@@ -1,123 +1,113 @@
 # Deploying BAGGI for real orders
 
-The storefront and the API are **one Express app**. `server/index.js` serves the
+The storefront and API are **one Express app**. `server/index.js` serves the
 static pages from the parent folder and handles checkout, Paystack webhooks and
 CJ orders. Deploy the whole `baggi-dropship` folder as a single web service.
 
-## 1. What is running now (temporary)
+## 1. Current permanent deployment
 
-- Backend: `http://127.0.0.1:3001` (also serves the storefront)
-- Preview only: `http://localhost:8000` (plain Python static server)
-- Public HTTPS tunnel: read `server/data/tunnel-url.txt` — the URL changes on restart
-- Paystack webhook: `WHK_a80cf00a` → `<tunnel-url>/webhooks/paystack`
+- GitHub: `https://github.com/TotoHunter/baggi-store` (branch `main`)
+- Canonical host (Oregon): `https://baggi-store.onrender.com`
+- Render service ID: `srv-dc11pcl9fdbs739ggbhg`
+- Health check: `https://baggi-store.onrender.com/api/health`
+- Paystack webhook `WHK_a80cf00a`: `https://baggi-store.onrender.com/webhooks/paystack`
+  (event `charge.success`, test mode until live keys are installed)
+- `js/config.js` uses `backendUrl: ""`, so the browser always calls the same
+  origin. Only Paystack's webhook URL needs to change if the host changes.
 
-`js/config.js` uses `backendUrl: ""`, so the browser always calls the **same
-origin**. That means a tunnel URL change cannot break checkout. The only thing
-that must follow the URL is the Paystack webhook, and `server/tools/keep-tunnel.js`
-does that automatically:
+The earlier Quick Tunnel watcher is **stopped and no longer used**. Do not start
+`server/tools/keep-tunnel.js`; the public URL is permanent.
 
-```powershell
-node server\tools\keep-tunnel.js
+A second Render service in Singapore (`srv-dc123tou01pc738h94j0`,
+`https://baggi-store-sg.onrender.com`) was used only to diagnose CJ's IP
+throttling and is being removed. Keep only the Oregon service above.
+
+## 2. Why there is a Cloudflare relay
+
+CJ throttles Render's shared cloud egress IPs with:
+
+```text
+1600200 — Too Many Requests, one ip limit 3 users, Your Ip is ...
 ```
 
-It restarts the tunnel if it drops, writes the current URL to
-`server/data/tunnel-url.txt`, and re-points the webhook (retried until the new
-host resolves). Verified end to end. This is still a Quick Tunnel, so it is fine
-for testing but not a permanent public address.
+This happened on both Oregon and Singapore. Paid orders were landing in
+`supplier_demo` with `CJ-ERROR-...` IDs. A free Cloudflare Worker now relays
+only the four CJ calls the backend makes:
 
-## 2. Permanent hosting (recommended: Render)
+- `/api2.0/v1/authentication/getAccessToken`
+- `/api2.0/v1/authentication/refreshAccessToken`
+- `/api2.0/v1/shopping/order/createOrderV3`
+- `/api2.0/v1/shopping/order/getOrderDetail`
 
-A free/starter Node host is enough. You need an account — none is configured on
-this machine, so this step needs you.
+Relay URL: `https://baggi-cj-relay.phpwo2.workers.dev`
 
-**Render (picked as the best free option — no card needed):**
+The Worker checks the `x-relay-secret` header against its `RELAY_SECRET`
+secret, rejects any other path, and forwards method/body/headers to
+`https://developers.cjdropshipping.com`. The Render service has:
 
-1. Push this folder to a GitHub repo. (No git installed on this PC, so create the
-   repo on GitHub and upload the files via the web UI, or install git.)
-2. Render Dashboard → **New** → **Blueprint** → select that repo.
-3. It reads `render.yaml`: Docker build from the project root, `plan: free`.
-   Fill the secrets it asks for:
-   - `PAYSTACK_SECRET_KEY` = test key now, live key (`sk_live_...`) at launch
-   - `CJ_API_KEY` = your CJ API key
-   - `CJ_PLATFORM_TOKEN` = leave empty unless CJ gave you one
-4. When it's live, copy the public URL and run on this machine:
+- `CJ_API_BASE=https://baggi-cj-relay.phpwo2.workers.dev`
+- `CJ_RELAY_SECRET=<secret stored only in Render and Cloudflare>`
 
-   ```powershell
-   node server\tools\set-webhook-url.js https://your-app.onrender.com
-   ```
+`server/services/cj.js` adds the `x-relay-secret` header whenever
+`CJ_RELAY_SECRET` is set. Verified end to end: signed Paystack test webhook →
+`supplier_ordered` with a real CJ sandbox order ID (no `CJ-ERROR` fallback).
 
-5. Set `FRONTEND_ORIGIN` in Render to that same URL and redeploy.
-   `js/config.js` already has `backendUrl: ""`, so no browser config change is
-   needed — the store and API are the same service.
+If the Worker is ever lost, recreate it with `wrangler deploy` from the saved
+worker folder, set `RELAY_SECRET` with `wrangler secret put RELAY_SECRET`, then
+restore the two Render variables above.
 
-**Free-tier caveat:** the service sleeps after ~15 minutes idle and takes about
-a minute to wake. Paystack retries webhooks, so orders still land, but the first
-customer visit on a cold service is slow. Storage is also ephemeral — see below.
+## 3. Render setup
 
-**Alternatives:** Railway, Fly.io, or any Node host. For all of them:
+Render was created from `render.yaml`: Docker build from the project root,
+`plan: free`. Environment variables are set in the Render dashboard, not in
+Git. Important ones:
 
-- Build/start from the project root: `npm ci --prefix server`, then `node server/index.js`
-- Set `PORT` (the host usually injects it; the app respects it)
-- Set `FRONTEND_ORIGIN` to the public storefront URL
-- Set the env vars listed in `server/.env.example`
-- Mount a persistent volume at `server/data` (see below)
+- `PAYSTACK_SECRET_KEY` — test key now; live `sk_live_...` at launch
+- `PAYSTACK_PUBLIC_KEY` / `js/config.js` public key — test now; live at launch
+- `CJ_API_KEY`, `CJ_PLATFORM_TOKEN`
+- `CJ_SANDBOX=1` while testing; set to `0` only after a successful live test
+- `CJ_PAY_TYPE=3` (create only); use `2` only when the CJ balance is funded
+- `CJ_LOGISTIC_NAME=CJPacket Postal`, `CJ_FROM_COUNTRY_CODE=CN`
+- `CJ_API_BASE` and `CJ_RELAY_SECRET` as described above
+- `FRONTEND_ORIGIN=https://baggi-store.onrender.com`
 
-## 3. Persistent order storage (important)
+Free tier sleeps after ~15 minutes idle; the first request can take ~50s.
+Storage is ephemeral — see below.
 
-Orders are saved to `server/data/orders.json`. On most free hosts the filesystem
-is ephemeral — **orders vanish on restart/redeploy**. Before going live either:
+To re-point Paystack after a host change, run on this machine:
 
-- mount a persistent disk at `/app/server/data` (Docker volume is declared in the
-  `Dockerfile`), or
+```powershell
+node server\tools\set-webhook-url.js https://your-app.onrender.com
+```
+
+## 4. Persistent order storage (still required before heavy live use)
+
+Orders are saved to `server/data/orders.json`. On Render's free tier the
+filesystem is ephemeral, so orders vanish on restart/redeploy. Before relying on
+order history, either:
+
+- mount a persistent disk at `/app/server/data`, or
 - migrate `readOrders`/`writeOrders` in `server/index.js` to a hosted database.
 
-If you skip this, a webhook can arrive just as the host restarts and the order
-will be lost, even though Paystack recorded a successful charge.
-
-## 4. Stable HTTPS without a hosting account (Cloudflare named tunnel)
-
-If you want to keep the backend on this PC:
-
-1. Add a domain to Cloudflare and install `cloudflared`.
-2. `cloudflared tunnel login`
-3. `cloudflared tunnel create baggi`
-4. Write `~/.cloudflared/config.yml`:
-
-   ```yaml
-   tunnel: <tunnel-id>
-   credentials-file: <path-to-json>
-   ingress:
-     - hostname: baggi.yourdomain.com
-       service: http://localhost:3001
-     - service: http_status:404
-   ```
-
-5. `cloudflared tunnel route dns baggi baggi.yourdomain.com`
-6. `cloudflared tunnel run baggi`
-7. Set `backendUrl: "https://baggi.yourdomain.com"` in `js/config.js`.
-8. Run `node server\tools\set-webhook-url.js https://baggi.yourdomain.com`.
-
-Unlike a Quick Tunnel, this URL never changes.
+Webhook fulfilment itself still works because payment is recorded by Paystack
+and the order is created/fulfilled in the same request cycle.
 
 ## 5. Go-live checklist
 
-- [ ] Permanent public HTTPS URL, verified with `/api/health`
-- [ ] Paystack webhook points to `<public-url>/webhooks/paystack`
-- [ ] Replace test keys with `sk_live_...` / `pk_live_...` (both `server/.env` and `js/config.js`)
-- [ ] Register the webhook again with the **live** secret key
-- [ ] `FRONTEND_ORIGIN` = public storefront URL
-- [ ] Persistent order storage configured
-- [ ] Review the SKU mapping in `js/config.js` — see README (catalog matches are
-      best-effort, not your actual branded designs)
-- [ ] Confirm product prices and delivery charges (they were raised to cover real
-      CJ freight to Nigeria)
+- [x] Permanent public HTTPS URL, verified with `/api/health`
+- [x] Paystack webhook points to `<public-url>/webhooks/paystack`
+- [x] CJ IP throttle bypassed with the Cloudflare relay
+- [ ] Replace test keys with `sk_live_...` / `pk_live_...` in Render and `js/config.js`
+- [ ] Register the Paystack webhook again with the **live** secret key
+- [ ] Review SKU mapping in `js/config.js` — generic CJ matches are not BAGGI designs
+- [ ] Confirm product prices and delivery charges
 - [ ] Fund CJ balance if switching `CJ_PAY_TYPE` from `3` to `2`
 - [ ] Set `CJ_SANDBOX=0` only after a successful live-key test
-- [ ] Run a small live payment, confirm webhook + CJ order, then refund/clean up
+- [ ] Run a small live payment, confirm webhook + CJ order, then clean up test data
 
 ## 6. Verify after any change
 
 ```powershell
-curl.exe https://<your-url>/api/health
-node server\tools\set-webhook-url.js https://<your-url>
+curl.exe https://baggi-store.onrender.com/api/health
+node server\tools\set-webhook-url.js https://baggi-store.onrender.com
 ```
