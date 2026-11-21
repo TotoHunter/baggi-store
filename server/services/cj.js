@@ -13,15 +13,39 @@ const DETAIL_PATH = process.env.CJ_ORDER_STATUS_ENDPOINT || "/api2.0/v1/shopping
 
 let tokenCache = null;
 
+// CJ allows 1 request/second. Pace every call and retry throttling/transient
+// errors so a paid order never falls back to demo because of a 429.
+let lastCallAt = 0;
+const MIN_INTERVAL_MS = 1300;
+
+async function pacedRequest(work) {
+  const wait = Math.max(0, lastCallAt + MIN_INTERVAL_MS - Date.now());
+  if (wait) await new Promise((r) => setTimeout(r, wait));
+  lastCallAt = Date.now();
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      return await work();
+    } catch (err) {
+      const status = err.response && err.response.status;
+      const retryable = status === 429 || (status >= 500 && status < 600);
+      if (!retryable || attempt === 3) throw err;
+      const header = err.response.headers && err.response.headers["retry-after"];
+      const delay = Math.max(1500 * (attempt + 1), Number(header) > 0 ? Number(header) * 1000 : 0);
+      await new Promise((r) => setTimeout(r, delay));
+      lastCallAt = Date.now();
+    }
+  }
+}
+
 function ok(body) {
   return body && (body.code === 200 || body.code === 0) && body.result !== false;
 }
 
 async function fetchToken(body, label) {
-  const res = await axios.post(BASE + (label === "refresh" ? REFRESH_PATH : TOKEN_PATH), body, {
+  const res = await pacedRequest(() => axios.post(BASE + (label === "refresh" ? REFRESH_PATH : TOKEN_PATH), body, {
     headers: { "Content-Type": "application/json" },
     timeout: 20000
-  });
+  }));
   const data = res.data;
   if (!ok(data) || !data.data || !data.data.accessToken) {
     throw new Error("CJ token " + label + " failed: " + (data && data.message ? data.message : "no access token"));
@@ -48,7 +72,7 @@ async function refreshToken() {
 
 async function callCj(method, path, payload, params, retried) {
   const token = await accessToken();
-  const res = await axios({
+  const res = await pacedRequest(() => axios({
     method,
     url: BASE + path,
     ...(payload ? { data: payload } : {}),
@@ -60,7 +84,7 @@ async function callCj(method, path, payload, params, retried) {
       "Content-Type": "application/json"
     },
     timeout: 20000
-  });
+  }));
   const body = res.data;
   if (body && body.code === 1600001 && !retried) {
     await refreshToken();
