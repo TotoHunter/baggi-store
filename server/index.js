@@ -348,6 +348,7 @@ app.get("/api/orders/:id", (req, res) => {
     currency: order.currency,
     payment: order.payment,
     supplierOrderId: order.supplierOrder?.id || null,
+    supplierMessage: order.supplierOrder?.message || null,
     timeline: order.timeline
   };
   res.json(safe);
