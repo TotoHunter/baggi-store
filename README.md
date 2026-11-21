@@ -49,28 +49,26 @@ The backend uses **port 3001** (3000 was already occupied on this machine). Chec
 http://127.0.0.1:3001/api/health
 ```
 
-`js/config.js` has `backendUrl: "http://127.0.0.1:3001"`. For production, change this to your public backend URL (for example `https://baggi-api.onrender.com`). If you serve the static files from the Express server itself, set it to `""`.
+`js/config.js` has `backendUrl: ""`. The Express server serves the static files and the API from the same origin, so this works locally on port 3001 and on the permanent Render host without changes.
 
 Until keys are added, checkout still works in **demo mode**: it shows a demo order ID and a WhatsApp confirmation link. No real money is taken and no real supplier order is placed.
 
-### Current live-setup status (21 Nov 2026)
+### Current live-setup status (22 Nov 2026)
 
-- Storefront + API: `http://127.0.0.1:3001` (one Express app). Preview only: `http://localhost:8000`.
-- Public HTTPS tunnel: current URL is in `server/data/tunnel-url.txt`. It changes on restart. `server/tools/keep-tunnel.js` keeps it alive and re-points the webhook automatically; verified end to end.
-- `js/config.js` uses `backendUrl: ""` — the browser calls the same origin, so a tunnel/host change cannot break checkout.
-- Paystack is configured in test mode (secret + public key saved in `server/.env` and `js/config.js`).
-- Paystack webhook `WHK_a80cf00a` → `<tunnel-url>/webhooks/paystack`, subscribed to `charge.success`. Verified with signed sandbox webhooks end to end.
-- Only Paystack, bank transfer and WhatsApp are shown at checkout; Flutterwave, Stripe and PayPal are disabled until their keys exist.
-- `server/.env` exists with non-secret defaults. Real keys must be added there with the owner's approval and the API restarted.
-- The CJ adapter uses CJ API V2.0 (token exchange + `createOrderV3`). `CJ_API_KEY` is set and verified; `CJ_LOGISTIC_NAME=CJPacket Postal` (from the CN→NG freight API); `CJ_PAY_TYPE=3` (create only — CJ balance is $0); `CJ_SANDBOX=1` while testing.
-- Full sandbox chain verified: Paystack test payment → signed webhook → real CJ order `SD2611212131240662000` (status `CREATED`, `isSandbox: 1`, logistic `CJPacket Postal`).
-- **SKU mapping applied (best-effort):** all 19 products now have real CJ `sku` + `vid` values in `js/config.js`, including a `sizes` map so the customer's selected size resolves to the correct CJ variant. Verified: a W32 order produced CJ variant `2409200336291616700` (Blue-L) and a real sandbox order `SD2611212143590648600`.
-  - **Important:** these are the closest generic CJ catalog matches, **not your branded BAGGI designs**. Some are approximations (e.g. waist sizes mapped to S–XXL, "Off White" mapped to white/gray, custom print items mapped to blank products). Review every mapping in `admin.html` or `js/config.js` before live orders, or upload your own products to CJ and replace the SKUs.
-  - Custom/print-on-demand items (`custom-jeans`, `custom-tee`, `custom-hoodie`, `gods-plan-tee`, `custom-mug`, `custom-poster`) will ship **blank** products with these SKUs — CJ's POD service is not wired up. Keep `supplier.mode: "manual"` for those, or integrate CJ POD separately.
-- **Pricing updated to cover real freight:** prices were recalculated from live CJ product cost + CN→NG shipping (`supplier.deliveryNgn`) with a ~30% margin. Example: OG Baggi is now ₦90,000 product + ₦43,440 delivery = ₦133,440. Delivery is charged per item and shown at checkout. These are much higher than the original prices because CJ shipping to Nigeria is $6–$30+ per item. If this is too expensive for your market, use a local supplier or change `supplier.mode` to `manual`.
-- **Checkout is now server-authoritative:** `server/index.js` loads `js/config.js`, recomputes the total from real prices/delivery and fills in SKU/VID/supplier cost itself. A browser cannot submit a fake amount. The Paystack webhook also rejects payments that don't match the stored amount, acknowledges immediately, and de-duplicates retries.
-- **Deploy files added:** `Dockerfile`, `render.yaml`, `.dockerignore`, `DEPLOY.md`, `server/tools/set-webhook-url.js` and `server/tools/keep-tunnel.js`. Permanent hosting still needs your account — see `DEPLOY.md`. The Quick Tunnel is temporary; same-origin calls mean no browser config change is needed when you move hosts.
-- To go live: follow `DEPLOY.md` — permanent HTTPS, update the webhook, live Paystack keys, `FRONTEND_ORIGIN`, persistent order storage, review SKUs/prices, fund CJ balance (if `CJ_PAY_TYPE=2`), then `CJ_SANDBOX=0` after a successful live test.
+- **Permanent storefront + API:** `https://baggi-store.onrender.com` (Render, Oregon, service `srv-dc11pcl9fdbs739ggbhg`). Health: `/api/health`.
+- Source: `https://github.com/TotoHunter/baggi-store`, branch `main`. Local development still works on `http://127.0.0.1:3001`; the Python server on `:8000` is preview-only.
+- `js/config.js` uses `backendUrl: ""` — the browser calls the same origin, so host changes need no browser config change.
+- The old Quick Tunnel watcher is **stopped**. `server/tools/keep-tunnel.js` is retained only as a reference and must not be started.
+- Paystack is still in **test mode** (test secret in Render, test public key in `js/config.js`). Live keys are required before launch.
+- Paystack webhook `WHK_a80cf00a` → `https://baggi-store.onrender.com/webhooks/paystack`, subscribed to `charge.success`. Signed webhooks are verified end to end.
+- Only Paystack, bank transfer and WhatsApp are shown at checkout; Flutterwave, Stripe and PayPal stay disabled until their keys exist. Bank transfer details are still placeholders.
+- CJ adapter uses V2.0 (token exchange + `createOrderV3`), `CJ_LOGISTIC_NAME=CJPacket Postal`, `CJ_PAY_TYPE=3`, `CJ_SANDBOX=1` while testing. CJ balance is $0.
+- **CJ IP throttle solved:** Render IPs were rejected with `1600200 / Too Many Requests, one ip limit 3 users`. A free Cloudflare Worker, `https://baggi-cj-relay.phpwo2.workers.dev`, now relays only the four CJ API paths used by the app. Render sets `CJ_API_BASE` to that Worker and `CJ_RELAY_SECRET` to the shared secret; the Worker keeps its own `RELAY_SECRET`. Verified: paid test webhook → `supplier_ordered` with real CJ sandbox order `SD2611212331300665700`.
+- **SKU mapping applied (best-effort):** all 19 products have CJ `sku` + `vid` values and a `sizes` map. These are the closest generic CJ catalog matches, **not your branded BAGGI designs**. Review every mapping before live orders, or upload your own products to CJ. Custom/POD items would ship blank without a separate CJ POD integration.
+- **Pricing updated to cover real freight:** prices include live CJ product cost + CN→NG delivery with ~30% margin. Example: OG Baggi is ₦90,000 + ₦43,440 delivery. Confirm these prices suit your market before launch.
+- **Checkout is server-authoritative:** totals and SKU/VID/supplier cost are recomputed on the server. The webhook rejects underpayments, acknowledges immediately and de-duplicates retries.
+- Render free tier sleeps after inactivity and has ephemeral storage; persistent order storage is still a pre-launch task — see `DEPLOY.md`.
+- To go live: install live Paystack keys, re-register the webhook with the live secret, review SKUs/prices, fund CJ, run a small live test, then set `CJ_SANDBOX=0`.
 
 ## Edit products, prices and supplier costs
 
