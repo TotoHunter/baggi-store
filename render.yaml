@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: baggi-store
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_ORIGIN
+        # Set this to the public URL Render gives you, e.g. https://baggi-store.onrender.com
+        value: https://baggi-store.onrender.com
+      - key: PAYSTACK_SECRET_KEY
+        sync: false
+      - key: CJ_API_KEY
+        sync: false
+      - key: CJ_LOGISTIC_NAME
+        value: CJPacket Postal
+      - key: CJ_PAY_TYPE
+        value: "3"
+      - key: CJ_SANDBOX
+        value: "1"
+      - key: CJ_FROM_COUNTRY_CODE
+        value: CN
+      - key: CJ_PLATFORM_TOKEN
+        sync: false
+      - key: EXCHANGE_RATE_CNY_TO_NGN
+        value: "240"

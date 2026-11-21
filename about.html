@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About — BAGGI</title>
+    <meta name="description" content="The BAGGI story: less noise, more leg. Heavy denim, cut wide, kept plain.">
+    <meta name="theme-color" content="#1a1a1e">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231a1a1e'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%23d3f85a'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/config.js" defer></script>
+    <script src="js/app.js" defer></script>
+  </head>
+  <body data-page="about">
+    <div data-header></div>
+
+    <main>
+      <section class="page-section">
+        <div class="container about-grid">
+          <div>
+            <p class="eyebrow" data-bind="aboutEyebrow">The story</p>
+            <h1 class="about-title display">
+              <span data-bind="aboutTitleTop">Less</span> <span class="text-outline" data-bind="aboutTitleMiddle">noise.</span><br>
+              <span data-bind="aboutTitleBottom">More leg.</span>
+            </h1>
+            <div class="about-copy" data-about-paragraphs></div>
+          </div>
+          <div class="grain about-media">
+            <img src="assets/model-jeans-light.jpg" alt="Model wearing BAGGI light stone baggy jeans" width="896" height="1152" loading="lazy">
+          </div>
+        </div>
+      </section>
+
+      <div class="marquee-strip" data-marquee="about" aria-label="Built heavy, cut wide, kept plain"></div>
+    </main>
+
+    <div data-footer></div>
+  </body>
+</html>

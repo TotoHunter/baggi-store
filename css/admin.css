@@ -1,0 +1,182 @@
+/* BAGGI store admin — private helper page */
+.admin-body {
+  padding: 40px 20px 80px;
+}
+
+.admin-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-title {
+  margin: 8px 0 0;
+  font-size: 72px;
+}
+
+.admin-notice {
+  margin: 24px 0;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.admin-notice strong,
+.admin-notice em {
+  color: var(--foreground);
+  font-style: normal;
+}
+
+.admin-notice code {
+  padding: 2px 6px;
+  background: var(--background);
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.admin-card {
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.admin-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-section-title {
+  margin: 0;
+  font-size: 40px;
+}
+
+.admin-settings {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.admin-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+}
+
+.admin-label input,
+.admin-label select,
+.admin-table input,
+.admin-table select,
+.admin-table textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+}
+
+.admin-label input:focus,
+.admin-table input:focus,
+.admin-table select:focus,
+.admin-table textarea:focus {
+  border-color: var(--primary);
+}
+
+.admin-table-scroll {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1500px;
+}
+
+.admin-table th {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.admin-table textarea {
+  min-height: 64px;
+  resize: vertical;
+}
+
+.admin-table input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+}
+
+.admin-delete {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.admin-delete:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.admin-status {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--primary);
+}
+
+@media (max-width: 767px) {
+  .admin-title {
+    font-size: 56px;
+  }
+}

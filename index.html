@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BAGGI — Plain denim. Big fits.</title>
+    <meta name="description" content="Heavy denim cut extra wide. No logos, no rips, no noise — the fit does the talking. Order on WhatsApp.">
+    <meta property="og:title" content="BAGGI — Plain denim. Big fits.">
+    <meta property="og:description" content="Plain baggy jeans, oversized hoodies and boxy tees. Order on WhatsApp.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#1a1a1e">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231a1a1e'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%23d3f85a'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/config.js" defer></script>
+    <script src="js/app.js" defer></script>
+  </head>
+  <body data-page="home">
+    <div data-header></div>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow" data-bind="homeEyebrow">Drop 01 — Out now</p>
+            <h1 class="hero-title display">
+              <span data-bind="heroTitleTop">Plain.</span><br>
+              <span class="text-outline" data-bind="heroTitleMiddle">Baggy.</span><br>
+              <span class="accent" data-bind="heroTitleBottom">Loud.</span>
+            </h1>
+            <p class="hero-text" data-bind="heroText">Heavy denim cut extra wide. No logos, no rips, no noise — the fit does the talking.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="collection.html">See the jeans <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+              <a class="btn btn-outline" href="about.html">Our story</a>
+            </div>
+            <div class="hero-points" data-hero-points></div>
+          </div>
+          <div class="grain hero-media">
+            <img src="assets/model-hero.jpg" alt="Model wearing BAGGI baggy jeans and a plain white tee" width="1024" height="1408">
+            <span class="hero-badge" data-bind="heroBadge">14oz denim</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="marquee-strip" data-marquee="home" aria-label="No logos, extra wide, heavy denim, plain forever"></div>
+
+      <section class="trust-strip" data-trust aria-label="Why shop with BAGGI"></section>
+
+      <section class="page-section">
+        <div class="container">
+          <div class="section-heading">
+            <h2 class="display">The Line-up</h2>
+            <a href="collection.html">View all →</a>
+          </div>
+          <div class="product-grid" data-featured></div>
+        </div>
+      </section>
+
+      <section class="features">
+        <div class="features-grid" data-features></div>
+      </section>
+
+      <section class="page-section steps-section">
+        <div class="container">
+          <div class="steps-head">
+            <p class="eyebrow">How it works</p>
+            <h2 class="display section-heading-title">Three steps to yours.</h2>
+          </div>
+          <div class="steps-grid" data-steps></div>
+        </div>
+      </section>
+    </main>
+
+    <div data-footer></div>
+  </body>
+</html>
