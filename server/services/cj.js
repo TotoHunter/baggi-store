@@ -10,6 +10,10 @@ const TOKEN_PATH = "/api2.0/v1/authentication/getAccessToken";
 const REFRESH_PATH = "/api2.0/v1/authentication/refreshAccessToken";
 const CREATE_PATH = process.env.CJ_ORDER_ENDPOINT || "/api2.0/v1/shopping/order/createOrderV3";
 const DETAIL_PATH = process.env.CJ_ORDER_STATUS_ENDPOINT || "/api2.0/v1/shopping/order/getOrderDetail";
+// When CJ_API_BASE points at our Cloudflare relay, this header authenticates
+// the relay. It is ignored when calling CJ directly.
+const RELAY_SECRET = process.env.CJ_RELAY_SECRET || "";
+const relayHeaders = () => (RELAY_SECRET ? { "x-relay-secret": RELAY_SECRET } : {});
 
 let tokenCache = null;
 
@@ -52,7 +56,7 @@ function ok(body) {
 
 async function fetchToken(body, label) {
   const res = await pacedRequest(() => axios.post(BASE + (label === "refresh" ? REFRESH_PATH : TOKEN_PATH), body, {
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...relayHeaders() },
     timeout: 20000
   }));
   const data = res.data;
@@ -90,7 +94,8 @@ async function callCj(method, path, payload, params, retried) {
       "CJ-Access-Token": token,
       // CJ requires this header on order endpoints; empty is valid when unused.
       platformToken: process.env.CJ_PLATFORM_TOKEN || "",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      ...relayHeaders()
     },
     timeout: 20000
   }));
