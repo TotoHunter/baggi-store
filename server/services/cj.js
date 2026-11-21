@@ -22,15 +22,21 @@ async function pacedRequest(work) {
   const wait = Math.max(0, lastCallAt + MIN_INTERVAL_MS - Date.now());
   if (wait) await new Promise((r) => setTimeout(r, wait));
   lastCallAt = Date.now();
-  for (let attempt = 0; attempt < 4; attempt++) {
+  const delays = [2000, 5000, 10000, 20000, 40000];
+  for (let attempt = 0; attempt <= delays.length; attempt++) {
     try {
       return await work();
     } catch (err) {
       const status = err.response && err.response.status;
       const retryable = status === 429 || (status >= 500 && status < 600);
-      if (!retryable || attempt === 3) throw err;
+      if (!retryable || attempt === delays.length) {
+        const url = err.config && err.config.url ? " " + err.config.url.replace(BASE, "") : "";
+        err.message = "CJ HTTP " + status + url + ": " + err.message;
+        throw err;
+      }
       const header = err.response.headers && err.response.headers["retry-after"];
-      const delay = Math.max(1500 * (attempt + 1), Number(header) > 0 ? Number(header) * 1000 : 0);
+      // Shared cloud egress IPs can stay throttled for a while; back off hard.
+      const delay = Math.max(delays[attempt], Number(header) > 0 ? Number(header) * 1000 : 0);
       await new Promise((r) => setTimeout(r, delay));
       lastCallAt = Date.now();
     }
