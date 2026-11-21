@@ -31,7 +31,10 @@ async function pacedRequest(work) {
       const retryable = status === 429 || (status >= 500 && status < 600);
       if (!retryable || attempt === delays.length) {
         const url = err.config && err.config.url ? " " + err.config.url.replace(BASE, "") : "";
-        err.message = "CJ HTTP " + status + url + ": " + err.message;
+        const detail = err.response && err.response.data
+          ? " " + JSON.stringify(err.response.data).slice(0, 300)
+          : "";
+        err.message = "CJ HTTP " + status + url + ": " + err.message + detail;
         throw err;
       }
       const header = err.response.headers && err.response.headers["retry-after"];
