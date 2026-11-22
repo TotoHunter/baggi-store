@@ -47,7 +47,7 @@ window.BAGGI_CONFIG = {
         label: "Paystack",
         description: "Card, bank transfer, USSD",
         enabled: true,
-        publicKey: "pk_test_b23cbfeb2d3a21237801328117e3d84b546efe47"
+        publicKey: "pk_live_aace3771ad0902dc8138b27ad7cb81e2151aac29"
       },
       {
         id: "flutterwave",
