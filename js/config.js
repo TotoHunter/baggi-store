@@ -35,7 +35,7 @@ window.BAGGI_CONFIG = {
   shipping: {
     flatFee: 0,
     freeAbove: 999999999,
-    note: "Delivery is calculated per item from live CJ freight rates and shown at checkout."
+    note: "Affordable flat delivery per item, shown at checkout."
   },
 
   payments: {
@@ -237,7 +237,7 @@ window.BAGGI_CONFIG = {
       description: "The everyday one. Heavy 14oz denim, wide straight leg.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "CJXX214221302BY", vid: "2409200336291616600", costCny: 106, deliveryNgn: 43440, sizes: { "W28": { sku: "CJXX214221301AZ", vid: "2409200336291616400" }, "W30": { sku: "CJXX214221302BY", vid: "2409200336291616600" }, "W32": { sku: "CJXX214221303CX", vid: "2409200336291616700" }, "W34": { sku: "CJXX214221304DW", vid: "2409200336291616900" }, "W36": { sku: "CJXX214221305EV", vid: "2409200336291617100" }, "W38": { sku: "CJXX214221305EV", vid: "2409200336291617100" } } }
+      supplier: { type: "cj", sku: "CJXX214221302BY", vid: "2409200336291616600", costCny: 106, deliveryNgn: 3500, sizes: { "W28": { sku: "CJXX214221301AZ", vid: "2409200336291616400" }, "W30": { sku: "CJXX214221302BY", vid: "2409200336291616600" }, "W32": { sku: "CJXX214221303CX", vid: "2409200336291616700" }, "W34": { sku: "CJXX214221304DW", vid: "2409200336291616900" }, "W36": { sku: "CJXX214221305EV", vid: "2409200336291617100" }, "W38": { sku: "CJXX214221305EV", vid: "2409200336291617100" } } }
     },
     {
       id: "night-baggi-black",
@@ -251,7 +251,7 @@ window.BAGGI_CONFIG = {
       description: "Faded black wash that only gets better with wear.",
       featured: true,
       customizable: false,
-      supplier: { type: "cj", sku: "CJXX218563306FU", vid: "2411070721091604700", costCny: 177, deliveryNgn: 31200, sizes: { "W28": { sku: "CJXX218563302BY", vid: "2411070721091603700" }, "W30": { sku: "CJXX218563304DW", vid: "2411070721091604300" }, "W32": { sku: "CJXX218563306FU", vid: "2411070721091604700" }, "W34": { sku: "CJXX218563308HS", vid: "2411070721091605100" }, "W36": { sku: "CJXX218563309IR", vid: "2411070721091605200" }, "W38": { sku: "CJXX218563310JQ", vid: "2411070721091605400" } } }
+      supplier: { type: "cj", sku: "CJXX218563306FU", vid: "2411070721091604700", costCny: 177, deliveryNgn: 3500, sizes: { "W28": { sku: "CJXX218563302BY", vid: "2411070721091603700" }, "W30": { sku: "CJXX218563304DW", vid: "2411070721091604300" }, "W32": { sku: "CJXX218563306FU", vid: "2411070721091604700" }, "W34": { sku: "CJXX218563308HS", vid: "2411070721091605100" }, "W36": { sku: "CJXX218563309IR", vid: "2411070721091605200" }, "W38": { sku: "CJXX218563310JQ", vid: "2411070721091605400" } } }
     },
     {
       id: "sky-baggi-light",
@@ -265,7 +265,7 @@ window.BAGGI_CONFIG = {
       description: "Bleached stone wash. Loud fit, zero logos.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "CJXX234012402BY", vid: "2503290128001627700", costCny: 81, deliveryNgn: 36960, sizes: { "W28": { sku: "CJXX234012401AZ", vid: "2503290128001627500" }, "W30": { sku: "CJXX234012402BY", vid: "2503290128001627700" }, "W32": { sku: "CJXX234012403CX", vid: "2503290128001627900" }, "W34": { sku: "CJXX234012404DW", vid: "2503290128001628100" }, "W36": { sku: "CJXX234012405EV", vid: "2503290128001628300" }, "W38": { sku: "CJXX234012405EV", vid: "2503290128001628300" } } }
+      supplier: { type: "cj", sku: "CJXX234012402BY", vid: "2503290128001627700", costCny: 81, deliveryNgn: 3500, sizes: { "W28": { sku: "CJXX234012401AZ", vid: "2503290128001627500" }, "W30": { sku: "CJXX234012402BY", vid: "2503290128001627700" }, "W32": { sku: "CJXX234012403CX", vid: "2503290128001627900" }, "W34": { sku: "CJXX234012404DW", vid: "2503290128001628100" }, "W36": { sku: "CJXX234012405EV", vid: "2503290128001628300" }, "W38": { sku: "CJXX234012405EV", vid: "2503290128001628300" } } }
     },
     {
       id: "heavy-hood-black",
@@ -279,7 +279,7 @@ window.BAGGI_CONFIG = {
       description: "Thick fleece, oversized body, big kangaroo pocket. No logos.",
       featured: true,
       customizable: false,
-      supplier: { type: "cj", sku: "CJWY236413910JQ", vid: "2504280202111613700", costCny: 87, deliveryNgn: 33120, sizes: { "S": { sku: "CJWY236413909IR", vid: "2504280202111612900" }, "M": { sku: "CJWY236413910JQ", vid: "2504280202111613700" }, "L": { sku: "CJWY236413911KP", vid: "2504280202111614200" }, "XL": { sku: "CJWY236413912LO", vid: "2504280202111614700" }, "XXL": { sku: "CJWY236413912LO", vid: "2504280202111614700" } } }
+      supplier: { type: "cj", sku: "CJWY236413910JQ", vid: "2504280202111613700", costCny: 87, deliveryNgn: 3000, sizes: { "S": { sku: "CJWY236413909IR", vid: "2504280202111612900" }, "M": { sku: "CJWY236413910JQ", vid: "2504280202111613700" }, "L": { sku: "CJWY236413911KP", vid: "2504280202111614200" }, "XL": { sku: "CJWY236413912LO", vid: "2504280202111614700" }, "XXL": { sku: "CJWY236413912LO", vid: "2504280202111614700" } } }
     },
     {
       id: "ash-hood-grey",
@@ -293,7 +293,7 @@ window.BAGGI_CONFIG = {
       description: "Vintage washed grey that pairs with every BAGGI denim.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "CJWY236413906FU", vid: "2504280202111610400", costCny: 87, deliveryNgn: 33120, sizes: { "S": { sku: "CJWY236413905EV", vid: "2504280202111610000" }, "M": { sku: "CJWY236413906FU", vid: "2504280202111610400" }, "L": { sku: "CJWY236413907GT", vid: "2504280202111611100" }, "XL": { sku: "CJWY236413908HS", vid: "2504280202111611800" }, "XXL": { sku: "CJWY236413908HS", vid: "2504280202111611800" } } }
+      supplier: { type: "cj", sku: "CJWY236413906FU", vid: "2504280202111610400", costCny: 87, deliveryNgn: 3000, sizes: { "S": { sku: "CJWY236413905EV", vid: "2504280202111610000" }, "M": { sku: "CJWY236413906FU", vid: "2504280202111610400" }, "L": { sku: "CJWY236413907GT", vid: "2504280202111611100" }, "XL": { sku: "CJWY236413908HS", vid: "2504280202111611800" }, "XXL": { sku: "CJWY236413908HS", vid: "2504280202111611800" } } }
     },
     {
       id: "box-tee-white",
@@ -307,7 +307,7 @@ window.BAGGI_CONFIG = {
       description: "Heavyweight boxy tee with a thick ribbed collar.",
       featured: true,
       customizable: false,
-      supplier: { type: "cj", sku: "CJDS212420102BY", vid: "2408300732091605400", costCny: 30, deliveryNgn: 11280, sizes: { "S": { sku: "CJDS212420101AZ", vid: "2408300732091605200" }, "M": { sku: "CJDS212420102BY", vid: "2408300732091605400" }, "L": { sku: "CJDS212420103CX", vid: "2408300732091605500" }, "XL": { sku: "CJDS212420104DW", vid: "2408300732091605700" }, "XXL": { sku: "CJDS212420105EV", vid: "2408300732091605900" } } }
+      supplier: { type: "cj", sku: "CJDS212420102BY", vid: "2408300732091605400", costCny: 30, deliveryNgn: 2000, sizes: { "S": { sku: "CJDS212420101AZ", vid: "2408300732091605200" }, "M": { sku: "CJDS212420102BY", vid: "2408300732091605400" }, "L": { sku: "CJDS212420103CX", vid: "2408300732091605500" }, "XL": { sku: "CJDS212420104DW", vid: "2408300732091605700" }, "XXL": { sku: "CJDS212420105EV", vid: "2408300732091605900" } } }
     },
     {
       id: "box-tee-black",
@@ -321,7 +321,7 @@ window.BAGGI_CONFIG = {
       description: "Same boxy cut, washed for a soft, faded black.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "CJDS212420122VE", vid: "2505280837081610500", costCny: 30, deliveryNgn: 13200, sizes: { "S": { sku: "CJDS212420123WD", vid: "2505280837081610700" }, "M": { sku: "CJDS212420122VE", vid: "2505280837081610500" }, "L": { sku: "CJDS212420121UF", vid: "2505280837081610300" }, "XL": { sku: "CJDS212420124XC", vid: "2505280837081610900" }, "XXL": { sku: "CJDS212420117QJ", vid: "2505280837071619500" } } }
+      supplier: { type: "cj", sku: "CJDS212420122VE", vid: "2505280837081610500", costCny: 30, deliveryNgn: 2000, sizes: { "S": { sku: "CJDS212420123WD", vid: "2505280837081610700" }, "M": { sku: "CJDS212420122VE", vid: "2505280837081610500" }, "L": { sku: "CJDS212420121UF", vid: "2505280837081610300" }, "XL": { sku: "CJDS212420124XC", vid: "2505280837081610900" }, "XXL": { sku: "CJDS212420117QJ", vid: "2505280837071619500" } } }
     },
     {
       id: "gods-plan-tee",
@@ -336,7 +336,7 @@ window.BAGGI_CONFIG = {
         "Pre-order. Boxy white tee with GOD'S PLAN, black thunder lines and white cracks.",
       featured: false,
       customizable: true,
-      supplier: { type: "cj", sku: "CJDS212420102BY", vid: "2408300732091605400", costCny: 30, deliveryNgn: 11280, sizes: { "S": { sku: "CJDS212420101AZ", vid: "2408300732091605200" }, "M": { sku: "CJDS212420102BY", vid: "2408300732091605400" }, "L": { sku: "CJDS212420103CX", vid: "2408300732091605500" }, "XL": { sku: "CJDS212420104DW", vid: "2408300732091605700" }, "XXL": { sku: "CJDS212420105EV", vid: "2408300732091605900" } } }
+      supplier: { type: "cj", sku: "CJDS212420102BY", vid: "2408300732091605400", costCny: 30, deliveryNgn: 2000, sizes: { "S": { sku: "CJDS212420101AZ", vid: "2408300732091605200" }, "M": { sku: "CJDS212420102BY", vid: "2408300732091605400" }, "L": { sku: "CJDS212420103CX", vid: "2408300732091605500" }, "XL": { sku: "CJDS212420104DW", vid: "2408300732091605700" }, "XXL": { sku: "CJDS212420105EV", vid: "2408300732091605900" } } }
     },
 
     /* ---------- New streetwear ---------- */
@@ -352,7 +352,7 @@ window.BAGGI_CONFIG = {
       description: "Wide-leg cargo pants with deep utility pockets. Heavy cotton.",
       featured: true,
       customizable: false,
-      supplier: { type: "cj", sku: "CJXX214169402BY", vid: "2409190824521617300", costCny: 119, deliveryNgn: 38640, sizes: { "W28": { sku: "CJXX214169401AZ", vid: "2409190824521617100" }, "W30": { sku: "CJXX214169402BY", vid: "2409190824521617300" }, "W32": { sku: "CJXX214169403CX", vid: "2409190824521617700" }, "W34": { sku: "CJXX214169404DW", vid: "2409190824521617900" }, "W36": { sku: "CJXX214169405EV", vid: "2409190824521618100" }, "W38": { sku: "CJXX214169405EV", vid: "2409190824521618100" } } }
+      supplier: { type: "cj", sku: "CJXX214169402BY", vid: "2409190824521617300", costCny: 119, deliveryNgn: 3500, sizes: { "W28": { sku: "CJXX214169401AZ", vid: "2409190824521617100" }, "W30": { sku: "CJXX214169402BY", vid: "2409190824521617300" }, "W32": { sku: "CJXX214169403CX", vid: "2409190824521617700" }, "W34": { sku: "CJXX214169404DW", vid: "2409190824521617900" }, "W36": { sku: "CJXX214169405EV", vid: "2409190824521618100" }, "W38": { sku: "CJXX214169405EV", vid: "2409190824521618100" } } }
     },
     {
       id: "denim-jacket",
@@ -366,7 +366,7 @@ window.BAGGI_CONFIG = {
       description: "Boxy 14oz denim jacket, cut to layer over every hoodie.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "CJXZ106624614NM", vid: "1378909718768128000", costCny: 92, deliveryNgn: 41760, sizes: { "S": { sku: "CJXZ106624613MN", vid: "1378909718701019136" }, "M": { sku: "CJXZ106624614NM", vid: "1378909718768128000" }, "L": { sku: "CJXZ106624615OL", vid: "1378909718835236864" }, "XL": { sku: "CJXZ106624616PK", vid: "1378909718902345728" }, "XXL": { sku: "CJXZ106624617QJ", vid: "1378909719003009024" } } }
+      supplier: { type: "cj", sku: "CJXZ106624614NM", vid: "1378909718768128000", costCny: 92, deliveryNgn: 3500, sizes: { "S": { sku: "CJXZ106624613MN", vid: "1378909718701019136" }, "M": { sku: "CJXZ106624614NM", vid: "1378909718768128000" }, "L": { sku: "CJXZ106624615OL", vid: "1378909718835236864" }, "XL": { sku: "CJXZ106624616PK", vid: "1378909718902345728" }, "XXL": { sku: "CJXZ106624617QJ", vid: "1378909719003009024" } } }
     },
     {
       id: "baggy-shorts",
@@ -380,7 +380,7 @@ window.BAGGI_CONFIG = {
       description: "Knee-length wide shorts with the same heavy wash as Night Baggi.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "CJXX207177202BY", vid: "2406290914111627100", costCny: 43, deliveryNgn: 18000, sizes: { "S": { sku: "CJXX207177201AZ", vid: "2406290914111626700" }, "M": { sku: "CJXX207177202BY", vid: "2406290914111627100" }, "L": { sku: "CJXX207177203CX", vid: "2406290914111627300" }, "XL": { sku: "CJXX207177204DW", vid: "2406290914111627500" }, "XXL": { sku: "CJXX207177205EV", vid: "2406290914111627700" } } }
+      supplier: { type: "cj", sku: "CJXX207177202BY", vid: "2406290914111627100", costCny: 43, deliveryNgn: 2000, sizes: { "S": { sku: "CJXX207177201AZ", vid: "2406290914111626700" }, "M": { sku: "CJXX207177202BY", vid: "2406290914111627100" }, "L": { sku: "CJXX207177203CX", vid: "2406290914111627300" }, "XL": { sku: "CJXX207177204DW", vid: "2406290914111627500" }, "XXL": { sku: "CJXX207177205EV", vid: "2406290914111627700" } } }
     },
     {
       id: "long-sleeve-white",
@@ -394,7 +394,7 @@ window.BAGGI_CONFIG = {
       description: "Heavyweight long sleeve with a boxy body and ribbed cuffs.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "CJDS1836000-White-M", vid: "1697504300173774853", costCny: 53, deliveryNgn: 17280, sizes: { "S": { sku: "CJDS1836000-White-S", vid: "1697504300173774848" }, "M": { sku: "CJDS1836000-White-M", vid: "1697504300173774853" }, "L": { sku: "CJDS1836000-White-L", vid: "1697504300173774858" }, "XL": { sku: "CJDS1836000-White-XL", vid: "1697504300173774863" }, "XXL": { sku: "CJDS1836000-White-2XL", vid: "1697504300173774868" } } }
+      supplier: { type: "cj", sku: "CJDS1836000-White-M", vid: "1697504300173774853", costCny: 53, deliveryNgn: 2500, sizes: { "S": { sku: "CJDS1836000-White-S", vid: "1697504300173774848" }, "M": { sku: "CJDS1836000-White-M", vid: "1697504300173774853" }, "L": { sku: "CJDS1836000-White-L", vid: "1697504300173774858" }, "XL": { sku: "CJDS1836000-White-XL", vid: "1697504300173774863" }, "XXL": { sku: "CJDS1836000-White-2XL", vid: "1697504300173774868" } } }
     },
     {
       id: "bucket-hat",
@@ -408,7 +408,7 @@ window.BAGGI_CONFIG = {
       description: "Plain heavy cotton bucket hat. One size, made to match.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "CJBQ220327102BY", vid: "2411210815431610700", costCny: 25, deliveryNgn: 6240 }
+      supplier: { type: "cj", sku: "CJBQ220327102BY", vid: "2411210815431610700", costCny: 25, deliveryNgn: 1500 }
     },
     {
       id: "canvas-tote",
@@ -422,7 +422,7 @@ window.BAGGI_CONFIG = {
       description: "Heavy natural canvas tote with long straps. One size.",
       featured: false,
       customizable: true,
-      supplier: { type: "cj", sku: "CJYD210245719SH", vid: "2408050905501606200", costCny: 44, deliveryNgn: 13200 }
+      supplier: { type: "cj", sku: "CJYD210245719SH", vid: "2408050905501606200", costCny: 44, deliveryNgn: 2000 }
     },
 
     /* ---------- Custom / print-on-demand ---------- */
@@ -438,7 +438,7 @@ window.BAGGI_CONFIG = {
       description: "Send your artwork or idea. We make a one-off pair just for you.",
       featured: false,
       customizable: true,
-      supplier: { type: "cj", sku: "CJXX214221302BY", vid: "2409200336291616600", costCny: 106, deliveryNgn: 43440, note: "blank for custom print", sizes: { "W28": { sku: "CJXX214221301AZ", vid: "2409200336291616400" }, "W30": { sku: "CJXX214221302BY", vid: "2409200336291616600" }, "W32": { sku: "CJXX214221303CX", vid: "2409200336291616700" }, "W34": { sku: "CJXX214221304DW", vid: "2409200336291616900" }, "W36": { sku: "CJXX214221305EV", vid: "2409200336291617100" }, "W38": { sku: "CJXX214221305EV", vid: "2409200336291617100" } } }
+      supplier: { type: "cj", sku: "CJXX214221302BY", vid: "2409200336291616600", costCny: 106, deliveryNgn: 3500, note: "blank for custom print", sizes: { "W28": { sku: "CJXX214221301AZ", vid: "2409200336291616400" }, "W30": { sku: "CJXX214221302BY", vid: "2409200336291616600" }, "W32": { sku: "CJXX214221303CX", vid: "2409200336291616700" }, "W34": { sku: "CJXX214221304DW", vid: "2409200336291616900" }, "W36": { sku: "CJXX214221305EV", vid: "2409200336291617100" }, "W38": { sku: "CJXX214221305EV", vid: "2409200336291617100" } } }
     },
     {
       id: "custom-tee",
@@ -452,7 +452,7 @@ window.BAGGI_CONFIG = {
       description: "Your print on a heavyweight boxy tee. Front, back or both.",
       featured: true,
       customizable: true,
-      supplier: { type: "cj", sku: "CJDS212420102BY", vid: "2408300732091605400", costCny: 30, deliveryNgn: 11280, note: "blank for custom print", sizes: { "S": { sku: "CJDS212420101AZ", vid: "2408300732091605200" }, "M": { sku: "CJDS212420102BY", vid: "2408300732091605400" }, "L": { sku: "CJDS212420103CX", vid: "2408300732091605500" }, "XL": { sku: "CJDS212420104DW", vid: "2408300732091605700" }, "XXL": { sku: "CJDS212420105EV", vid: "2408300732091605900" } } }
+      supplier: { type: "cj", sku: "CJDS212420102BY", vid: "2408300732091605400", costCny: 30, deliveryNgn: 2000, note: "blank for custom print", sizes: { "S": { sku: "CJDS212420101AZ", vid: "2408300732091605200" }, "M": { sku: "CJDS212420102BY", vid: "2408300732091605400" }, "L": { sku: "CJDS212420103CX", vid: "2408300732091605500" }, "XL": { sku: "CJDS212420104DW", vid: "2408300732091605700" }, "XXL": { sku: "CJDS212420105EV", vid: "2408300732091605900" } } }
     },
     {
       id: "custom-hoodie",
@@ -466,7 +466,7 @@ window.BAGGI_CONFIG = {
       description: "Your design printed or embroidered on our oversized heavy hood.",
       featured: false,
       customizable: true,
-      supplier: { type: "cj", sku: "CJWY236413910JQ", vid: "2504280202111613700", costCny: 87, deliveryNgn: 33120, note: "blank for custom print", sizes: { "S": { sku: "CJWY236413909IR", vid: "2504280202111612900" }, "M": { sku: "CJWY236413910JQ", vid: "2504280202111613700" }, "L": { sku: "CJWY236413911KP", vid: "2504280202111614200" }, "XL": { sku: "CJWY236413912LO", vid: "2504280202111614700" }, "XXL": { sku: "CJWY236413912LO", vid: "2504280202111614700" } } }
+      supplier: { type: "cj", sku: "CJWY236413910JQ", vid: "2504280202111613700", costCny: 87, deliveryNgn: 3000, note: "blank for custom print", sizes: { "S": { sku: "CJWY236413909IR", vid: "2504280202111612900" }, "M": { sku: "CJWY236413910JQ", vid: "2504280202111613700" }, "L": { sku: "CJWY236413911KP", vid: "2504280202111614200" }, "XL": { sku: "CJWY236413912LO", vid: "2504280202111614700" }, "XXL": { sku: "CJWY236413912LO", vid: "2504280202111614700" } } }
     },
     {
       id: "custom-mug",
@@ -480,7 +480,7 @@ window.BAGGI_CONFIG = {
       description: "11oz ceramic mug printed with your artwork.",
       featured: false,
       customizable: true,
-      supplier: { type: "cj", sku: "CJYD225590702BY", vid: "2412280733131621000", costCny: 16, deliveryNgn: 22080 }
+      supplier: { type: "cj", sku: "CJYD225590702BY", vid: "2412280733131621000", costCny: 16, deliveryNgn: 1500 }
     },
     {
       id: "custom-poster",
@@ -494,7 +494,7 @@ window.BAGGI_CONFIG = {
       description: "A2/A3 matte poster printed from your design.",
       featured: false,
       customizable: true,
-      supplier: { type: "cj", sku: "CJZW108595101AZ", vid: "1383962869925810176", costCny: 4, deliveryNgn: 3360 }
+      supplier: { type: "cj", sku: "CJZW108595101AZ", vid: "1383962869925810176", costCny: 4, deliveryNgn: 1000 }
     }
   ],
 
