@@ -186,6 +186,7 @@ app.post("/api/checkout", async (req, res) => {
       provider: order.paymentMethod,
       reference: paymentResult.reference,
       demo: Boolean(paymentResult.demo),
+      inline: Boolean(paymentResult.inline),
       message: paymentResult.message || null
     };
     order.status = paymentResult.paymentUrl ? "awaiting_payment" : "manual_confirmation";
@@ -200,6 +201,13 @@ app.post("/api/checkout", async (req, res) => {
       orderId: order.id,
       status: order.status,
       paymentUrl: paymentResult.paymentUrl,
+      // Paystack Inline runs entirely in the browser with the public key. The
+      // browser needs these fields to open the payment modal; none are secret.
+      inline: Boolean(paymentResult.inline),
+      publicKey: paymentResult.publicKey || null,
+      email: paymentResult.email || null,
+      amount: paymentResult.amount || null,
+      currency: paymentResult.currency || null,
       demo: Boolean(paymentResult.demo),
       message: paymentResult.message || "Order created. Complete payment to continue.",
       supplierOrderId: null
