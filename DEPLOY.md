@@ -62,8 +62,20 @@ Render was created from `render.yaml`: Docker build from the project root,
 `plan: free`. Environment variables are set in the Render dashboard, not in
 Git. Important ones:
 
-- `PAYSTACK_SECRET_KEY` — test key now; live `sk_live_...` at launch
-- `PAYSTACK_PUBLIC_KEY` / `js/config.js` public key — test now; live at launch
+- `PAYSTACK_PUBLIC_KEY` / `js/config.js` public key — live `pk_live_...ac29`
+- `PAYSTACK_USE_INLINE=1` — Paystack Inline checkout in the browser. The old
+  `sk_live_...1618` was exposed and is revoked; the replacement restricted key
+  cannot call the Paystack API. Inline needs only the public key, so payments can
+  still be started while a fresh full `sk_live_...` is not available. Replace
+  this with a new rotated full secret key when one is issued, then set
+  `PAYSTACK_USE_INLINE=0`.
+- Webhook authenticity is checked with the dashboard-generated signing secret
+  (`whsec_...`). It is installed as a Render **Secret File** named
+  `PAYSTACK_WEBHOOK_SECRET`, mounted at `/etc/secrets/PAYSTACK_WEBHOOK_SECRET`.
+  `server/services/payments.js` reads that file (or the
+  `PAYSTACK_WEBHOOK_SECRET` env var) and verifies the `Paystack-Signature`
+  header with a 300-second timestamp tolerance. The legacy
+  `x-paystack-signature` header remains accepted as a fallback.
 - `CJ_API_KEY`, `CJ_PLATFORM_TOKEN`
 - `CJ_SANDBOX=1` while testing; set to `0` only after a successful live test
 - `CJ_PAY_TYPE=3` (create only); use `2` only when the CJ balance is funded
@@ -99,10 +111,18 @@ and the order is created/fulfilled in the same request cycle.
 - [x] CJ IP throttle bypassed with the Cloudflare relay
 - [x] Replace test keys with `sk_live_...` / `pk_live_...` in Render and `js/config.js`
 - [x] Register the Paystack webhook with the **live** secret key (`WHK_6bc15772`)
+- [x] Live Inline checkout deployed; webhook verified with dashboard `whsec_` secret
+      stored as a Render Secret File (bad/tampered signatures are rejected)
+- [ ] Rotate the exposed `sk_live_...1618` and replace Inline with a fresh full
+      `sk_live_...` for server-side transaction initialisation
 - [ ] Review SKU mapping in `js/config.js` — generic CJ matches are not BAGGI designs
 - [ ] Confirm product prices and delivery charges
 - [ ] Fund CJ balance if switching `CJ_PAY_TYPE` from `3` to `2`
-- [x] Signed webhook test with live keys passed (order `BAG-MWR3694R-K2VB` → `supplier_ordered`, CJ sandbox order `SD2611220016080654000`); test data cleared
+- [x] Signed webhook tests passed: `BAG-MWR3694R-K2VB` → `supplier_ordered`
+      (CJ sandbox `SD2611220016080654000`, legacy signature) and
+      `BAG-MWRK67E7-J37P` → `supplier_ordered` (CJ sandbox
+      `SD2611220811560660300`, new `Paystack-Signature`/`whsec_`); test data
+      cleared by a service restart
 - [ ] Set `CJ_SANDBOX=0` only after a real live payment succeeds and CJ is funded
 - [ ] Run a small live payment, confirm webhook + CJ order, then clean up test data
 
