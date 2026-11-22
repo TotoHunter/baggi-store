@@ -795,6 +795,10 @@
           );
           return;
         }
+        if (res.data.inline) {
+          startPaystackInline(res.data, resultHost, submitBtn);
+          return;
+        }
         if (res.data.paymentUrl) {
           window.location.href = res.data.paymentUrl;
           return;
@@ -814,6 +818,67 @@
           submitBtn,
           true
         );
+      });
+  }
+
+  function loadPaystackInline() {
+    return new Promise(function (resolve, reject) {
+      if (window.PaystackPop) return resolve();
+      var existing = document.querySelector("script[data-paystack-inline]");
+      if (existing) {
+        existing.addEventListener("load", resolve);
+        existing.addEventListener("error", function () {
+          reject(new Error("Could not load the Paystack payment form."));
+        });
+        return;
+      }
+      var script = document.createElement("script");
+      script.src = "https://js.paystack.co/v1/inline.js";
+      script.async = true;
+      script.setAttribute("data-paystack-inline", "1");
+      script.onload = resolve;
+      script.onerror = function () {
+        reject(new Error("Could not load the Paystack payment form."));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  function startPaystackInline(data, host, submitBtn) {
+    loadPaystackInline()
+      .then(function () {
+        if (!window.PaystackPop) throw new Error("Paystack payment form is unavailable.");
+        var handler = window.PaystackPop.setup({
+          key: data.publicKey,
+          email: data.email,
+          amount: Number(data.amount),
+          currency: data.currency || "NGN",
+          ref: data.reference,
+          callback: function () {
+            showResult(
+              {
+                orderId: data.reference,
+                status: "payment_submitted",
+                message:
+                  "Payment received. We are confirming it and will arrange your supplier order shortly.",
+                supplierOrderId: null
+              },
+              host,
+              submitBtn,
+              false
+            );
+          },
+          onClose: function () {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Place order";
+            }
+          }
+        });
+        handler.openIframe();
+      })
+      .catch(function (err) {
+        showError(err.message || "Could not open the Paystack payment form.", host, submitBtn);
       });
   }
 
