@@ -154,8 +154,14 @@ async function createSupplierOrder(order) {
     ...(order.items || []).map((i) => i.notes).filter(Boolean)
   ].join(" | ").slice(0, 500);
 
+  // CJ accepts only numbers, symbols and spaces in the postcode. Strip letters
+  // so a typo cannot block a paid order; fall back to a Lagos code if absent.
+  const rawZip = (order.customer && (order.customer.postcode || order.customer.zip)) || "";
+  const shippingZip = String(rawZip).replace(/[A-Za-z]/g, "").trim() || "100001";
+
   const payload = {
     orderNumber: order.id,
+    shippingZip,
     shippingCountryCode: "NG",
     shippingCountry: "Nigeria",
     shippingProvince: (order.customer && order.customer.state) || (order.customer && order.customer.city) || "Lagos",
