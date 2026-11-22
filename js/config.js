@@ -86,10 +86,10 @@ window.BAGGI_CONFIG = {
       }
     ],
     bank: {
-      bankName: "",
-      accountName: "",
-      accountNumber: "",
-      note: "Bank details will be sent on WhatsApp."
+      bankName: "Palmpay",
+      accountName: "Patrick Ibiso Wolugbom",
+      accountNumber: "8923133406",
+      note: "Transfer to the account above, then confirm on WhatsApp."
     }
   },
 
