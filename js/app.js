@@ -720,7 +720,9 @@
           email: document.getElementById("cust-email").value.trim(),
           phone: document.getElementById("cust-phone").value.trim(),
           address: document.getElementById("cust-address").value.trim(),
-          city: document.getElementById("cust-city").value.trim()
+          city: document.getElementById("cust-city").value.trim(),
+          state: document.getElementById("cust-state").value.trim(),
+          postcode: document.getElementById("cust-postcode").value.trim()
         },
         paymentMethod: selectedMethod ? selectedMethod.value : "whatsapp",
         amount: totals.total,
