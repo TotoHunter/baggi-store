@@ -102,7 +102,8 @@ and the order is created/fulfilled in the same request cycle.
 - [ ] Review SKU mapping in `js/config.js` — generic CJ matches are not BAGGI designs
 - [ ] Confirm product prices and delivery charges
 - [ ] Fund CJ balance if switching `CJ_PAY_TYPE` from `3` to `2`
-- [ ] Set `CJ_SANDBOX=0` only after a successful live-key test
+- [x] Signed webhook test with live keys passed (order `BAG-MWR3694R-K2VB` → `supplier_ordered`, CJ sandbox order `SD2611220016080654000`); test data cleared
+- [ ] Set `CJ_SANDBOX=0` only after a real live payment succeeds and CJ is funded
 - [ ] Run a small live payment, confirm webhook + CJ order, then clean up test data
 
 ## 6. Verify after any change
