@@ -10,8 +10,8 @@ CJ orders. Deploy the whole `baggi-dropship` folder as a single web service.
 - Canonical host (Oregon): `https://baggi-store.onrender.com`
 - Render service ID: `srv-dc11pcl9fdbs739ggbhg`
 - Health check: `https://baggi-store.onrender.com/api/health`
-- Paystack webhook `WHK_a80cf00a`: `https://baggi-store.onrender.com/webhooks/paystack`
-  (event `charge.success`, test mode until live keys are installed)
+- Paystack live webhook `WHK_6bc15772`: `https://baggi-store.onrender.com/webhooks/paystack`
+  (event `charge.success`). The old test webhook was `WHK_a80cf00a`.
 - `js/config.js` uses `backendUrl: ""`, so the browser always calls the same
   origin. Only Paystack's webhook URL needs to change if the host changes.
 
@@ -97,8 +97,8 @@ and the order is created/fulfilled in the same request cycle.
 - [x] Permanent public HTTPS URL, verified with `/api/health`
 - [x] Paystack webhook points to `<public-url>/webhooks/paystack`
 - [x] CJ IP throttle bypassed with the Cloudflare relay
-- [ ] Replace test keys with `sk_live_...` / `pk_live_...` in Render and `js/config.js`
-- [ ] Register the Paystack webhook again with the **live** secret key
+- [x] Replace test keys with `sk_live_...` / `pk_live_...` in Render and `js/config.js`
+- [x] Register the Paystack webhook with the **live** secret key (`WHK_6bc15772`)
 - [ ] Review SKU mapping in `js/config.js` — generic CJ matches are not BAGGI designs
 - [ ] Confirm product prices and delivery charges
 - [ ] Fund CJ balance if switching `CJ_PAY_TYPE` from `3` to `2`

@@ -59,8 +59,8 @@ Until keys are added, checkout still works in **demo mode**: it shows a demo ord
 - Source: `https://github.com/TotoHunter/baggi-store`, branch `main`. Local development still works on `http://127.0.0.1:3001`; the Python server on `:8000` is preview-only.
 - `js/config.js` uses `backendUrl: ""` — the browser calls the same origin, so host changes need no browser config change.
 - The old Quick Tunnel watcher is **stopped**. `server/tools/keep-tunnel.js` is retained only as a reference and must not be started.
-- Paystack is still in **test mode** (test secret in Render, test public key in `js/config.js`). Live keys are required before launch.
-- Paystack webhook `WHK_a80cf00a` → `https://baggi-store.onrender.com/webhooks/paystack`, subscribed to `charge.success`. Signed webhooks are verified end to end.
+- Paystack is now in **live mode**: live secret is stored in Render and the OpenBot Vault; the live public key is in `js/config.js`. The keys were pasted in chat, so rotate them in Paystack after the launch test.
+- Paystack live webhook `WHK_6bc15772` → `https://baggi-store.onrender.com/webhooks/paystack`, subscribed to `charge.success`. The old test webhook was `WHK_a80cf00a`. Signed webhooks are verified end to end.
 - Only Paystack, bank transfer and WhatsApp are shown at checkout; Flutterwave, Stripe and PayPal stay disabled until their keys exist. Bank transfer details are still placeholders.
 - CJ adapter uses V2.0 (token exchange + `createOrderV3`), `CJ_LOGISTIC_NAME=CJPacket Postal`, `CJ_PAY_TYPE=3`, `CJ_SANDBOX=1` while testing. CJ balance is $0.
 - **CJ IP throttle solved:** Render IPs were rejected with `1600200 / Too Many Requests, one ip limit 3 users`. A free Cloudflare Worker, `https://baggi-cj-relay.phpwo2.workers.dev`, now relays only the four CJ API paths used by the app. Render sets `CJ_API_BASE` to that Worker and `CJ_RELAY_SECRET` to the shared secret; the Worker keeps its own `RELAY_SECRET`. Verified: paid test webhook → `supplier_ordered` with real CJ sandbox order `SD2611212331300665700`.
@@ -68,7 +68,7 @@ Until keys are added, checkout still works in **demo mode**: it shows a demo ord
 - **Pricing updated to cover real freight:** prices include live CJ product cost + CN→NG delivery with ~30% margin. Example: OG Baggi is ₦90,000 + ₦43,440 delivery. Confirm these prices suit your market before launch.
 - **Checkout is server-authoritative:** totals and SKU/VID/supplier cost are recomputed on the server. The webhook rejects underpayments, acknowledges immediately and de-duplicates retries.
 - Render free tier sleeps after inactivity and has ephemeral storage; persistent order storage is still a pre-launch task — see `DEPLOY.md`.
-- To go live: install live Paystack keys, re-register the webhook with the live secret, review SKUs/prices, fund CJ, run a small live test, then set `CJ_SANDBOX=0`.
+- To go live: review SKUs/prices, fund CJ, run a small live test with the new live keys, then set `CJ_SANDBOX=0`. Because the keys were pasted in chat, rotate them in Paystack after the test.
 
 ## Edit products, prices and supplier costs
 
