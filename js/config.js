@@ -72,8 +72,8 @@ window.BAGGI_CONFIG = {
       },
       {
         id: "bank",
-        label: "Bank transfer",
-        description: "Transfer and confirm on WhatsApp",
+        label: "Palmpay",
+        description: "Direct transfer to Palmpay, then confirm on WhatsApp",
         enabled: true,
         publicKey: ""
       },
