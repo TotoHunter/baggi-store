@@ -49,6 +49,21 @@ function enrichItems(items) {
   });
 }
 
+/* Keep only the fields needed to deliver an order. The browser can send extra
+   data; nothing outside this list is written to the order record. */
+function deliveryFields(customer) {
+  const clean = (value, max) => String(value == null ? "" : value).trim().slice(0, max);
+  return {
+    name: clean(customer.name, 100),
+    email: clean(customer.email, 120),
+    phone: clean(customer.phone, 30),
+    address: clean(customer.address, 300),
+    city: clean(customer.city, 100),
+    state: clean(customer.state, 100),
+    postcode: clean(customer.postcode, 20).replace(/[A-Za-z]/g, "").trim()
+  };
+}
+
 /* Recalculate the payable total from real product prices + CJ delivery. */
 function priceOrder(items) {
   if (!PRODUCTS.size) return null;
@@ -137,8 +152,13 @@ app.post("/api/checkout", async (req, res) => {
     if (!Array.isArray(items) || !items.length) {
       return res.status(400).json({ error: "No items in order." });
     }
-    if (!customer || !customer.email || !customer.name || !customer.address) {
-      return res.status(400).json({ error: "Customer details are incomplete." });
+    if (!customer || !customer.email || !customer.name || !customer.phone ||
+        !customer.address || !customer.city || !customer.postcode) {
+      return res.status(400).json({ error: "Complete all delivery details, including postcode." });
+    }
+    const delivery = deliveryFields(customer);
+    if (!delivery.postcode) {
+      return res.status(400).json({ error: "Postcode must contain numbers, symbols or spaces only." });
     }
 
     const priced = priceOrder(items);
@@ -162,7 +182,7 @@ app.post("/api/checkout", async (req, res) => {
       createdAt: new Date().toISOString(),
       status: "pending_payment",
       items: enriched,
-      customer,
+      customer: delivery,
       paymentMethod: paymentMethod || "whatsapp",
       amount: priced.total,
       currency: "NGN",
