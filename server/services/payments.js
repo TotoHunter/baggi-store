@@ -1,6 +1,7 @@
 /* Payment adapters. Secret keys are read from server/.env only. */
 const axios = require("axios");
 const crypto = require("crypto");
+const fs = require("fs");
 
 const FRONTEND = process.env.FRONTEND_ORIGIN || "http://localhost:8000";
 
@@ -244,11 +245,36 @@ function safeHexEqual(actual, expected) {
   return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
+function webhookSecrets() {
+  // Render Secret Files mount at /etc/secrets/<filename>. This lets the
+  // signing secret be installed without placing its value in an env var or
+  // in source control. Multiple secrets may be comma-separated for rotation.
+  const fromEnv = String(process.env.PAYSTACK_WEBHOOK_SECRET || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  let fromFile = [];
+  const file =
+    process.env.PAYSTACK_WEBHOOK_SECRET_FILE ||
+    "/etc/secrets/PAYSTACK_WEBHOOK_SECRET";
+  try {
+    fromFile = fs
+      .readFileSync(file, "utf8")
+      .trim()
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  } catch (e) {
+    // No secret file mounted; env var is sufficient.
+  }
+  return [...new Set([...fromEnv, ...fromFile])];
+}
+
 function verifyPaystackSigningSecret(req) {
-  const configured = process.env.PAYSTACK_WEBHOOK_SECRET;
+  const secrets = webhookSecrets();
   const header = req.headers["paystack-signature"];
   const raw = req.rawBody;
-  if (!configured || !header || !Buffer.isBuffer(raw)) return false;
+  if (secrets.length === 0 || !header || !Buffer.isBuffer(raw)) return false;
 
   let timestamp = null;
   const entries = [];
@@ -268,10 +294,6 @@ function verifyPaystackSigningSecret(req) {
   if (timestamp === null || entries.length === 0) return false;
   if (Math.abs(Math.floor(Date.now() / 1000) - timestamp) > 300) return false;
 
-  const secrets = String(configured)
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
   for (const secret of secrets) {
     const expected = crypto
       .createHmac("sha512", secret)
