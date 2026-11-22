@@ -32,8 +32,30 @@ async function initiate(method, order) {
   }
 }
 
+function paystackInline(order) {
+  if (!process.env.PAYSTACK_PUBLIC_KEY) {
+    return demo("Paystack", "Paystack public key is not configured.");
+  }
+  return {
+    demo: false,
+    inline: true,
+    publicKey: process.env.PAYSTACK_PUBLIC_KEY,
+    email: order.customer.email,
+    amount: toMajor(order.amount, "NGN"),
+    currency: "NGN",
+    reference: order.id
+  };
+}
+
 async function paystack(order) {
-  if (!process.env.PAYSTACK_SECRET_KEY) return demo("Paystack");
+  // Inline checkout needs only the public key in the browser. It is used when a
+  // full secret key is unavailable (for example, with a restricted key) and
+  // webhook authenticity is then checked with PAYSTACK_WEBHOOK_SECRET.
+  const useInline =
+    process.env.PAYSTACK_USE_INLINE === "1" ||
+    !process.env.PAYSTACK_SECRET_KEY ||
+    /^rk_live_/.test(process.env.PAYSTACK_SECRET_KEY);
+  if (useInline) return paystackInline(order);
   try {
     const res = await axios.post(
       "https://api.paystack.co/transaction/initialize",
@@ -58,6 +80,10 @@ async function paystack(order) {
       reference: res.data.data.reference
     };
   } catch (err) {
+    const status = err.response && err.response.status;
+    // A revoked/restricted key cannot initialize payments. Fall back to Inline
+    // rather than showing a fake demo payment page.
+    if (status === 401 || status === 403) return paystackInline(order);
     return demo("Paystack", err.message);
   }
 }
@@ -206,14 +232,65 @@ function demo(provider, reason) {
   };
 }
 
-/* ---------- Webhook verification ---------- */
+/* ---------- Webhook verification ----------
+   New Paystack integrations sign webhooks with a dashboard-generated
+   whsec_ secret (Paystack-Signature header). The legacy x-paystack-signature
+   header is signed with the full secret key and is still accepted while both
+   are available. */
+function safeHexEqual(actual, expected) {
+  if (typeof expected !== "string" || !/^[0-9a-f]{128}$/i.test(expected)) return false;
+  const a = Buffer.from(actual, "hex");
+  const b = Buffer.from(expected, "hex");
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
+function verifyPaystackSigningSecret(req) {
+  const configured = process.env.PAYSTACK_WEBHOOK_SECRET;
+  const header = req.headers["paystack-signature"];
+  const raw = req.rawBody;
+  if (!configured || !header || !Buffer.isBuffer(raw)) return false;
+
+  let timestamp = null;
+  const entries = [];
+  for (const part of String(header).split(",")) {
+    const split = part.indexOf("=");
+    if (split === -1) continue;
+    const key = part.slice(0, split).trim();
+    const value = part.slice(split + 1).trim();
+    if (key === "t") {
+      if (timestamp !== null || !/^[0-9]+$/.test(value)) return false;
+      timestamp = Number(value);
+    } else if (key === "v1") {
+      const colon = value.indexOf(":");
+      if (colon !== -1) entries.push(value.slice(colon + 1));
+    }
+  }
+  if (timestamp === null || entries.length === 0) return false;
+  if (Math.abs(Math.floor(Date.now() / 1000) - timestamp) > 300) return false;
+
+  const secrets = String(configured)
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  for (const secret of secrets) {
+    const expected = crypto
+      .createHmac("sha512", secret)
+      .update(String(timestamp) + ".")
+      .update(raw)
+      .digest("hex");
+    if (entries.some((signature) => safeHexEqual(expected, signature))) return true;
+  }
+  return false;
+}
+
 function verifyPaystack(req) {
+  if (verifyPaystackSigningSecret(req)) return true;
   if (!process.env.PAYSTACK_SECRET_KEY) return false;
   const hash = crypto
     .createHmac("sha512", process.env.PAYSTACK_SECRET_KEY)
     .update(req.rawBody || Buffer.from(""))
     .digest("hex");
-  return hash === req.headers["x-paystack-signature"];
+  return safeHexEqual(hash, req.headers["x-paystack-signature"]);
 }
 
 function verifyFlutterwave(req) {
