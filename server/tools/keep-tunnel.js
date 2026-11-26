@@ -25,7 +25,7 @@ const BIN = process.env.CLOUDFLARED_PATH ||
   CANDIDATES.find((p) => fs.existsSync(p)) || CANDIDATES[0];
 const LOCAL_API = process.env.LOCAL_API || "http://127.0.0.1:3001";
 const URL_FILE = path.join(__dirname, "..", "data", "tunnel-url.txt");
-const ERR_LOG = path.join(require("os").tmpdir(), "vortex-tunnel.err");
+const ERR_LOG = path.join(require("os").tmpdir(), "baggi-tunnel.err");
 const WEBHOOKS = "https://api.paystack.co/integration/webhooks/endpoints";
 
 let currentUrl = "";
@@ -52,7 +52,7 @@ async function pointWebhook(url) {
         (w) => (w.webhook_url || "").includes("/webhooks/paystack")
       );
       const body = JSON.stringify({
-        name: "Vortex order fulfillment",
+        name: "BAGGI order fulfillment",
         url: url.replace(/\/$/, "") + "/webhooks/paystack",
         events: ["charge.success"]
       });
