@@ -1,5 +1,9 @@
-node_modules/
-server/.env
+server/node_modules/
 server/data/
-*.bak
-server/tools/*.log
+server/.env
+tools/.vision_cache/
+tools/.vqa_cache/
+tools/.source_extract/
+tools/__pycache__/
+*.log
+.DS_Store

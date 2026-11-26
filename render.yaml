@@ -1,4 +1,5 @@
 services:
+  # Legacy service/host name retained so deploys keep hitting the existing Render service.
   - type: web
     name: baggi-store
     runtime: docker

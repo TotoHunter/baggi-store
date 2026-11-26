@@ -1,5 +1,5 @@
-# BAGGI storefront + API in one container.
-# Build from the baggi-dropship folder:  docker build -t baggi-store .
+# VORTEX storefront + API in one container.
+# Build from the project folder:  docker build -t vortex-store .
 FROM node:20-alpine
 
 WORKDIR /app

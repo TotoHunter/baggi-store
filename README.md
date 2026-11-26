@@ -1,13 +1,13 @@
-# BAGGI — Dropshipping storefront + automated supplier flow
+# VORTEX — Dropshipping storefront + automated supplier flow
 
-A static streetwear store with WhatsApp ordering, a shopping bag, multi-gateway checkout, and a Node.js backend that creates a CJ Dropshipping supplier order **after payment is confirmed**.
+A static streetwear store with WhatsApp ordering, a shopping bag, multi-gateway checkout, and a Node.js backend that creates a CJ Dropshipping supplier order **after payment is confirmed**. The folder name keeps the old scaffold name, but the brand is VORTEX everywhere in the store.
 
 ## What was added
 
 - **More products:** 19 total — jeans, hoodies, tees, cargos, jackets, shorts, hats, totes, plus custom jeans, tees, hoodies, mugs and posters.
 - **Custom print-on-demand:** `Design Yours` maps designs to the custom products and adds a personalised pre-order to the bag.
-- **Shopping bag + checkout:** quantity controls, delivery fee, six payment choices, order confirmation.
-- **Payments:** Paystack, Flutterwave, Stripe, PayPal, bank transfer and WhatsApp confirmation.
+- **Shopping bag + checkout:** quantity controls, delivery fee, all six payment methods shown, order confirmation.
+- **Payments:** Paystack, Flutterwave, Stripe, PayPal, Palmpay transfer and WhatsApp confirmation. Paystack, Palmpay and WhatsApp are selectable now; the other three show as coming soon until keys are added.
 - **Supplier automation:** backend verifies payment webhooks, then sends a CJ Dropshipping order using each product's SKU and CNY cost.
 - **Admin page:** edit products, prices, supplier SKUs/costs and shop settings in the browser.
 
@@ -17,6 +17,7 @@ A static streetwear store with WhatsApp ordering, a shopping bag, multi-gateway 
 | --- | --- |
 | `index.html` | Home |
 | `collection.html` | All products by category |
+| `jeans.html`, `hoodies.html`, `shirts.html`, `cargo.html`, `outerwear.html`, `accessories.html`, `custom.html` | One dedicated page per product type |
 | `fit-advisor.html` | Design yours |
 | `about.html` | Brand story |
 | `contact.html` | Contact options |
@@ -53,19 +54,19 @@ http://127.0.0.1:3001/api/health
 
 Until keys are added, checkout still works in **demo mode**: it shows a demo order ID and a WhatsApp confirmation link. No real money is taken and no real supplier order is placed.
 
-### Current live-setup status (22 Nov 2026)
+### Current live-setup status (26 Nov 2026)
 
-- **Permanent storefront + API:** `https://baggi-store.onrender.com` (Render, Oregon, service `srv-dc11pcl9fdbs739ggbhg`). Health: `/api/health`.
-- Source: `https://github.com/TotoHunter/baggi-store`, branch `main`. Local development still works on `http://127.0.0.1:3001`; the Python server on `:8000` is preview-only.
+- **Permanent storefront + API:** `https://baggi-store.onrender.com` (Render, Oregon, service `srv-dc11pcl9fdbs739ggbhg`). This URL and the GitHub repo name are legacy deployment identifiers; the storefront brand is VORTEX. Health: `/api/health`.
+- Source: `https://github.com/TotoHunter/baggi-store`, branch `main` (legacy repo name). Local development still works on `http://127.0.0.1:3001`; the Python server on `:8000` is preview-only.
 - `js/config.js` uses `backendUrl: ""` — the browser calls the same origin, so host changes need no browser config change.
 - The old Quick Tunnel watcher is **stopped**. `server/tools/keep-tunnel.js` is retained only as a reference and must not be started.
 - Paystack is in **live mode**: live public key `pk_live_...ac29` is in `js/config.js`. The previously exposed full secret was revoked; the restricted replacement cannot call the Paystack API, so checkout now uses **Paystack Inline** (`PAYSTACK_USE_INLINE=1`) and only needs the public key in the browser. A fresh full `sk_live_...` should still be issued and rotated in before launch.
 - Paystack live webhook `WHK_6bc15772` → `https://baggi-store.onrender.com/webhooks/paystack`, subscribed to `charge.success`. The old test webhook was `WHK_a80cf00a`. Webhooks are verified with the dashboard-generated `whsec_` signing secret, stored as a Render Secret File at `/etc/secrets/PAYSTACK_WEBHOOK_SECRET` and in the OpenBot Vault. Bad or tampered signatures are rejected; the legacy header is accepted only as a fallback.
-- Only Paystack, bank transfer and WhatsApp are shown at checkout; Flutterwave, Stripe and PayPal stay disabled until their keys exist. Bank transfer details are still placeholders.
+- All six payment methods are shown at checkout. Paystack, Palmpay and WhatsApp are selectable; Flutterwave, Stripe and PayPal are shown as coming soon until their keys exist. Palmpay details are still placeholders.
 - CJ adapter uses V2.0 (token exchange + `createOrderV3`), `CJ_LOGISTIC_NAME=CJPacket Postal`, `CJ_PAY_TYPE=3`, `CJ_SANDBOX=1` while testing. CJ balance is $0.
 - **CJ IP throttle solved:** Render IPs were rejected with `1600200 / Too Many Requests, one ip limit 3 users`. A free Cloudflare Worker, `https://baggi-cj-relay.phpwo2.workers.dev`, now relays only the four CJ API paths used by the app. Render sets `CJ_API_BASE` to that Worker and `CJ_RELAY_SECRET` to the shared secret; the Worker keeps its own `RELAY_SECRET`. Verified: signed webhook with **live Paystack keys** → `supplier_ordered` with real CJ sandbox order `SD2611220016080654000` (and earlier `SD2611212331300665700`), then test data cleared.
-- **SKU mapping applied (best-effort):** all 19 products have CJ `sku` + `vid` values and a `sizes` map. These are the closest generic CJ catalog matches, **not your branded BAGGI designs**. Review every mapping before live orders, or upload your own products to CJ. Custom/POD items would ship blank without a separate CJ POD integration.
-- **Pricing updated to cover real freight:** prices include live CJ product cost + CN→NG delivery with ~30% margin. Example: OG Baggi is ₦90,000 + ₦43,440 delivery. Confirm these prices suit your market before launch.
+- **SKU mapping applied (best-effort):** all 19 products have CJ `sku` + `vid` values and a `sizes` map. These are the closest generic CJ catalog matches, **not your branded Vortex designs**. Review every mapping before live orders, or upload your own products to CJ. Custom/POD items would ship blank without a separate CJ POD integration.
+- **Pricing is set per product in `js/config.js`:** each product has its own customer price and delivery amount. Confirm the current prices suit your market before launch.
 - **Checkout is server-authoritative:** totals and SKU/VID/supplier cost are recomputed on the server. The webhook rejects underpayments, acknowledges immediately and de-duplicates retries.
 - Render free tier sleeps after inactivity and has ephemeral storage; persistent order storage is still a pre-launch task — see `DEPLOY.md`.
 - To go live: rotate a fresh full `sk_live_...`, review SKUs/prices, fund CJ, run one **real** small live payment (signed-webhook tests already passed, including `BAG-MWRK67E7-J37P` → `supplier_ordered` with CJ sandbox `SD2611220811560660300`), then set `CJ_SANDBOX=0`.
@@ -85,7 +86,7 @@ The admin table includes **Supplier SKU**, **CJ variant ID**, **Cost (CNY)** and
 ### Option B — edit `js/config.js` directly
 
 - `products[].price` — customer price in naira.
-- `products[].image` — filename inside `assets/`.
+- `products[].image` / `products[].imageAlt` — filename in `assets/` and its alt text.
 - `products[].supplier.sku` — your product code in CJ.
 - `products[].supplier.costCny` — what you pay CJ in yuan.
 - `supplier.exchangeRateToNgn` — conversion used for your margin calculation.
@@ -97,19 +98,23 @@ Prices display automatically as `₦14,000`.
 
 ## Product photos
 
-All product photos are AI-generated model-wearing shots stored locally in `assets/` as `model-<product>.jpg`. The collection uses these directly, and `tools/apply_model_photos.py` + `tools/generate_model_photos.py` wire them into `js/config.js` automatically.
+The supplied streetwear images are placed by what each picture actually shows, not
+by filename: denim photos sit on jeans/shorts, hoodie photos on hoodies, the denim
+jacket photo on the jacket, the painting photo on the custom poster, and the
+hat/tote/mug photos on those products. The hero and About use the two VORTEX-branded
+portraits.
 
-To replace any photo with real supplier imagery:
+`tools/IMAGE_CHECK.html` is a contact sheet that shows every product next to its
+assigned picture and the caption used to verify it. To change a photo, replace the
+file in `assets/` or edit `products[].image` in `js/config.js` (or the Image filename
+column in `admin.html`).
 
-1. Upload a portrait/4:5 product photo from your supplier into `assets/`.
-2. Set that product's `image` value in `js/config.js` (or in `admin.html`) to the exact filename.
-3. Keep the filename simple, e.g. `cargo-olive-real.jpg`.
 
 ## How the money and supplier flow works
 
 This is a **merchant-of-record** setup:
 
-1. The customer pays **you** the full retail price through Paystack / Flutterwave / Stripe / PayPal, or confirms a bank/WhatsApp payment.
+1. The customer pays **you** the full retail price through Paystack / Flutterwave / Stripe / PayPal, or confirms a Palmpay/WhatsApp payment.
 2. The payment provider sends a webhook to the backend.
 3. The backend marks the order paid and calls CJ Dropshipping with the product SKU, size, quantity and your CNY cost.
 4. **You pay CJ from your CJ wallet/balance** using the collected money. CJ manufactures and ships to the customer.
@@ -139,7 +144,7 @@ PayPal does not accept naira, so PayPal amounts are converted from NGN to USD us
 ## Set up CJ Dropshipping
 
 1. Create an account at **app.cjdropshipping.com**, install the **API** app, then copy the API key from the API page. Put it in `.env` as `CJ_API_KEY`.
-2. Find your real products (or ask a CJ agent for the streetwear/custom items) and copy their **variant SKUs**. Replace every placeholder `BAG-...` `supplier.sku` in `js/config.js` (or in `admin.html`) with the real SKU. Keep `supplier.costCny` as your real cost per item.
+2. Find your real products (or ask a CJ agent for the streetwear/custom items) and copy their **variant SKUs**. Review every `supplier.sku` and variant ID in `js/config.js` (or in `admin.html`); the current values are generic CJ matches, not your branded designs. Keep `supplier.costCny` as your real cost per item.
 3. Get a valid `logisticName` from CJ's freight-calculate API or your CJ account and put it in `.env` as `CJ_LOGISTIC_NAME`. CJ rejects orders with an invalid logistics name.
 4. `server/services/cj.js` exchanges `CJ_API_KEY` for a CJ access token, caches it, and posts to `/api2.0/v1/shopping/order/createOrderV3`. `CJ_PAY_TYPE=2` pays from your CJ balance when the order is created; `CJ_PAY_TYPE=3` only creates it. Use `CJ_SANDBOX=1` for a test order with no real charge or fulfilment.
 5. Set `supplier.mode` in `js/config.js` to `"api"` for automatic orders, or `"manual"` if you want to place each order in CJ yourself after payment. If a key, SKU or logistics name is missing, the adapter returns a demo order with the exact missing item in its message instead of silently pretending the order was placed.
@@ -158,7 +163,7 @@ If CJ changes its API, edit `CJ_API_BASE`, `CJ_ORDER_ENDPOINT`, `CJ_ORDER_STATUS
 - Set supplier costs from real CJ quotes before running ads.
 - Recheck the CNY → NGN rate regularly.
 - Test every payment method in test/sandbox mode first.
-- Add your real bank account details under `payments.bank` in `js/config.js`.
+- Add your real Palmpay details under `payments.bank` in `js/config.js`.
 - Add delivery timelines and return policy to `copy.contactText` / About page.
 
 Everything is local and admin-ready — no database is required for the storefront itself.
