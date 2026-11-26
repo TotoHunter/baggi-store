@@ -1,8 +1,8 @@
 {
-  "name": "baggi-store-server",
+  "name": "vortex-store-server",
   "version": "1.0.0",
   "private": true,
-  "description": "Checkout, payment verification and CJ Dropshipping supplier automation for the BAGGI storefront.",
+  "description": "Checkout, payment verification and CJ Dropshipping supplier automation for the VORTEX storefront.",
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js"

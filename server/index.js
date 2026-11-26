@@ -1,4 +1,4 @@
-/* BAGGI store server — checkout, payment webhooks, supplier automation. */
+/* VORTEX store server — checkout, payment webhooks, supplier automation. */
 require("dotenv").config();
 
 const express = require("express");
@@ -16,7 +16,7 @@ function loadCatalog() {
     const code = fs.readFileSync(path.join(__dirname, "..", "js", "config.js"), "utf8");
     const sandbox = { window: {} };
     vm.runInNewContext(code, sandbox, { timeout: 1000 });
-    return sandbox.window.BAGGI_CONFIG || null;
+    return sandbox.window.VORTEX_CONFIG || null;
   } catch (e) {
     console.error("Could not load product catalog:", e.message);
     return null;
@@ -126,7 +126,7 @@ function saveOrder(order) {
 }
 
 function newOrderId() {
-  return "BAG-" + Date.now().toString(36).toUpperCase() + "-" +
+  return "VTX-" + Date.now().toString(36).toUpperCase() + "-" +
     Math.random().toString(36).slice(2, 6).toUpperCase();
 }
 
@@ -396,6 +396,6 @@ app.get("/api/orders/:id/supplier", async (req, res) => {
 app.use(express.static(path.join(__dirname, "..")));
 
 app.listen(PORT, () => {
-  console.log("BAGGI server listening on http://localhost:" + PORT);
+  console.log("VORTEX server listening on http://localhost:" + PORT);
   console.log("Storefront: http://localhost:8000 (or open the static files directly)");
 });
