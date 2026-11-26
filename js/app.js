@@ -1,14 +1,14 @@
-/* VORTEX STORE — shared rendering, cart and checkout */
+/* BAGGI STORE — shared rendering, cart and checkout */
 (function () {
   "use strict";
 
-  var cfg = window.VORTEX_CONFIG;
+  var cfg = window.BAGGI_CONFIG;
   if (!cfg) return;
 
   var brand = cfg.brand;
   var contact = cfg.contact;
   var copy = cfg.copy || {};
-  var CART_KEY = "vortex_cart";
+  var CART_KEY = "baggi_cart";
 
   function esc(value) {
     return String(value == null ? "" : value)
@@ -327,9 +327,11 @@
     return (
       '<article class="product-card">' +
       '<div class="grain product-media" data-index="' + esc(product.index) + '">' +
+      '<a class="product-image-link" href="product-' + esc(product.id) +
+      '.html" aria-label="View ' + esc(product.name) + '">' +
       '<img src="assets/' + esc(product.image) + '" alt="' +
       esc(product.imageAlt || product.name) +
-      '" width="896" height="1152" loading="lazy">' +
+      '" width="896" height="1152" loading="lazy"></a>' +
       (product.customizable ? '<span class="custom-tag">Custom</span>' : "") +
       "</div>" +
       '<div class="product-body">' +
@@ -337,7 +339,8 @@
       "<div>" +
       '<p class="product-index">' + esc(product.index) + " / " +
       esc(product.variant) + "</p>" +
-      '<h3 class="product-title display">' + esc(product.name) + "</h3>" +
+      '<h3 class="product-title display"><a href="product-' + esc(product.id) +
+      '.html">' + esc(product.name) + "</a></h3>" +
       "</div>" +
       '<p class="product-price">' + money(product.price) + "</p>" +
       "</div>" +
@@ -673,7 +676,9 @@
           return p
             ? '<div class="checkout-line"><span>' + esc(p.name) +
               " × " + (Number(item.qty) || 1) +
-              '<small>' + esc(item.size || "One size") + "</small></span><span>" +
+              '<small>' + esc(item.size || "One size") +
+              (item.notes ? " · " + esc(item.notes.split("\n")[0]) : "") +
+              "</small></span><span>" +
               money(p.price * (Number(item.qty) || 1)) + "</span></div>"
             : "";
         })
@@ -710,7 +715,7 @@
       bankHost.innerHTML =
         '<p class="bank-title display">Payment details</p>' +
         "<p>" + esc(b.bankName || "Payment details will be confirmed on WhatsApp") + "</p>" +
-        "<p>" + esc(b.accountName || "VORTEX") + "</p>" +
+        "<p>" + esc(b.accountName || "BAGGI") + "</p>" +
         "<p>" + esc(b.accountNumber || "—") + "</p>" +
         '<p class="bank-note">' + esc(b.note || "") + "</p>";
     }
@@ -943,7 +948,9 @@
     if (add) {
       var id = add.getAttribute("data-add");
       var select = document.querySelector('[data-size-for="' + id + '"]');
-      addToCart(id, select ? select.value : "One size");
+      var colour = document.querySelector('[data-colour-for="' + id + '"]');
+      var notes = colour ? "Colour: " + colour.value : "";
+      addToCart(id, select ? select.value : "One size", notes);
       return;
     }
 

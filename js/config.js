@@ -1,5 +1,5 @@
 /* ============================================================
-   VORTEX STORE — EDIT THIS FILE TO MANAGE YOUR SHOP
+   BAGGI STORE — EDIT THIS FILE TO MANAGE YOUR SHOP
    ------------------------------------------------------------
    • Change prices, product names and descriptions here.
    • Change your WhatsApp number and social links under "contact".
@@ -8,11 +8,11 @@
    • Secret API keys NEVER go here — they belong in server/.env
    ============================================================ */
 
-window.VORTEX_CONFIG = {
+window.BAGGI_CONFIG = {
   /* ---------- Brand ---------- */
   brand: {
-    name: "VORTEX",
-    dot: "",
+    name: "BAGGI",
+    dot: ".",
     tagline: "Plain denim. Big fits.",
     copyrightYear: 2026
   },
@@ -21,9 +21,9 @@ window.VORTEX_CONFIG = {
   contact: {
     // WhatsApp number in international format, digits only (no + or spaces)
     whatsapp: "2349065694156",
-    instagramUrl: "https://instagram.com/vortexclothingco",
-    instagramHandle: "@vortexclothingco",
-    email: "hello@vortexclothingco.com"
+    instagramUrl: "https://instagram.com/baggiclothingco",
+    instagramHandle: "@baggiclothingco",
+    email: "hello@baggiclothingco.com"
   },
 
   /* ---------- Checkout ---------- */
@@ -124,7 +124,7 @@ window.VORTEX_CONFIG = {
     aboutTitleMiddle: "noise.",
     aboutTitleBottom: "More leg.",
     aboutParagraphs: [
-      "VORTEX started with one idea: the perfect pair of baggy jeans doesn't need a logo on the back pocket. It needs weight, width and a wash that ages right.",
+      "BAGGI started with one idea: the perfect pair of baggy jeans doesn't need a logo on the back pocket. It needs weight, width and a wash that ages right.",
       "Every pair is cut from heavy cotton denim, finished plain, and built to be worn hard — on the street, on the stage, everywhere. Custom pieces are made to order by our production partner."
     ],
     designEyebrow: "Made to order · Pre-order",
@@ -176,7 +176,7 @@ window.VORTEX_CONFIG = {
     shirts: "Boxy heavyweight tees and long sleeves with a thick collar. Plain by design, made to sit right.",
     cargo: "Wide-leg utility pieces with deep pockets and heavy cotton. Relaxed fit, zero noise.",
     outerwear: "Boxy 14oz denim built to go over any hoodie. Structured, heavy and plain.",
-    accessories: "One-size pieces made to match every VORTEX fit. Plain, heavy and ready to wear.",
+    accessories: "One-size pieces made to match every BAGGI fit. Plain, heavy and ready to wear.",
     custom: "Send your artwork or idea and we will make a one-off piece just for you. Front, back or both."
   },
 
@@ -218,7 +218,7 @@ window.VORTEX_CONFIG = {
       id: "accessories",
       label: "Accessories",
       sizes: ["One size"],
-      sizeNote: "One size. Built to match every VORTEX fit."
+      sizeNote: "One size. Built to match every BAGGI fit."
     },
     {
       id: "custom",
@@ -238,12 +238,12 @@ window.VORTEX_CONFIG = {
   ------------------------------------- */
   products: [
     {
-      id: "og-vortex-indigo",
+      id: "og-baggi-indigo",
       category: "jeans",
-      name: "OG VORTEX",
+      name: "OG BAGGI",
       variant: "Mid Indigo",
       index: "01",
-      image: "og-vortex.jpg",
+      image: "og-baggi.jpg",
       imageAlt: "Model wearing blue denim jeans",
       price: 32000,
       description: "The everyday one. Heavy 14oz denim, wide straight leg.",
@@ -252,12 +252,12 @@ window.VORTEX_CONFIG = {
       supplier: { type: "cj", sku: "CJXX214221302BY", vid: "2409200336291616600", costCny: 106, deliveryNgn: 37500, sizes: { "W28": { sku: "CJXX214221301AZ", vid: "2409200336291616400" }, "W30": { sku: "CJXX214221302BY", vid: "2409200336291616600" }, "W32": { sku: "CJXX214221303CX", vid: "2409200336291616700" }, "W34": { sku: "CJXX214221304DW", vid: "2409200336291616900" }, "W36": { sku: "CJXX214221305EV", vid: "2409200336291617100" }, "W38": { sku: "CJXX214221305EV", vid: "2409200336291617100" } } }
     },
     {
-      id: "night-vortex-black",
+      id: "night-baggi-black",
       category: "jeans",
-      name: "Night VORTEX",
+      name: "Night BAGGI",
       variant: "Washed Black",
       index: "02",
-      image: "vortex-jacket.jpg",
+      image: "night-baggi.jpg",
       imageAlt: "Model wearing black denim jeans",
       price: 48000,
       description: "Faded black wash that only gets better with wear.",
@@ -266,12 +266,12 @@ window.VORTEX_CONFIG = {
       supplier: { type: "cj", sku: "CJXX218563306FU", vid: "2411070721091604700", costCny: 177, deliveryNgn: 30000, sizes: { "W28": { sku: "CJXX218563302BY", vid: "2411070721091603700" }, "W30": { sku: "CJXX218563304DW", vid: "2411070721091604300" }, "W32": { sku: "CJXX218563306FU", vid: "2411070721091604700" }, "W34": { sku: "CJXX218563308HS", vid: "2411070721091605100" }, "W36": { sku: "CJXX218563309IR", vid: "2411070721091605200" }, "W38": { sku: "CJXX218563310JQ", vid: "2411070721091605400" } } }
     },
     {
-      id: "sky-vortex-light",
+      id: "sky-baggi-light",
       category: "jeans",
-      name: "Sky VORTEX",
+      name: "Sky BAGGI",
       variant: "Light Stone",
       index: "03",
-      image: "long-sleeve.jpg",
+      image: "sky-baggi.jpg",
       imageAlt: "Model wearing light blue denim jeans",
       price: 26000,
       description: "Bleached stone wash. Loud fit, zero logos.",
@@ -299,10 +299,10 @@ window.VORTEX_CONFIG = {
       name: "Ash Hood",
       variant: "Washed Grey",
       index: "02",
-      image: "night-vortex.jpg",
+      image: "ash-hood.jpg",
       imageAlt: "Model wearing a grey hoodie",
       price: 27000,
-      description: "Vintage washed grey that pairs with every VORTEX denim.",
+      description: "Vintage washed grey that pairs with every BAGGI denim.",
       featured: false,
       customizable: false,
       supplier: { type: "cj", sku: "CJWY206111513MN", vid: "2406150750401609000", costCny: 87, deliveryNgn: 28000, sizes: {"S":{"sku":"CJWY206111513MN","vid":"2406150750401609000"},"M":{"sku":"CJWY206111514NM","vid":"2406150750401609100"},"L":{"sku":"CJWY206111515OL","vid":"2406150750401609300"},"XL":{"sku":"CJWY206111516PK","vid":"2406150750401609400"},"XXL":{"sku":"CJWY206111517QJ","vid":"2406150750401609500"}} }
@@ -369,10 +369,10 @@ window.VORTEX_CONFIG = {
     {
       id: "denim-jacket",
       category: "outerwear",
-      name: "VORTEX Jacket",
+      name: "BAGGI Jacket",
       variant: "Mid Indigo",
       index: "01",
-      image: "custom-poster.jpg",
+      image: "baggi-jacket.jpg",
       imageAlt: "Model wearing a denim jacket",
       price: 30000,
       description: "Boxy 14oz denim jacket, cut to layer over every hoodie.",
@@ -383,13 +383,13 @@ window.VORTEX_CONFIG = {
     {
       id: "baggy-shorts",
       category: "cargo",
-      name: "VORTEX Short",
+      name: "BAGGI Short",
       variant: "Washed Black",
       index: "02",
-      image: "sky-vortex.jpg",
+      image: "baggi-short.jpg",
       imageAlt: "Model wearing black denim shorts",
       price: 14000,
-      description: "Knee-length wide shorts with the same heavy wash as Night VORTEX.",
+      description: "Knee-length wide shorts with the same heavy wash as Night BAGGI.",
       featured: false,
       customizable: false,
       supplier: { type: "cj", sku: "CJXX207177202BY", vid: "2406290914111627100", costCny: 43, deliveryNgn: 15000, sizes: { "S": { sku: "CJXX207177201AZ", vid: "2406290914111626700" }, "M": { sku: "CJXX207177202BY", vid: "2406290914111627100" }, "L": { sku: "CJXX207177203CX", vid: "2406290914111627300" }, "XL": { sku: "CJXX207177204DW", vid: "2406290914111627500" }, "XXL": { sku: "CJXX207177205EV", vid: "2406290914111627700" } } }
@@ -400,7 +400,7 @@ window.VORTEX_CONFIG = {
       name: "Long Sleeve",
       variant: "Off White",
       index: "04",
-      image: "vortex-short.jpg",
+      image: "long-sleeve.jpg",
       imageAlt: "Model wearing a white long sleeve top",
       price: 16000,
       description: "Heavyweight long sleeve with a boxy body and ribbed cuffs.",
@@ -441,7 +441,7 @@ window.VORTEX_CONFIG = {
     {
       id: "custom-jeans",
       category: "custom",
-      name: "Custom VORTEX Jeans",
+      name: "Custom BAGGI Jeans",
       variant: "Your design",
       index: "01",
       image: "custom-jeans.jpg",
@@ -500,7 +500,7 @@ window.VORTEX_CONFIG = {
       name: "Custom Poster",
       variant: "Your design",
       index: "05",
-      image: "ash-hood.jpg",
+      image: "custom-poster.jpg",
       imageAlt: "Person holding a custom printed poster",
       price: 2000,
       description: "A2/A3 matte poster printed from your design.",

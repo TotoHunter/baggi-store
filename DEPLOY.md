@@ -1,4 +1,4 @@
-# Deploying VORTEX for real orders
+# Deploying BAGGI for real orders
 
 The storefront and API are **one Express app**. `server/index.js` serves the
 static pages from the parent folder and handles checkout, Paystack webhooks and
@@ -7,7 +7,7 @@ CJ orders. Deploy the whole `baggi-dropship` folder as a single web service.
 ## 1. Current permanent deployment
 
 The `baggi-store` host/repo names below are legacy deployment identifiers from the
-original scaffold. The storefront itself is branded VORTEX everywhere.
+original scaffold. The storefront itself is branded BAGGI everywhere.
 
 - GitHub: `https://github.com/TotoHunter/baggi-store` (branch `main`, legacy repo name)
 - Canonical host (Oregon): `https://baggi-store.onrender.com`
@@ -118,7 +118,7 @@ and the order is created/fulfilled in the same request cycle.
       stored as a Render Secret File (bad/tampered signatures are rejected)
 - [ ] Rotate the exposed `sk_live_...1618` and replace Inline with a fresh full
       `sk_live_...` for server-side transaction initialisation
-- [ ] Review SKU mapping in `js/config.js` — generic CJ matches are not Vortex designs
+- [ ] Review SKU mapping in `js/config.js` — generic CJ matches are not BAGGI designs
 - [ ] Confirm product prices and delivery charges
 - [ ] Fund CJ balance if switching `CJ_PAY_TYPE` from `3` to `2`
 - [x] Signed webhook tests passed: `BAG-MWR3694R-K2VB` → `supplier_ordered`

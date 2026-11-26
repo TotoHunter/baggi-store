@@ -150,7 +150,7 @@ async function createSupplierOrder(order) {
   }
 
   const remarks = [
-    "VORTEX order " + order.id,
+    "BAGGI order " + order.id,
     ...(order.items || []).map((i) => i.notes).filter(Boolean)
   ].join(" | ").slice(0, 500);
 

@@ -28,7 +28,7 @@ async function main() {
     (w) => (w.webhook_url || "").includes("/webhooks/paystack")
   );
   const body = JSON.stringify({
-    name: "Vortex order fulfillment",
+    name: "BAGGI order fulfillment",
     url: webhookUrl,
     events: ["charge.success"]
   });
