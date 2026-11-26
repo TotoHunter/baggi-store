@@ -4,7 +4,7 @@ A static streetwear store with WhatsApp ordering, a shopping bag, multi-gateway 
 
 ## What was added
 
-- **More products:** 19 total — jeans, hoodies, tees, cargos, jackets, shorts, hats, totes, plus custom jeans, tees, hoodies, mugs and posters.
+- **More products:** 27 total — jeans, hoodies, tees, cargos, jackets, shorts, hats, totes, sweatpants, zip hoodie, denim shirt, utility vest, beanie, crossbody bag and socks, plus custom jeans, tees, hoodies, mugs, posters and caps.
 - **Custom print-on-demand:** `Design Yours` maps designs to the custom products and adds a personalised pre-order to the bag.
 - **Shopping bag + checkout:** quantity controls, delivery fee, all six payment methods shown, order confirmation.
 - **Payments:** Paystack, Flutterwave, Stripe, PayPal, Palmpay transfer and WhatsApp confirmation. Paystack, Palmpay and WhatsApp are selectable now; the other three show as coming soon until keys are added.
@@ -62,10 +62,10 @@ Until keys are added, checkout still works in **demo mode**: it shows a demo ord
 - The old Quick Tunnel watcher is **stopped**. `server/tools/keep-tunnel.js` is retained only as a reference and must not be started.
 - Paystack is in **live mode**: live public key `pk_live_...ac29` is in `js/config.js`. The previously exposed full secret was revoked; the restricted replacement cannot call the Paystack API, so checkout now uses **Paystack Inline** (`PAYSTACK_USE_INLINE=1`) and only needs the public key in the browser. A fresh full `sk_live_...` should still be issued and rotated in before launch.
 - Paystack live webhook `WHK_6bc15772` → `https://baggi-store.onrender.com/webhooks/paystack`, subscribed to `charge.success`. The old test webhook was `WHK_a80cf00a`. Webhooks are verified with the dashboard-generated `whsec_` signing secret, stored as a Render Secret File at `/etc/secrets/PAYSTACK_WEBHOOK_SECRET` and in the OpenBot Vault. Bad or tampered signatures are rejected; the legacy header is accepted only as a fallback.
-- All six payment methods are shown at checkout. Paystack, Palmpay and WhatsApp are selectable; Flutterwave, Stripe and PayPal are shown as coming soon until their keys exist. Palmpay details are still placeholders.
+- All six payment methods are enabled and selectable at checkout: Paystack, Flutterwave, Stripe, PayPal, Palmpay and WhatsApp. Paystack, Palmpay and WhatsApp work now; Flutterwave, Stripe and PayPal complete a demo order until their keys are added in Render. Palmpay details are still placeholders.
 - CJ adapter uses V2.0 (token exchange + `createOrderV3`), `CJ_LOGISTIC_NAME=CJPacket Postal`, `CJ_PAY_TYPE=3`, `CJ_SANDBOX=1` while testing. CJ balance is $0.
 - **CJ IP throttle solved:** Render IPs were rejected with `1600200 / Too Many Requests, one ip limit 3 users`. A free Cloudflare Worker, `https://baggi-cj-relay.phpwo2.workers.dev`, now relays only the four CJ API paths used by the app. Render sets `CJ_API_BASE` to that Worker and `CJ_RELAY_SECRET` to the shared secret; the Worker keeps its own `RELAY_SECRET`. Verified: signed webhook with **live Paystack keys** → `supplier_ordered` with real CJ sandbox order `SD2611220016080654000` (and earlier `SD2611212331300665700`), then test data cleared.
-- **SKU mapping applied (best-effort):** all 19 products have CJ `sku` + `vid` values and a `sizes` map. These are the closest generic CJ catalog matches, **not your branded BAGGI designs**. Review every mapping before live orders, or upload your own products to CJ. Custom/POD items would ship blank without a separate CJ POD integration.
+- **SKU mapping applied (best-effort):** the original 19 products have CJ `sku` + `vid` values and a `sizes` map; the eight newer products have estimated costs and empty SKU/VID fields with a `note` to set them before live launch. Existing mappings are the closest generic CJ catalog matches, **not your branded BAGGI designs**. Review every mapping before live orders, or upload your own products to CJ. Custom/POD items would ship blank without a separate CJ POD integration.
 - **Pricing is set per product in `js/config.js`:** each product has its own customer price and delivery amount. Confirm the current prices suit your market before launch.
 - **Checkout is server-authoritative:** totals and SKU/VID/supplier cost are recomputed on the server. The webhook rejects underpayments, acknowledges immediately and de-duplicates retries.
 - Render free tier sleeps after inactivity and has ephemeral storage; persistent order storage is still a pre-launch task — see `DEPLOY.md`.
@@ -134,6 +134,8 @@ Copy `server/.env.example` to `server/.env`, then add keys for the providers you
 | Flutterwave | dashboard.flutterwave.com → Settings → API Keys | `https://YOUR-API-Host/webhooks/flutterwave` |
 | Stripe | dashboard.stripe.com → Developers → API keys | `https://YOUR-API-Host/webhooks/stripe` |
 | PayPal | developer.paypal.com → My Apps | `https://YOUR-API-Host/webhooks/paypal` |
+
+All six methods are enabled in `js/config.js`. To make a gateway take real money, add its keys as environment variables in Render (not in `js/config.js`): Paystack → `PAYSTACK_SECRET_KEY`, `PAYSTACK_PUBLIC_KEY`; Flutterwave → `FLUTTERWAVE_SECRET_KEY`, `FLUTTERWAVE_PUBLIC_KEY`, `FLUTTERWAVE_HASH_SECRET`; Stripe → `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`; PayPal → `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_WEBHOOK_ID`, `PAYPAL_MODE`, `PAYPAL_CURRENCY`, `NGN_TO_USD_RATE`. Palmpay details come from `payments.bank`; WhatsApp needs no keys. Unconfigured gateways still show at checkout but finish as a demo order.
 
 Set `FRONTEND_ORIGIN` in `.env` to your storefront URL. Stripe also needs `STRIPE_WEBHOOK_SECRET` from the webhook endpoint. Flutterwave needs `FLUTTERWAVE_HASH_SECRET`.
 

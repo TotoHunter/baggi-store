@@ -45,6 +45,38 @@
     poster: [
       { name: "Matte White", hex: "#f2f0ea" },
       { name: "Matte Black", hex: "#17171a" }
+    ],
+    sweat: [
+      { name: "Washed Black", hex: "#232327" },
+      { name: "Washed Grey", hex: "#8b8d90" }
+    ],
+    zip: [
+      { name: "Washed Grey", hex: "#8b8d90" },
+      { name: "Jet Black", hex: "#17171a" }
+    ],
+    denimshirt: [
+      { name: "Mid Indigo", hex: "#3b5a86" },
+      { name: "Washed Black", hex: "#232327" }
+    ],
+    vest: [
+      { name: "Olive", hex: "#6b7250" },
+      { name: "Washed Black", hex: "#232327" }
+    ],
+    beanie: [
+      { name: "Jet Black", hex: "#17171a" },
+      { name: "Washed Grey", hex: "#8b8d90" }
+    ],
+    bag: [
+      { name: "Jet Black", hex: "#17171a" },
+      { name: "Natural", hex: "#d8c6a4" }
+    ],
+    socks: [
+      { name: "Black · 2-pack", hex: "#17171a" },
+      { name: "Off White · 2-pack", hex: "#e8e5dc" }
+    ],
+    cap: [
+      { name: "Jet Black", hex: "#17171a" },
+      { name: "Off White", hex: "#e8e5dc" }
     ]
   };
 
@@ -264,6 +296,94 @@
         "Your artwork, printed to order",
         "Choose matte white or matte black stock",
         "Ships flat and tracked"
+      ]
+    },
+    "sweatpant-black": {
+      colours: palettes.sweat,
+      story:
+        "The off-duty half of the BAGGI fit. Heavy fleece with a wide straight leg and a clean washed-black finish, so it hangs with the same weight as the denim and keeps the silhouette going from waist to hem.",
+      bullets: [
+        "Heavyweight fleece with a brushed inner face",
+        "Wide straight leg with an elasticated waist",
+        "Plain washed-black finish, no branding",
+        "Made to order in 3–7 days"
+      ]
+    },
+    "zip-hoodie-grey": {
+      colours: palettes.zip,
+      story:
+        "All the weight of our Heavy Hood with a full zip for days when you need to open up. Oversized body, dropped shoulders and a double-layer hood, washed back to a soft vintage grey.",
+      bullets: [
+        "Heavyweight fleece with a vintage grey wash",
+        "Full-length zip and double-layer hood",
+        "Oversized boxy body with dropped shoulders",
+        "Deep kangaroo pocket and plain finish"
+      ]
+    },
+    "denim-shirt-indigo": {
+      colours: palettes.denimshirt,
+      story:
+        "A shirt built like our jeans. The same 14oz indigo denim, cut into a boxy oversized shape that works open over a tee or buttoned up on its own. Plain pockets, plain back, no branding.",
+      bullets: [
+        "14oz structured denim in mid indigo",
+        "Boxy oversized cut that layers easily",
+        "Buttoned front with two plain chest pockets",
+        "Made to order in 3–7 days"
+      ]
+    },
+    "cargo-vest-olive": {
+      colours: palettes.vest,
+      story:
+        "A layer with somewhere to put things. Heavy cotton, a straight boxy body and deep utility pockets, kept plain so the shape does the talking. Olive is the everyday colourway.",
+      bullets: [
+        "Heavy cotton with a boxy straight cut",
+        "Deep utility pockets front and back",
+        "Full zip front, plain unbranded finish",
+        "Made to order in 3–7 days"
+      ]
+    },
+    "beanie-black": {
+      colours: palettes.beanie,
+      story:
+        "One size, done properly. A thick ribbed knit beanie with a clean fold and no logo, built to sit under a hood or pull on when the weather turns.",
+      bullets: [
+        "Thick ribbed knit with a clean fold",
+        "One size fits most",
+        "Plain finish with no logo",
+        "Pairs with every BAGGI colourway"
+      ]
+    },
+    "crossbody-bag": {
+      colours: palettes.bag,
+      story:
+        "The small bag that keeps the basics close. Heavy canvas, an adjustable strap and one clean compartment, finished plain so it works with every fit.",
+      bullets: [
+        "Heavy canvas with an adjustable long strap",
+        "One main compartment with a zip closure",
+        "One size, plain finish",
+        "Made to order in 3–7 days"
+      ]
+    },
+    "socks-black": {
+      colours: palettes.socks,
+      story:
+        "Heavy ribbed crew socks sold as a plain two-pack. Thick enough to hold their shape and simple enough to disappear under any BAGGI fit.",
+      bullets: [
+        "Heavyweight ribbed cotton blend",
+        "Two pairs in each pack",
+        "Plain black finish, no branding",
+        "Made to order and shipped tracked"
+      ]
+    },
+    "custom-cap": {
+      colours: palettes.cap,
+      story:
+        "Your artwork on a heavy cotton cap. Send the design and placement notes after checkout and we print a one-off piece made only for you.",
+      bullets: [
+        "One-off cap printed from your artwork",
+        "Heavy cotton with a structured crown",
+        "Curved brim and adjustable fit",
+        "Pre-order: made after checkout"
       ]
     }
   };
