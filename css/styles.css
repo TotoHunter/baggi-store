@@ -1,9 +1,8 @@
 /* ============================================================
-   BAGGI STORE — styles
+   VORTEX STORE — styles
    Dark streetwear look: heavy type, lime accent, grainy photos.
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap");
 
 :root {
   --background: oklch(15% 0.005 260);
@@ -14,9 +13,9 @@
   --muted-foreground: oklch(68% 0.01 260);
   --border: oklch(32% 0.008 260);
 
-  --font-display: "Anton", Impact, sans-serif;
-  --font-body: "Archivo", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: Impact, "Arial Narrow", "Arial Black", sans-serif;
+  --font-body: system-ui, Arial, Helvetica, sans-serif;
+  --font-mono: Consolas, "Courier New", ui-monospace, monospace;
 
   --header-height: 64px;
 }
@@ -1192,6 +1191,16 @@ img {
   accent-color: var(--primary);
 }
 
+.payment-method.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  border-style: dashed;
+}
+
+.payment-method.is-disabled input {
+  cursor: not-allowed;
+}
+
 .payment-name {
   font-family: var(--font-mono);
   font-size: 13px;
@@ -1963,4 +1972,27 @@ p {
   .payment-method:hover {
     transform: none;
   }
+}
+
+/* Text-only placeholders — no product photography on the site */
+.media-placeholder,
+.cart-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(211, 248, 90, 0.12), transparent 60%),
+    repeating-linear-gradient(135deg, #1a1a1e 0 12px, #202026 12px 24px);
+  color: rgba(211, 248, 90, 0.55);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  letter-spacing: 0.12em;
+  border: 1px solid rgba(211, 248, 90, 0.18);
+}
+
+.cart-placeholder {
+  width: 96px;
+  aspect-ratio: 4 / 5;
+  flex: 0 0 96px;
+  font-size: 1rem;
 }
