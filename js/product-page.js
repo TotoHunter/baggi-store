@@ -99,10 +99,13 @@
     .map(function (c, i) {
       return (
         '<button class="pdp-swatch' + (i === 0 ? " is-active" : "") +
+        (c.pop ? " is-pop" : "") +
         '" type="button" data-colour="' + esc(c.name) +
         '" aria-label="' + esc(c.name) + '" aria-pressed="' + (i === 0) + '">' +
         '<span class="pdp-swatch-dot" style="background:' + esc(c.hex) + '"></span>' +
-        "<span>" + esc(c.name) + "</span></button>"
+        "<span>" + esc(c.name) + "</span>" +
+        (c.pop ? '<span class="pdp-pop-tag">POP</span>' : "") +
+        "</button>"
       );
     })
     .join("");
@@ -151,6 +154,8 @@
     '<div class="pdp-block">' +
     '<p class="pdp-label">Colour: <strong data-colour-label>' + esc(firstColour) + "</strong></p>" +
     '<div class="pdp-swatches" role="group" aria-label="Choose colour">' + swatches + "</div>" +
+    '<p class="pdp-colour-hint">Two brand colours: near-black and BAGGI Lime. ' +
+    "Lime is the loud one — made to pop against the plain fits.</p>" +
     '<select class="pdp-hidden-select" data-colour-for="' + esc(id) +
     '" aria-label="Selected colour">' + colourOptions + "</select>" +
     "</div>" +

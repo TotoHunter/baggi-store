@@ -48,6 +48,14 @@
     ]
   };
 
+  /* BAGGI runs on two brand colours: near-black and electric lime.
+     Add lime to every palette so one colour visibly pops out on each
+     product page, matching the accent used across the website. */
+  var popColour = { name: "BAGGI Lime", hex: "#eaff00", pop: true };
+  Object.keys(palettes).forEach(function (key) {
+    palettes[key].push(popColour);
+  });
+
   window.BAGGI_PRODUCT_DETAILS = {
     "og-baggi-indigo": {
       colours: palettes.denim,
