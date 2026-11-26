@@ -140,7 +140,7 @@ async function createSupplierOrder(order) {
     );
   }
   const placeholders = (order.items || []).filter(
-    (item) => (item.sku || "").trim().startsWith("BAG-") && !(item.vid && String(item.vid).trim())
+    (item) => (item.sku || "").trim().startsWith("VTX-") && !(item.vid && String(item.vid).trim())
   );
   if (placeholders.length) {
     return demo(
@@ -150,7 +150,7 @@ async function createSupplierOrder(order) {
   }
 
   const remarks = [
-    "BAGGI order " + order.id,
+    "VORTEX order " + order.id,
     ...(order.items || []).map((i) => i.notes).filter(Boolean)
   ].join(" | ").slice(0, 500);
 

@@ -104,7 +104,7 @@ async function flutterwave(order) {
           name: order.customer.name,
           phonenumber: order.customer.phone
         },
-        customizations: { title: "BAGGI", description: "BAGGI order " + order.id }
+        customizations: { title: "VORTEX", description: "VORTEX order " + order.id }
       },
       {
         headers: {
@@ -136,7 +136,7 @@ async function stripe(order) {
           price_data: {
             currency: "ngn",
             unit_amount: toMajor(order.amount, "NGN"),
-            product_data: { name: "BAGGI order " + order.id }
+            product_data: { name: "VORTEX order " + order.id }
           },
           quantity: 1
         }
@@ -194,7 +194,7 @@ async function paypal(order) {
               value: value.toFixed(2)
             },
             description:
-              "BAGGI order " + order.id + " (NGN " + Number(order.amount).toFixed(2) + ")"
+              "VORTEX order " + order.id + " (NGN " + Number(order.amount).toFixed(2) + ")"
           }
         ],
         application_context: {
