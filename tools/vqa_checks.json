@@ -1,0 +1,42 @@
+{
+  "sky-vortex.jpg": {
+    "What color are the shorts?": "black.. 5.. 5..",
+    "Are the shorts denim?": "yes.. 5.. 5.."
+  },
+  "long-sleeve.jpg": {
+    "What color are the jeans?": "blue.. 00.. 00..",
+    "Is the person wearing a long sleeve shirt?": "no.. 5.. 0.."
+  },
+  "vortex-jacket.jpg": {
+    "What color are the jeans?": "gray.. 00.. 00..",
+    "Is the person wearing a jacket?": "no.. 99.. 99.."
+  },
+  "night-vortex.jpg": {
+    "What color is the hoodie?": "gray.. 99... 99.",
+    "Is the person wearing a hoodie?": "yes.. 5.. 5.."
+  },
+  "vortex-short.jpg": {
+    "What is the person wearing on top?": "sweatshirt.. 99.. 99..",
+    "Are the sleeves long?": "long.. 5.. 5.."
+  },
+  "ash-hood.jpg": {
+    "What is the person holding?": "phone.. 99.. 99..",
+    "Is the person wearing a hoodie?": "unknown.. 5.. 5.."
+  },
+  "custom-poster.jpg": {
+    "What is the person wearing?": "jeans.. 0.. 0..",
+    "Is the person holding a poster?": "no.. 0.. 0.."
+  },
+  "custom-jeans.jpg": {
+    "What color are the jeans?": "black.. 00.. 00..",
+    "What is the person wearing on top?": "shirt.. 99... 99."
+  },
+  "about-vortex.jpg": {
+    "What is the person wearing?": "pants.. 99.. 99..",
+    "What color are the pants?": "black.. 5.. 5.."
+  },
+  "hero-vortex.jpg": {
+    "What is the person wearing?": "shirt.. 99.. 99..",
+    "What color are the shorts?": "black.. 5.. 5.."
+  }
+}
