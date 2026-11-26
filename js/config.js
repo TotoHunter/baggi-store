@@ -1,18 +1,18 @@
 /* ============================================================
-   BAGGI STORE — EDIT THIS FILE TO MANAGE YOUR SHOP
+   VORTEX STORE — EDIT THIS FILE TO MANAGE YOUR SHOP
    ------------------------------------------------------------
-   • Change prices, product names, descriptions and photos here.
+   • Change prices, product names and descriptions here.
    • Change your WhatsApp number and social links under "contact".
    • Payment buttons are configured under "payments".
    • Supplier costs and SKUs live on each product under "supplier".
    • Secret API keys NEVER go here — they belong in server/.env
    ============================================================ */
 
-window.BAGGI_CONFIG = {
+window.VORTEX_CONFIG = {
   /* ---------- Brand ---------- */
   brand: {
-    name: "BAGGI",
-    dot: ".",
+    name: "VORTEX",
+    dot: "",
     tagline: "Plain denim. Big fits.",
     copyrightYear: 2026
   },
@@ -21,9 +21,9 @@ window.BAGGI_CONFIG = {
   contact: {
     // WhatsApp number in international format, digits only (no + or spaces)
     whatsapp: "2349065694156",
-    instagramUrl: "https://instagram.com",
-    instagramHandle: "@baggi.jeans",
-    email: "hello@baggi.store"
+    instagramUrl: "https://instagram.com/vortexclothingco",
+    instagramHandle: "@vortexclothingco",
+    email: "hello@vortexclothingco.com"
   },
 
   /* ---------- Checkout ---------- */
@@ -35,7 +35,7 @@ window.BAGGI_CONFIG = {
   shipping: {
     flatFee: 0,
     freeAbove: 999999999,
-    note: "Delivery covers real CJ freight; shown at checkout."
+    note: "Delivery is calculated per item at checkout and covers real CJ freight."
   },
 
   payments: {
@@ -124,7 +124,7 @@ window.BAGGI_CONFIG = {
     aboutTitleMiddle: "noise.",
     aboutTitleBottom: "More leg.",
     aboutParagraphs: [
-      "BAGGI started with one idea: the perfect pair of baggy jeans doesn't need a logo on the back pocket. It needs weight, width and a wash that ages right.",
+      "VORTEX started with one idea: the perfect pair of baggy jeans doesn't need a logo on the back pocket. It needs weight, width and a wash that ages right.",
       "Every pair is cut from heavy cotton denim, finished plain, and built to be worn hard — on the street, on the stage, everywhere. Custom pieces are made to order by our production partner."
     ],
     designEyebrow: "Made to order · Pre-order",
@@ -169,6 +169,17 @@ window.BAGGI_CONFIG = {
     { num: "03", title: "We make & ship", text: "Your piece is made to order and tracked all the way to your door." }
   ],
 
+  /* ---------- Intro copy for each product type page ---------- */
+  categoryIntros: {
+    jeans: "Heavy denim cut extra wide. Plain washes, real weight and a straight leg that holds its shape all day.",
+    hoodies: "Oversized heavy fleece with dropped shoulders and a big kangaroo pocket. Built to layer and wear hard.",
+    shirts: "Boxy heavyweight tees and long sleeves with a thick collar. Plain by design, made to sit right.",
+    cargo: "Wide-leg utility pieces with deep pockets and heavy cotton. Relaxed fit, zero noise.",
+    outerwear: "Boxy 14oz denim built to go over any hoodie. Structured, heavy and plain.",
+    accessories: "One-size pieces made to match every VORTEX fit. Plain, heavy and ready to wear.",
+    custom: "Send your artwork or idea and we will make a one-off piece just for you. Front, back or both."
+  },
+
   /* ---------- Categories, sizes and sizing advice ---------- */
   categories: [
     {
@@ -207,7 +218,7 @@ window.BAGGI_CONFIG = {
       id: "accessories",
       label: "Accessories",
       sizes: ["One size"],
-      sizeNote: "One size. Built to match every BAGGI fit."
+      sizeNote: "One size. Built to match every VORTEX fit."
     },
     {
       id: "custom",
@@ -219,6 +230,7 @@ window.BAGGI_CONFIG = {
   ],
 
   /* ---------- Your products ----------
+     The storefront is text-only: no photo fields are used.
      price        = what the customer pays (naira)
      supplier.costCny = what you pay the supplier (yuan)
      supplier.sku = the product code in your supplier account
@@ -226,42 +238,42 @@ window.BAGGI_CONFIG = {
   ------------------------------------- */
   products: [
     {
-      id: "og-baggi-indigo",
+      id: "og-vortex-indigo",
       category: "jeans",
-      name: "OG Baggi",
+      name: "OG VORTEX",
       variant: "Mid Indigo",
       index: "01",
+      image: "og-vortex.jpg",
+      imageAlt: "Model wearing blue denim jeans",
       price: 32000,
-      image: "model-jeans-indigo.jpg",
-      imageAlt: "OG Baggi in Mid Indigo",
       description: "The everyday one. Heavy 14oz denim, wide straight leg.",
       featured: false,
       customizable: false,
       supplier: { type: "cj", sku: "CJXX214221302BY", vid: "2409200336291616600", costCny: 106, deliveryNgn: 37500, sizes: { "W28": { sku: "CJXX214221301AZ", vid: "2409200336291616400" }, "W30": { sku: "CJXX214221302BY", vid: "2409200336291616600" }, "W32": { sku: "CJXX214221303CX", vid: "2409200336291616700" }, "W34": { sku: "CJXX214221304DW", vid: "2409200336291616900" }, "W36": { sku: "CJXX214221305EV", vid: "2409200336291617100" }, "W38": { sku: "CJXX214221305EV", vid: "2409200336291617100" } } }
     },
     {
-      id: "night-baggi-black",
+      id: "night-vortex-black",
       category: "jeans",
-      name: "Night Baggi",
+      name: "Night VORTEX",
       variant: "Washed Black",
       index: "02",
+      image: "vortex-jacket.jpg",
+      imageAlt: "Model wearing black denim jeans",
       price: 48000,
-      image: "model-jeans-black.jpg",
-      imageAlt: "Night Baggi in Washed Black",
       description: "Faded black wash that only gets better with wear.",
       featured: true,
       customizable: false,
       supplier: { type: "cj", sku: "CJXX218563306FU", vid: "2411070721091604700", costCny: 177, deliveryNgn: 30000, sizes: { "W28": { sku: "CJXX218563302BY", vid: "2411070721091603700" }, "W30": { sku: "CJXX218563304DW", vid: "2411070721091604300" }, "W32": { sku: "CJXX218563306FU", vid: "2411070721091604700" }, "W34": { sku: "CJXX218563308HS", vid: "2411070721091605100" }, "W36": { sku: "CJXX218563309IR", vid: "2411070721091605200" }, "W38": { sku: "CJXX218563310JQ", vid: "2411070721091605400" } } }
     },
     {
-      id: "sky-baggi-light",
+      id: "sky-vortex-light",
       category: "jeans",
-      name: "Sky Baggi",
+      name: "Sky VORTEX",
       variant: "Light Stone",
       index: "03",
+      image: "long-sleeve.jpg",
+      imageAlt: "Model wearing light blue denim jeans",
       price: 26000,
-      image: "model-jeans-light.jpg",
-      imageAlt: "Sky Baggi in Light Stone",
       description: "Bleached stone wash. Loud fit, zero logos.",
       featured: false,
       customizable: false,
@@ -273,9 +285,9 @@ window.BAGGI_CONFIG = {
       name: "Heavy Hood",
       variant: "Jet Black",
       index: "01",
+      image: "heavy-hood.jpg",
+      imageAlt: "Model wearing a black hoodie",
       price: 27000,
-      image: "model-hoodie-black.jpg",
-      imageAlt: "Heavy Hood in Jet Black",
       description: "Thick fleece, oversized body, big kangaroo pocket. No logos.",
       featured: true,
       customizable: false,
@@ -287,10 +299,10 @@ window.BAGGI_CONFIG = {
       name: "Ash Hood",
       variant: "Washed Grey",
       index: "02",
+      image: "night-vortex.jpg",
+      imageAlt: "Model wearing a grey hoodie",
       price: 27000,
-      image: "model-hoodie-grey.jpg",
-      imageAlt: "Ash Hood in Washed Grey",
-      description: "Vintage washed grey that pairs with every BAGGI denim.",
+      description: "Vintage washed grey that pairs with every VORTEX denim.",
       featured: false,
       customizable: false,
       supplier: { type: "cj", sku: "CJWY206111513MN", vid: "2406150750401609000", costCny: 87, deliveryNgn: 28000, sizes: {"S":{"sku":"CJWY206111513MN","vid":"2406150750401609000"},"M":{"sku":"CJWY206111514NM","vid":"2406150750401609100"},"L":{"sku":"CJWY206111515OL","vid":"2406150750401609300"},"XL":{"sku":"CJWY206111516PK","vid":"2406150750401609400"},"XXL":{"sku":"CJWY206111517QJ","vid":"2406150750401609500"}} }
@@ -301,9 +313,9 @@ window.BAGGI_CONFIG = {
       name: "Box Tee",
       variant: "Off White",
       index: "01",
+      image: "box-tee-white.jpg",
+      imageAlt: "Model wearing a white t-shirt",
       price: 10000,
-      image: "model-tee-white.jpg",
-      imageAlt: "Box Tee in Off White",
       description: "Heavyweight boxy tee with a thick ribbed collar.",
       featured: true,
       customizable: false,
@@ -315,9 +327,9 @@ window.BAGGI_CONFIG = {
       name: "Box Tee",
       variant: "Faded Black",
       index: "02",
+      image: "box-tee-black.jpg",
+      imageAlt: "Model wearing a black t-shirt",
       price: 11000,
-      image: "model-tee-black.jpg",
-      imageAlt: "Box Tee in Faded Black",
       description: "Same boxy cut, washed for a soft, faded black.",
       featured: false,
       customizable: false,
@@ -329,9 +341,9 @@ window.BAGGI_CONFIG = {
       name: "God's Plan Tee",
       variant: "White · Hand-painted",
       index: "03",
+      image: "gods-plan-tee.jpg",
+      imageAlt: "White t-shirt with black and white paint splat design",
       price: 10000,
-      image: "model-tee-gods-plan.jpg",
-      imageAlt: "God's Plan Tee in White · Hand-painted",
       description:
         "Pre-order. Boxy white tee with GOD'S PLAN, black thunder lines and white cracks.",
       featured: false,
@@ -346,9 +358,9 @@ window.BAGGI_CONFIG = {
       name: "Cargo Pant",
       variant: "Olive",
       index: "01",
+      image: "cargo-olive.jpg",
+      imageAlt: "Model wearing olive cargo pants",
       price: 35000,
-      image: "model-cargo-olive.jpg",
-      imageAlt: "Olive baggy cargo pants",
       description: "Wide-leg cargo pants with deep utility pockets. Heavy cotton.",
       featured: true,
       customizable: false,
@@ -357,12 +369,12 @@ window.BAGGI_CONFIG = {
     {
       id: "denim-jacket",
       category: "outerwear",
-      name: "Baggi Jacket",
+      name: "VORTEX Jacket",
       variant: "Mid Indigo",
       index: "01",
+      image: "custom-poster.jpg",
+      imageAlt: "Model wearing a denim jacket",
       price: 30000,
-      image: "model-denim-jacket.jpg",
-      imageAlt: "Oversized mid indigo denim jacket",
       description: "Boxy 14oz denim jacket, cut to layer over every hoodie.",
       featured: false,
       customizable: false,
@@ -371,13 +383,13 @@ window.BAGGI_CONFIG = {
     {
       id: "baggy-shorts",
       category: "cargo",
-      name: "Baggi Short",
+      name: "VORTEX Short",
       variant: "Washed Black",
       index: "02",
+      image: "sky-vortex.jpg",
+      imageAlt: "Model wearing black denim shorts",
       price: 14000,
-      image: "model-baggy-shorts.jpg",
-      imageAlt: "Washed black baggy shorts",
-      description: "Knee-length wide shorts with the same heavy wash as Night Baggi.",
+      description: "Knee-length wide shorts with the same heavy wash as Night VORTEX.",
       featured: false,
       customizable: false,
       supplier: { type: "cj", sku: "CJXX207177202BY", vid: "2406290914111627100", costCny: 43, deliveryNgn: 15000, sizes: { "S": { sku: "CJXX207177201AZ", vid: "2406290914111626700" }, "M": { sku: "CJXX207177202BY", vid: "2406290914111627100" }, "L": { sku: "CJXX207177203CX", vid: "2406290914111627300" }, "XL": { sku: "CJXX207177204DW", vid: "2406290914111627500" }, "XXL": { sku: "CJXX207177205EV", vid: "2406290914111627700" } } }
@@ -388,9 +400,9 @@ window.BAGGI_CONFIG = {
       name: "Long Sleeve",
       variant: "Off White",
       index: "04",
+      image: "vortex-short.jpg",
+      imageAlt: "Model wearing a white long sleeve top",
       price: 16000,
-      image: "model-long-sleeve.jpg",
-      imageAlt: "Off white heavyweight long sleeve tee",
       description: "Heavyweight long sleeve with a boxy body and ribbed cuffs.",
       featured: false,
       customizable: false,
@@ -402,9 +414,9 @@ window.BAGGI_CONFIG = {
       name: "Bucket Hat",
       variant: "Jet Black",
       index: "01",
+      image: "bucket-hat.jpg",
+      imageAlt: "Model wearing a black bucket hat",
       price: 7500,
-      image: "model-bucket-hat.jpg",
-      imageAlt: "Black bucket hat",
       description: "Plain heavy cotton bucket hat. One size, made to match.",
       featured: false,
       customizable: false,
@@ -416,9 +428,9 @@ window.BAGGI_CONFIG = {
       name: "Canvas Tote",
       variant: "Natural",
       index: "02",
+      image: "canvas-tote.jpg",
+      imageAlt: "Model holding a canvas tote bag",
       price: 14000,
-      image: "model-tote-bag.jpg",
-      imageAlt: "Natural canvas tote bag",
       description: "Heavy natural canvas tote with long straps. One size.",
       featured: false,
       customizable: true,
@@ -429,12 +441,12 @@ window.BAGGI_CONFIG = {
     {
       id: "custom-jeans",
       category: "custom",
-      name: "Custom Baggi Jeans",
+      name: "Custom VORTEX Jeans",
       variant: "Your design",
       index: "01",
+      image: "custom-jeans.jpg",
+      imageAlt: "Model wearing custom denim jeans",
       price: 34000,
-      image: "model-custom-jeans.jpg",
-      imageAlt: "Custom made baggy jeans",
       description: "Send your artwork or idea. We make a one-off pair just for you.",
       featured: false,
       customizable: true,
@@ -446,9 +458,9 @@ window.BAGGI_CONFIG = {
       name: "Custom Box Tee",
       variant: "Your design",
       index: "02",
+      image: "custom-tee.jpg",
+      imageAlt: "T-shirt with custom paint splat design",
       price: 11000,
-      image: "model-custom-tee.jpg",
-      imageAlt: "Custom printed boxy tee",
       description: "Your print on a heavyweight boxy tee. Front, back or both.",
       featured: true,
       customizable: true,
@@ -460,9 +472,9 @@ window.BAGGI_CONFIG = {
       name: "Custom Heavy Hood",
       variant: "Your design",
       index: "03",
+      image: "custom-hoodie.jpg",
+      imageAlt: "Black hoodie with custom white deer design",
       price: 28000,
-      image: "model-custom-hoodie.jpg",
-      imageAlt: "Custom printed oversized hoodie",
       description: "Your design printed or embroidered on our oversized heavy hood.",
       featured: false,
       customizable: true,
@@ -474,9 +486,9 @@ window.BAGGI_CONFIG = {
       name: "Custom Mug",
       variant: "Your design",
       index: "04",
+      image: "custom-mug.jpg",
+      imageAlt: "Person holding a custom printed mug",
       price: 7000,
-      image: "model-custom-mug.jpg",
-      imageAlt: "Custom printed mug",
       description: "11oz ceramic mug printed with your artwork.",
       featured: false,
       customizable: true,
@@ -488,9 +500,9 @@ window.BAGGI_CONFIG = {
       name: "Custom Poster",
       variant: "Your design",
       index: "05",
+      image: "ash-hood.jpg",
+      imageAlt: "Person holding a custom printed poster",
       price: 2000,
-      image: "model-custom-poster.jpg",
-      imageAlt: "Custom printed poster",
       description: "A2/A3 matte poster printed from your design.",
       featured: false,
       customizable: true,

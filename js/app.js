@@ -1,14 +1,14 @@
-/* BAGGI STORE — shared rendering, cart and checkout */
+/* VORTEX STORE — shared rendering, cart and checkout */
 (function () {
   "use strict";
 
-  var cfg = window.BAGGI_CONFIG;
+  var cfg = window.VORTEX_CONFIG;
   if (!cfg) return;
 
   var brand = cfg.brand;
   var contact = cfg.contact;
   var copy = cfg.copy || {};
-  var CART_KEY = "baggi_cart";
+  var CART_KEY = "vortex_cart";
 
   function esc(value) {
     return String(value == null ? "" : value)
@@ -178,9 +178,9 @@
         "</div>" +
         '<div class="footer-col"><h4>Shop</h4>' +
         '<a href="collection.html">All products</a>' +
-        '<a href="collection.html#jeans">Jeans</a>' +
-        '<a href="collection.html#hoodies">Hoodies</a>' +
-        '<a href="collection.html#custom">Custom pieces</a>' +
+        '<a href="jeans.html">Jeans</a>' +
+        '<a href="hoodies.html">Hoodies</a>' +
+        '<a href="custom.html">Custom pieces</a>' +
         "</div>" +
         '<div class="footer-col"><h4>Help</h4>' +
         '<a href="contact.html">Contact us</a>' +
@@ -372,7 +372,27 @@
     var collectionHost = document.querySelector("[data-collection]");
     if (!collectionHost) return;
 
-    collectionHost.innerHTML = cfg.categories
+    var activeCategory = document.body.getAttribute("data-category") || "";
+    var cats = activeCategory
+      ? cfg.categories.filter(function (c) {
+          return c.id === activeCategory;
+        })
+      : cfg.categories;
+
+    if (activeCategory && cats.length) {
+      var active = cats[0];
+      var intro =
+        (cfg.categoryIntros && cfg.categoryIntros[active.id]) || active.sizeNote;
+      var titleEl = document.querySelector("[data-category-title]");
+      var eyebrowEl = document.querySelector("[data-category-eyebrow]");
+      var textEl = document.querySelector("[data-category-text]");
+      if (titleEl) titleEl.textContent = active.label;
+      if (eyebrowEl) eyebrowEl.textContent = "Drop 01 · " + active.label;
+      if (textEl) textEl.textContent = intro;
+      document.title = active.label + " — " + brand.name;
+    }
+
+    collectionHost.innerHTML = cats
       .map(function (cat, catIndex) {
         var items = cfg.products.filter(function (p) {
           return p.category === cat.id;
@@ -400,14 +420,17 @@
       .join("");
 
     document.querySelectorAll("[data-category-links]").forEach(function (host) {
-      host.innerHTML = cfg.categories
-        .map(function (cat) {
-          return (
-            '<a class="category-link" href="#' + esc(cat.id) + '">' +
-            esc(cat.label) + "</a>"
-          );
-        })
-        .join("");
+      host.innerHTML =
+        '<a class="category-link" href="collection.html">All</a>' +
+        cfg.categories
+          .map(function (cat) {
+            var current = cat.id === activeCategory ? ' aria-current="page"' : "";
+            return (
+              '<a class="category-link" href="' + esc(cat.id) + '.html"' + current + ">" +
+              esc(cat.label) + "</a>"
+            );
+          })
+          .join("");
     });
   }
 
@@ -661,17 +684,21 @@
       '<p class="summary-note">' + esc((cfg.supplier && cfg.supplier.productionDays) || "") +
       " days production · " + esc((cfg.supplier && cfg.supplier.shippingDays) || "") + " days shipping</p>";
 
-    var methods = (cfg.payments && cfg.payments.methods || []).filter(function (m) {
-      return m.enabled !== false;
-    });
+    var methods = (cfg.payments && cfg.payments.methods) || [];
+    var selected = false;
     methodsHost.innerHTML = methods
-      .map(function (m, i) {
+      .map(function (m) {
+        var unavailable = m.enabled === false;
+        var checked = !unavailable && !selected;
+        if (checked) selected = true;
         return (
-          '<label class="payment-method">' +
+          '<label class="payment-method' + (unavailable ? " is-disabled" : "") + '">' +
           '<input type="radio" name="paymentMethod" value="' + esc(m.id) + '"' +
-          (i === 0 ? " checked" : "") + ">" +
+          (checked ? " checked" : "") +
+          (unavailable ? " disabled" : "") + ">" +
           '<span class="payment-name">' + esc(m.label) + "</span>" +
-          '<span class="payment-desc">' + esc(m.description) + "</span>" +
+          '<span class="payment-desc">' + esc(m.description) +
+          (unavailable ? " — coming soon" : "") + "</span>" +
           "</label>"
         );
       })
@@ -681,9 +708,9 @@
     if (bankHost) {
       var b = (cfg.payments && cfg.payments.bank) || {};
       bankHost.innerHTML =
-        '<p class="bank-title display">Bank details</p>' +
-        "<p>" + esc(b.bankName || "Bank name will be confirmed on WhatsApp") + "</p>" +
-        "<p>" + esc(b.accountName || "BAGGI") + "</p>" +
+        '<p class="bank-title display">Payment details</p>' +
+        "<p>" + esc(b.bankName || "Payment details will be confirmed on WhatsApp") + "</p>" +
+        "<p>" + esc(b.accountName || "VORTEX") + "</p>" +
         "<p>" + esc(b.accountNumber || "—") + "</p>" +
         '<p class="bank-note">' + esc(b.note || "") + "</p>";
     }
