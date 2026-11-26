@@ -6,7 +6,7 @@ require("dotenv").config({ path: require("path").join(__dirname, "..", ".env") }
 
 const baseUrl = (process.argv[2] || process.env.PUBLIC_URL || "").replace(/\/+$/, "");
 if (!/^https:\/\//i.test(baseUrl)) {
-  console.error("Provide a public HTTPS URL, e.g. node set-webhook-url.js https://baggi-store.onrender.com");
+  console.error("Provide a public HTTPS URL, e.g. node set-webhook-url.js https://your-app.onrender.com");
   process.exit(1);
 }
 const secret = process.env.PAYSTACK_SECRET_KEY;
@@ -28,7 +28,7 @@ async function main() {
     (w) => (w.webhook_url || "").includes("/webhooks/paystack")
   );
   const body = JSON.stringify({
-    name: "BAGGI order fulfillment",
+    name: "Vortex order fulfillment",
     url: webhookUrl,
     events: ["charge.success"]
   });
