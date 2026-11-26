@@ -1,6 +1,6 @@
-# VORTEX — Dropshipping storefront + automated supplier flow
+# BAGGI — Dropshipping storefront + automated supplier flow
 
-A static streetwear store with WhatsApp ordering, a shopping bag, multi-gateway checkout, and a Node.js backend that creates a CJ Dropshipping supplier order **after payment is confirmed**. The folder name keeps the old scaffold name, but the brand is VORTEX everywhere in the store.
+A static streetwear store with WhatsApp ordering, a shopping bag, multi-gateway checkout, and a Node.js backend that creates a CJ Dropshipping supplier order **after payment is confirmed**. The folder name keeps the old scaffold name, but the brand is BAGGI everywhere in the store.
 
 ## What was added
 
@@ -56,7 +56,7 @@ Until keys are added, checkout still works in **demo mode**: it shows a demo ord
 
 ### Current live-setup status (26 Nov 2026)
 
-- **Permanent storefront + API:** `https://baggi-store.onrender.com` (Render, Oregon, service `srv-dc11pcl9fdbs739ggbhg`). This URL and the GitHub repo name are legacy deployment identifiers; the storefront brand is VORTEX. Health: `/api/health`.
+- **Permanent storefront + API:** `https://baggi-store.onrender.com` (Render, Oregon, service `srv-dc11pcl9fdbs739ggbhg`). This URL and the GitHub repo name are legacy deployment identifiers; the storefront brand is BAGGI. Health: `/api/health`.
 - Source: `https://github.com/TotoHunter/baggi-store`, branch `main` (legacy repo name). Local development still works on `http://127.0.0.1:3001`; the Python server on `:8000` is preview-only.
 - `js/config.js` uses `backendUrl: ""` — the browser calls the same origin, so host changes need no browser config change.
 - The old Quick Tunnel watcher is **stopped**. `server/tools/keep-tunnel.js` is retained only as a reference and must not be started.
@@ -65,7 +65,7 @@ Until keys are added, checkout still works in **demo mode**: it shows a demo ord
 - All six payment methods are shown at checkout. Paystack, Palmpay and WhatsApp are selectable; Flutterwave, Stripe and PayPal are shown as coming soon until their keys exist. Palmpay details are still placeholders.
 - CJ adapter uses V2.0 (token exchange + `createOrderV3`), `CJ_LOGISTIC_NAME=CJPacket Postal`, `CJ_PAY_TYPE=3`, `CJ_SANDBOX=1` while testing. CJ balance is $0.
 - **CJ IP throttle solved:** Render IPs were rejected with `1600200 / Too Many Requests, one ip limit 3 users`. A free Cloudflare Worker, `https://baggi-cj-relay.phpwo2.workers.dev`, now relays only the four CJ API paths used by the app. Render sets `CJ_API_BASE` to that Worker and `CJ_RELAY_SECRET` to the shared secret; the Worker keeps its own `RELAY_SECRET`. Verified: signed webhook with **live Paystack keys** → `supplier_ordered` with real CJ sandbox order `SD2611220016080654000` (and earlier `SD2611212331300665700`), then test data cleared.
-- **SKU mapping applied (best-effort):** all 19 products have CJ `sku` + `vid` values and a `sizes` map. These are the closest generic CJ catalog matches, **not your branded Vortex designs**. Review every mapping before live orders, or upload your own products to CJ. Custom/POD items would ship blank without a separate CJ POD integration.
+- **SKU mapping applied (best-effort):** all 19 products have CJ `sku` + `vid` values and a `sizes` map. These are the closest generic CJ catalog matches, **not your branded BAGGI designs**. Review every mapping before live orders, or upload your own products to CJ. Custom/POD items would ship blank without a separate CJ POD integration.
 - **Pricing is set per product in `js/config.js`:** each product has its own customer price and delivery amount. Confirm the current prices suit your market before launch.
 - **Checkout is server-authoritative:** totals and SKU/VID/supplier cost are recomputed on the server. The webhook rejects underpayments, acknowledges immediately and de-duplicates retries.
 - Render free tier sleeps after inactivity and has ephemeral storage; persistent order storage is still a pre-launch task — see `DEPLOY.md`.
@@ -101,7 +101,7 @@ Prices display automatically as `₦14,000`.
 The supplied streetwear images are placed by what each picture actually shows, not
 by filename: denim photos sit on jeans/shorts, hoodie photos on hoodies, the denim
 jacket photo on the jacket, the painting photo on the custom poster, and the
-hat/tote/mug photos on those products. The hero and About use the two VORTEX-branded
+hat/tote/mug photos on those products. The hero and About use the two BAGGI-branded
 portraits.
 
 `tools/IMAGE_CHECK.html` is a contact sheet that shows every product next to its
