@@ -118,20 +118,20 @@ window.BAGGI_CONFIG = {
     collectionEyebrow: "Drop 01",
     collectionTitle: "Collection",
     collectionText:
-      "Jeans, hoodies, shirts, cargos and custom pieces. All plain, all big. Add to bag or order straight on WhatsApp.",
+      "Jeans, hoodies, shirts, cargos and plain staples. All big, all BAGGI. Add to bag or order on WhatsApp. Design previews are WhatsApp-only.",
     aboutEyebrow: "The story",
     aboutTitleTop: "Less",
     aboutTitleMiddle: "noise.",
     aboutTitleBottom: "More leg.",
     aboutParagraphs: [
       "BAGGI started with one idea: the perfect pair of baggy jeans doesn't need a logo on the back pocket. It needs weight, width and a wash that ages right.",
-      "Every pair is cut from heavy cotton denim, finished plain, and built to be worn hard — on the street, on the stage, everywhere. Custom pieces are made to order by our production partner."
+      "Every pair is cut from heavy cotton denim, finished plain, and built to be worn hard — on the street, on the stage, everywhere. Design previews are confirmed on WhatsApp before we arrange any one-off production."
     ],
     designEyebrow: "Made to order · Pre-order",
     designTitleTop: "Design",
     designTitleBottom: "yours.",
     designText:
-      "Pick jeans, a hoodie or a tee and describe the design in your head. We'll turn it into a one-off pre-order made just for you.",
+      "Pick jeans, a hoodie or a tee and describe the design in your head. Custom printing is not connected to CJ yet, so we'll confirm the one-off order with you on WhatsApp before any payment.",
     contactEyebrow: "Get yours",
     contactTitleTop: "Hit us",
     contactTitleBottom: "up.",
@@ -149,7 +149,7 @@ window.BAGGI_CONFIG = {
   features: [
     { num: "01", title: "Wide", text: "Cut extra wide from hip to hem." },
     { num: "02", title: "Heavy", text: "14oz cotton denim that holds its shape." },
-    { num: "03", title: "Yours", text: "Plain staples or custom pieces made to order." }
+    { num: "03", title: "Yours", text: "Plain staples, or design previews confirmed on WhatsApp." }
   ],
 
   /* ---------- Professional trust signals ---------- */
@@ -164,9 +164,9 @@ window.BAGGI_CONFIG = {
 
   /* ---------- How it works ---------- */
   steps: [
-    { num: "01", title: "Pick your piece", text: "Browse the collection or design your own. Choose your size and add to bag." },
-    { num: "02", title: "Check out securely", text: "Pay with card, bank transfer or WhatsApp. You get an order ID straight away." },
-    { num: "03", title: "We make & ship", text: "Your piece is made to order and tracked all the way to your door." }
+    { num: "01", title: "Pick your piece", text: "Browse plain staples and add your size to the bag. For custom artwork, send a design preview on WhatsApp." },
+    { num: "02", title: "Check out securely", text: "Pay with card, bank transfer or WhatsApp. Design previews are confirmed before any payment." },
+    { num: "03", title: "We make & ship", text: "Your order is made to order and tracked all the way to your door." }
   ],
 
   /* ---------- Intro copy for each product type page ---------- */
@@ -177,7 +177,7 @@ window.BAGGI_CONFIG = {
     cargo: "Wide-leg utility pieces with deep pockets and heavy cotton. Relaxed fit, zero noise.",
     outerwear: "Boxy 14oz denim built to go over any hoodie. Structured, heavy and plain.",
     accessories: "One-size pieces made to match every BAGGI fit. Plain, heavy and ready to wear.",
-    custom: "Send your artwork or idea and we will make a one-off piece just for you. Front, back or both."
+    custom: "Design previews only. Custom printing is not connected to CJ yet — send your artwork on WhatsApp and we will confirm the one-off order before any payment."
   },
 
   /* ---------- Categories, sizes and sizing advice ---------- */
@@ -225,7 +225,7 @@ window.BAGGI_CONFIG = {
       label: "Custom",
       sizes: ["S", "M", "L", "XL", "XXL"],
       sizeNote:
-        "Made to order from your design. Upload or send your artwork after checkout."
+        "Design preview only. Confirm your size and artwork on WhatsApp before paying."
     }
   ],
 
@@ -339,16 +339,17 @@ window.BAGGI_CONFIG = {
       id: "gods-plan-tee",
       category: "shirts",
       name: "God's Plan Tee",
-      variant: "White · Hand-painted",
+      variant: "Off White",
       index: "03",
       image: "gods-plan-tee.jpg",
       imageAlt: "White t-shirt with black and white paint splat design",
       price: 10000,
       description:
-        "Pre-order. Boxy white tee with GOD'S PLAN, black thunder lines and white cracks.",
+        "Design preview only. Custom printing is not connected to CJ yet — ask us on WhatsApp before ordering.",
       featured: false,
-      customizable: true,
-      supplier: { type: "cj", sku: "CJYH206124501AZ", vid: "2406150921401622900", costCny: 30, deliveryNgn: 11500, sizes: {"S":{"sku":"CJYH206124501AZ","vid":"2406150921401622900"},"M":{"sku":"CJYH206124502BY","vid":"2406150921401623100"},"L":{"sku":"CJYH206124503CX","vid":"2406150921401623300"},"XL":{"sku":"CJYH206124504DW","vid":"2406150921401623500"},"XXL":{"sku":"CJYH206124505EV","vid":"2406150921401623700"}} }
+      customizable: false,
+      podPending: true,
+      supplier: { type: "cj", sku: "CJYH206124501AZ", vid: "2406150921401622900", costCny: 30, deliveryNgn: 11500, note: "Design preview only — POD not verified; paid CJ checkout disabled. Ask on WhatsApp.", sizes: {"S":{"sku":"CJYH206124501AZ","vid":"2406150921401622900"},"M":{"sku":"CJYH206124502BY","vid":"2406150921401623100"},"L":{"sku":"CJYH206124503CX","vid":"2406150921401623300"},"XL":{"sku":"CJYH206124504DW","vid":"2406150921401623500"},"XXL":{"sku":"CJYH206124505EV","vid":"2406150921401623700"}} }
     },
 
     /* ---------- New streetwear ---------- */
@@ -431,10 +432,10 @@ window.BAGGI_CONFIG = {
       image: "canvas-tote.jpg",
       imageAlt: "Model holding a canvas tote bag",
       price: 14000,
-      description: "Heavy natural canvas tote with long straps. One size.",
+      description: "Plain natural canvas tote with long straps. One size. Sold blank.",
       featured: false,
-      customizable: true,
-      supplier: { type: "cj", sku: "CJYD235483101AZ", vid: "2504160359071611600", costCny: 44, deliveryNgn: 7500 }
+      customizable: false,
+      supplier: { type: "cj", sku: "CJYD235483101AZ", vid: "2504160359071611600", costCny: 44, deliveryNgn: 7500, note: "CJ natural canvas tote, exact colour match" }
     },
 
     /* ---------- Custom / print-on-demand ---------- */
@@ -447,10 +448,12 @@ window.BAGGI_CONFIG = {
       image: "custom-jeans.jpg",
       imageAlt: "Model wearing custom denim jeans",
       price: 34000,
-      description: "Send your artwork or idea. We make a one-off pair just for you.",
+      description:
+        "Design preview only. Custom printing is not connected to CJ yet — ask us on WhatsApp before ordering.",
       featured: false,
-      customizable: true,
-      supplier: { type: "cj", sku: "CJXX214221302BY", vid: "2409200336291616600", costCny: 106, deliveryNgn: 35500, note: "blank for custom print", sizes: { "W28": { sku: "CJXX214221301AZ", vid: "2409200336291616400" }, "W30": { sku: "CJXX214221302BY", vid: "2409200336291616600" }, "W32": { sku: "CJXX214221303CX", vid: "2409200336291616700" }, "W34": { sku: "CJXX214221304DW", vid: "2409200336291616900" }, "W36": { sku: "CJXX214221305EV", vid: "2409200336291617100" }, "W38": { sku: "CJXX214221305EV", vid: "2409200336291617100" } } }
+      customizable: false,
+      podPending: true,
+      supplier: { type: "cj", sku: "CJXX214221302BY", vid: "2409200336291616600", costCny: 106, deliveryNgn: 35500, note: "Design preview only — POD not verified; paid CJ checkout disabled. Ask on WhatsApp.", sizes: { "W28": { sku: "CJXX214221301AZ", vid: "2409200336291616400" }, "W30": { sku: "CJXX214221302BY", vid: "2409200336291616600" }, "W32": { sku: "CJXX214221303CX", vid: "2409200336291616700" }, "W34": { sku: "CJXX214221304DW", vid: "2409200336291616900" }, "W36": { sku: "CJXX214221305EV", vid: "2409200336291617100" }, "W38": { sku: "CJXX214221305EV", vid: "2409200336291617100" } } }
     },
     {
       id: "custom-tee",
@@ -461,10 +464,12 @@ window.BAGGI_CONFIG = {
       image: "custom-tee.jpg",
       imageAlt: "T-shirt with custom paint splat design",
       price: 11000,
-      description: "Your print on a heavyweight boxy tee. Front, back or both.",
+      description:
+        "Design preview only. Custom printing is not connected to CJ yet — ask us on WhatsApp before ordering.",
       featured: true,
-      customizable: true,
-      supplier: { type: "cj", sku: "CJYH206124501AZ", vid: "2406150921401622900", costCny: 30, deliveryNgn: 10500, note: "blank for custom print", sizes: {"S":{"sku":"CJYH206124501AZ","vid":"2406150921401622900"},"M":{"sku":"CJYH206124502BY","vid":"2406150921401623100"},"L":{"sku":"CJYH206124503CX","vid":"2406150921401623300"},"XL":{"sku":"CJYH206124504DW","vid":"2406150921401623500"},"XXL":{"sku":"CJYH206124505EV","vid":"2406150921401623700"}} }
+      customizable: false,
+      podPending: true,
+      supplier: { type: "cj", sku: "CJYH206124501AZ", vid: "2406150921401622900", costCny: 30, deliveryNgn: 10500, note: "Design preview only — POD not verified; paid CJ checkout disabled. Ask on WhatsApp.", sizes: {"S":{"sku":"CJYH206124501AZ","vid":"2406150921401622900"},"M":{"sku":"CJYH206124502BY","vid":"2406150921401623100"},"L":{"sku":"CJYH206124503CX","vid":"2406150921401623300"},"XL":{"sku":"CJYH206124504DW","vid":"2406150921401623500"},"XXL":{"sku":"CJYH206124505EV","vid":"2406150921401623700"}} }
     },
     {
       id: "custom-hoodie",
@@ -475,10 +480,12 @@ window.BAGGI_CONFIG = {
       image: "custom-hoodie.jpg",
       imageAlt: "Black hoodie with custom white deer design",
       price: 28000,
-      description: "Your design printed or embroidered on our oversized heavy hood.",
+      description:
+        "Design preview only. Custom printing is not connected to CJ yet — ask us on WhatsApp before ordering.",
       featured: false,
-      customizable: true,
-      supplier: { type: "cj", sku: "CJWY206111507GT", vid: "2406150750401608100", costCny: 87, deliveryNgn: 27000, note: "blank for custom print", sizes: {"S":{"sku":"CJWY206111507GT","vid":"2406150750401608100"},"M":{"sku":"CJWY206111508HS","vid":"2406150750401608200"},"L":{"sku":"CJWY206111509IR","vid":"2406150750401608400"},"XL":{"sku":"CJWY206111510JQ","vid":"2406150750401608500"},"XXL":{"sku":"CJWY206111511KP","vid":"2406150750401608700"}} }
+      customizable: false,
+      podPending: true,
+      supplier: { type: "cj", sku: "CJWY206111507GT", vid: "2406150750401608100", costCny: 87, deliveryNgn: 27000, note: "Design preview only — POD not verified; paid CJ checkout disabled. Ask on WhatsApp.", sizes: {"S":{"sku":"CJWY206111507GT","vid":"2406150750401608100"},"M":{"sku":"CJWY206111508HS","vid":"2406150750401608200"},"L":{"sku":"CJWY206111509IR","vid":"2406150750401608400"},"XL":{"sku":"CJWY206111510JQ","vid":"2406150750401608500"},"XXL":{"sku":"CJWY206111511KP","vid":"2406150750401608700"}} }
     },
     {
       id: "custom-mug",
@@ -489,10 +496,12 @@ window.BAGGI_CONFIG = {
       image: "custom-mug.jpg",
       imageAlt: "Person holding a custom printed mug",
       price: 7000,
-      description: "11oz ceramic mug printed with your artwork.",
+      description:
+        "Design preview only. Custom printing is not connected to CJ yet — ask us on WhatsApp before ordering.",
       featured: false,
-      customizable: true,
-      supplier: { type: "cj", sku: "CJYD225590702BY", vid: "2412280733131621000", costCny: 16, deliveryNgn: 19500 }
+      customizable: false,
+      podPending: true,
+      supplier: { type: "cj", sku: "CJYD225590702BY", vid: "2412280733131621000", costCny: 16, deliveryNgn: 19500, note: "Design preview only — POD not verified; paid CJ checkout disabled. Ask on WhatsApp." }
     },
     {
       id: "custom-poster",
@@ -503,10 +512,12 @@ window.BAGGI_CONFIG = {
       image: "custom-poster.jpg",
       imageAlt: "Person holding a custom printed poster",
       price: 2000,
-      description: "A2/A3 matte poster printed from your design.",
+      description:
+        "Design preview only. Custom printing is not connected to CJ yet — ask us on WhatsApp before ordering.",
       featured: false,
-      customizable: true,
-      supplier: { type: "cj", sku: "CJZW108595101AZ", vid: "1383962869925810176", costCny: 4, deliveryNgn: 2500 }
+      customizable: false,
+      podPending: true,
+      supplier: { type: "cj", sku: "CJZW108595101AZ", vid: "1383962869925810176", costCny: 4, deliveryNgn: 2500, note: "Design preview only — POD not verified; paid CJ checkout disabled. Ask on WhatsApp." }
     },
 
     /* ---------- Extended collection ---------- */
@@ -522,7 +533,7 @@ window.BAGGI_CONFIG = {
       description: "Heavy fleece, wide leg and a plain washed-black finish.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "", vid: "", costCny: 65, deliveryNgn: 23000, note: "Set CJ SKU/VID before live launch" }
+      supplier: { type: "cj", sku: "CJXX212921606FU", vid: "2409050811321618800", costCny: 65, deliveryNgn: 23000, note: "Generic CJ match — plain black sweatpant in a similar colourway. Not an exact BAGGI-branded item; check fabric and fit before live orders.", sizes: { "S": { sku: "CJXX212921606FU", vid: "2409050811321618800" }, "M": { sku: "CJXX212921607GT", vid: "2409050811321619100" }, "L": { sku: "CJXX212921608HS", vid: "2409050811321619600" }, "XL": { sku: "CJXX212921609IR", vid: "2409050811331610400" }, "2XL": { sku: "CJXX212921610JQ", vid: "2409050811331610700" } } }
     },
     {
       id: "zip-hoodie-grey",
@@ -536,7 +547,7 @@ window.BAGGI_CONFIG = {
       description: "Oversized heavy fleece zip hoodie with a double-layer hood.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "", vid: "", costCny: 95, deliveryNgn: 30000, note: "Set CJ SKU/VID before live launch" }
+      supplier: { type: "cj", sku: "CJWY236413905EV", vid: "2504280202111610000", costCny: 95, deliveryNgn: 30000, note: "Generic CJ match — plain washed-grey zip hoodie in a similar colourway. Not an exact BAGGI-branded item; check fabric and fit before live orders.", sizes: { "M": { sku: "CJWY236413905EV", vid: "2504280202111610000" }, "L": { sku: "CJWY236413906FU", vid: "2504280202111610400" }, "XL": { sku: "CJWY236413907GT", vid: "2504280202111611100" }, "2XL": { sku: "CJWY236413908HS", vid: "2504280202111611800" } } }
     },
     {
       id: "denim-shirt-indigo",
@@ -550,7 +561,7 @@ window.BAGGI_CONFIG = {
       description: "Boxy 14oz denim shirt built to layer over a plain tee.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "", vid: "", costCny: 85, deliveryNgn: 30000, note: "Set CJ SKU/VID before live launch" }
+      supplier: { type: "cj", sku: "CJDS224282901AZ", vid: "2412130724411614100", costCny: 85, deliveryNgn: 30000, note: "Generic CJ match — indigo denim shirt in a similar colourway. Not an exact BAGGI-branded item; check cut and wash before live orders.", sizes: { "M": { sku: "CJDS224282901AZ", vid: "2412130724411614100" }, "L": { sku: "CJDS224282902BY", vid: "2412130724411614300" }, "XL": { sku: "CJDS224282903CX", vid: "2412130724411614500" }, "2XL": { sku: "CJDS224282904DW", vid: "2412130724411614700" }, "3XL": { sku: "CJDS224282905EV", vid: "2412130724411614800" } } }
     },
     {
       id: "cargo-vest-olive",
@@ -564,7 +575,7 @@ window.BAGGI_CONFIG = {
       description: "Plain heavy cotton utility vest with deep pockets.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "", vid: "", costCny: 72, deliveryNgn: 26000, note: "Set CJ SKU/VID before live launch" }
+      supplier: { type: "cj", sku: "CJYD192286225YB", vid: "1736247422583574528", costCny: 72, deliveryNgn: 26000, note: "Generic CJ match — army-green utility vest in a similar colourway. Not an exact BAGGI-branded item; check pockets and fit before live orders.", sizes: { "S": { sku: "CJYD192286225YB", vid: "1736247422583574528" }, "M": { sku: "CJYD192286226ZA", vid: "1736247422633906176" }, "L": { sku: "CJYD192286227AZ", vid: "1736247422675849216" }, "XL": { sku: "CJYD192286228BY", vid: "1736247422721986560" }, "2XL": { sku: "CJYD192286229CX", vid: "1736247422768123904" } } }
     },
     {
       id: "beanie-black",
@@ -578,7 +589,7 @@ window.BAGGI_CONFIG = {
       description: "Plain ribbed knit beanie. One size, no logo.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "", vid: "", costCny: 18, deliveryNgn: 5000, note: "Set CJ SKU/VID before live launch" }
+      supplier: { type: "cj", sku: "CJRN169931201AZ", vid: "1632633322612469760", costCny: 18, deliveryNgn: 5000, note: "CJ black ribbed beanie, exact colour match", sizes: { "One size": { sku: "CJRN169931201AZ", vid: "1632633322612469760" } } }
     },
     {
       id: "crossbody-bag",
@@ -592,47 +603,48 @@ window.BAGGI_CONFIG = {
       description: "Heavy canvas crossbody bag with a long strap. One size.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "", vid: "", costCny: 36, deliveryNgn: 7000, note: "Set CJ SKU/VID before live launch" }
+      supplier: { type: "cj", sku: "CJYD206111207GT", vid: "2406150745061606600", costCny: 36, deliveryNgn: 7000, note: "CJ black canvas crossbody bag, exact colour match", sizes: { "One size": { sku: "CJYD206111207GT", vid: "2406150745061606600" } } }
     },
     {
       id: "socks-black",
       category: "accessories",
       name: "BAGGI Socks",
-      variant: "Black · 2-pack",
+      variant: "Jet Black",
       index: "05",
       image: "socks-black.jpg",
-      imageAlt: "Pair of plain black heavy ribbed crew socks",
+      imageAlt: "Plain black heavy ribbed crew socks",
       price: 4000,
-      description: "Heavy ribbed crew socks in a plain black two-pack.",
+      description: "Heavy ribbed crew socks in plain black. One size.",
       featured: false,
       customizable: false,
-      supplier: { type: "cj", sku: "", vid: "", costCny: 12, deliveryNgn: 3000, note: "Set CJ SKU/VID before live launch" }
+      supplier: { type: "cj", sku: "CJWZ220154703CX", vid: "2411200547501613500", costCny: 12, deliveryNgn: 3000, note: "CJ black free-size socks, exact colour match", sizes: { "One size": { sku: "CJWZ220154703CX", vid: "2411200547501613500" } } }
     },
     {
       id: "custom-cap",
-      category: "custom",
-      name: "Custom Cap",
-      variant: "Your design",
+      category: "accessories",
+      name: "BAGGI Cap",
+      variant: "Jet Black",
       index: "06",
       image: "custom-cap.jpg",
-      imageAlt: "Plain black heavy cotton cap ready for custom print",
+      imageAlt: "Plain black heavy cotton cap with an adjustable fit",
       price: 9000,
-      description: "Send your artwork and we print a one-off cap made to order.",
+      description: "Plain black heavy cotton cap with a curved brim and adjustable fit. One size.",
       featured: false,
-      customizable: true,
-      supplier: { type: "cj", sku: "", vid: "", costCny: 28, deliveryNgn: 6000, note: "Set CJ SKU/VID before live launch" }
+      customizable: false,
+      supplier: { type: "cj", sku: "CJBQ110108101AZ", vid: "1386867611375112192", costCny: 28, deliveryNgn: 6000, note: "CJ black adjustable blank cap, exact colour match", sizes: { "One size": { sku: "CJBQ110108101AZ", vid: "1386867611375112192" } } }
     }
   ],
 
   /* ---------- Design-your-own form options ---------- */
   designOptions: {
     categories: ["Jeans", "Hoodies", "Shirts"],
-    // Which catalog product receives a custom design from each option
+    // Reference only. Design previews are never added to the paid bag.
     productMap: {
       Jeans: "custom-jeans",
       Hoodies: "custom-hoodie",
       Shirts: "custom-tee"
     },
-    fits: ["Super baggy", "Relaxed baggy", "Straight & wide", "Stacked at the ankle"]
+    fits: ["Super baggy", "Relaxed baggy", "Straight & wide", "Stacked at the ankle"],
+    notice: "Design previews only — custom printing is not connected to CJ. Send your artwork on WhatsApp to confirm a one-off order before any payment."
   }
 };

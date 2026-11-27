@@ -30,20 +30,37 @@ const PRODUCTS = new Map(
 );
 
 /* Fill in supplier identifiers and pricing from the catalog, ignoring any
-   values supplied by the browser. Sizes map to their own CJ variant. */
+   values supplied by the browser. A selected size must resolve to a real CJ
+   variant; stale or unknown sizes are rejected instead of silently falling
+   back to a different SKU. */
 function enrichItems(items) {
   if (!PRODUCTS.size) return null;
   return items.map((item) => {
-    const product = PRODUCTS.get(item.id);
+    const product = PRODUCTS.get(item && item.id);
     if (!product) return null; // unknown product — never trust a made-up price
+    if (product.podPending) return null; // POD previews are WhatsApp-only, never shipped by CJ
     const supplier = product.supplier || {};
-    const sized = supplier.sizes && item.size ? supplier.sizes[item.size] : null;
+    let sku = supplier.sku || "";
+    let vid = supplier.vid || "";
+
+    if (supplier.sizes && Object.keys(supplier.sizes).length) {
+      if (!item.size || !Object.prototype.hasOwnProperty.call(supplier.sizes, item.size)) {
+        return null; // stale size from an old cart — never guess a variant
+      }
+      const variant = supplier.sizes[item.size];
+      if (!variant) return null;
+      sku = variant.sku || "";
+      vid = variant.vid || "";
+    }
+
+    if (!String(sku).trim() || !String(vid).trim()) return null;
+
     return {
       ...item,
       name: product.name,
       variant: product.variant,
-      sku: sized ? sized.sku : supplier.sku || "",
-      vid: sized ? sized.vid : supplier.vid || "",
+      sku: String(sku).trim(),
+      vid: String(vid).trim(),
       supplierCostCny: Number(supplier.costCny) || 0
     };
   });
@@ -147,7 +164,7 @@ app.get("/api/health", (req, res) => {
 /* ---------- Checkout ---------- */
 app.post("/api/checkout", async (req, res) => {
   try {
-    const { items, customer, paymentMethod, amount, supplier } = req.body || {};
+    const { items, customer, paymentMethod } = req.body || {};
 
     if (!Array.isArray(items) || !items.length) {
       return res.status(400).json({ error: "No items in order." });
@@ -163,15 +180,16 @@ app.post("/api/checkout", async (req, res) => {
 
     const priced = priceOrder(items);
     const enriched = enrichItems(items);
-    if (!priced || !enriched) {
+    if (!priced || !enriched || enriched.some((item) => !item)) {
       return res.status(400).json({
-        error: "One or more products are no longer available. Refresh the page and try again."
+        error: "One or more items is a design preview or has an unavailable size/CJ variant. Previews are WhatsApp-only. Refresh and try again."
       });
     }
 
+    const catalogSupplier = (CATALOG && CATALOG.supplier) || {};
     const rate = Number(process.env.EXCHANGE_RATE_CNY_TO_NGN) ||
-      Number(supplier?.exchangeRateToNgn) || 240;
-    const supplierCostCny = items.reduce(
+      Number(catalogSupplier.exchangeRateToNgn) || 240;
+    const supplierCostCny = enriched.reduce(
       (sum, item) => sum + (Number(item.supplierCostCny) || 0) * (Number(item.qty) || 1),
       0
     );
@@ -188,8 +206,8 @@ app.post("/api/checkout", async (req, res) => {
       currency: "NGN",
       shipping: priced.delivery,
       supplier: {
-        name: supplier?.name || "CJ Dropshipping",
-        mode: supplier?.mode || "api"
+        name: catalogSupplier.name || "CJ Dropshipping",
+        mode: catalogSupplier.mode || "api"
       },
       supplierCostCny,
       supplierCostNgn,

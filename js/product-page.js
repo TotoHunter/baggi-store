@@ -66,9 +66,19 @@
     ? Object.keys(product.supplier.sizes)
     : sizesFor(product.category);
   if (!sizes.length) sizes = sizesFor(product.category);
-  var colours = info.colours || [{ name: product.variant, hex: "#8b8d90" }];
+  // Only the colour mapped to this catalog item can be fulfilled by CJ.
+  // Other palette entries are decorative; never expose them as selectable.
+  var palette = info.colours || [];
+  var matchedColours = palette.filter(function (c) {
+    return c.name === product.variant;
+  });
+  var colours = matchedColours.length
+    ? matchedColours
+    : [{ name: product.variant, hex: palette.length ? palette[0].hex : "#8b8d90" }];
   var firstColour = colours[0].name;
   var firstSize = sizes[0];
+  var previewOnly = Boolean(product.podPending);
+  var supplierNote = product.supplier && product.supplier.note;
 
   document.title = product.name + " — " + cfg.brand.name;
   var meta = document.querySelector('meta[name="description"]');
@@ -150,12 +160,19 @@
     '<p class="pdp-subtitle">' + esc(product.variant) + " · " +
     esc(product.index) + " / " + esc(category ? category.label : "BAGGI") + "</p>" +
     '<p class="pdp-price">' + money(product.price) + "</p>" +
-    '<p class="pdp-price-note">Made to order. Delivery is calculated at checkout.</p>' +
+    '<p class="pdp-price-note">' +
+    (previewOnly ? "Design preview — confirmed on WhatsApp." : "Made to order. Delivery is calculated at checkout.") +
+    "</p>" +
+    (supplierNote
+      ? '<p class="supplier-note' + (previewOnly ? " is-preview" : "") + '"><strong>' +
+        (previewOnly ? "Preview only — " : "Supplier note — ") + "</strong>" +
+        esc(supplierNote) + "</p>"
+      : "") +
     '<div class="pdp-block">' +
     '<p class="pdp-label">Colour: <strong data-colour-label>' + esc(firstColour) + "</strong></p>" +
     '<div class="pdp-swatches" role="group" aria-label="Choose colour">' + swatches + "</div>" +
-    '<p class="pdp-colour-hint">Two brand colours: near-black and BAGGI Lime. ' +
-    "Lime is the loud one — made to pop against the plain fits.</p>" +
+    '<p class="pdp-colour-hint">This listing ships in the colourway shown. ' +
+    "Other colours are not available for this CJ variant.</p>" +
     '<select class="pdp-hidden-select" data-colour-for="' + esc(id) +
     '" aria-label="Selected colour">' + colourOptions + "</select>" +
     "</div>" +
@@ -166,11 +183,14 @@
     '<p class="pdp-size-note">' + esc((category && category.sizeNote) || "") + "</p>" +
     "</div>" +
     '<div class="pdp-actions">' +
-    '<button class="add-btn pdp-add" type="button" data-add="' + esc(id) + '">Add to bag</button>' +
+    (previewOnly
+      ? '<span class="add-btn add-disabled" aria-disabled="true">Preview only</span>'
+      : '<button class="add-btn pdp-add" type="button" data-add="' + esc(id) + '">Add to bag</button>') +
     '<a class="order-btn pdp-wa" data-wa-link href="' +
     esc(waLink("Hi " + cfg.brand.name + "! I want to order the " + product.name + " in " +
       firstColour + ". Size: " + firstSize + ".")) +
-    '" target="_blank" rel="noreferrer"><span>Order on WhatsApp</span> ↗</a>' +
+    '" target="_blank" rel="noreferrer"><span>' +
+    (previewOnly ? "Ask on WhatsApp" : "Order on WhatsApp") + "</span> ↗</a>" +
     "</div>" +
     '<ul class="pdp-assurances">' +
     "<li>Secure card, bank &amp; wallet checkout</li>" +

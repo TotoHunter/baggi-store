@@ -1130,6 +1130,55 @@ img {
   margin-top: 24px;
 }
 
+/* Supplier / preview warnings shown on cards, PDP, cart and checkout. */
+.supplier-note {
+  margin: 10px 0 0;
+  padding: 9px 11px;
+  border-left: 3px solid var(--primary);
+  background: rgba(234, 255, 0, 0.07);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.supplier-note strong {
+  color: var(--foreground);
+}
+
+.supplier-note.is-preview {
+  border-left-color: #ff8a5b;
+  background: rgba(255, 138, 91, 0.09);
+}
+
+.checkout-alert,
+.cart-notice {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #ff8a5b;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--foreground);
+  background: rgba(255, 138, 91, 0.09);
+}
+
+.add-disabled {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+  background: transparent;
+  cursor: not-allowed;
+}
+
 .continue-link {
   display: block;
   margin-top: 16px;

@@ -9,6 +9,7 @@
   var contact = cfg.contact;
   var copy = cfg.copy || {};
   var CART_KEY = "baggi_cart";
+  var removedCartCount = 0;
 
   function esc(value) {
     return String(value == null ? "" : value)
@@ -42,11 +43,54 @@
     })[0];
   }
 
-  function sizesFor(categoryId) {
+  // Use a product's own CJ variant map when it has one, so the size a shopper
+  // picks on a product card is the same size the PDP and CJ order will use.
+  function sizesFor(product) {
+    if (product && product.supplier && product.supplier.sizes) {
+      var mapped = Object.keys(product.supplier.sizes);
+      if (mapped.length) return mapped;
+    }
+    var categoryId = product && product.category ? product.category : product;
     var cat = cfg.categories.filter(function (c) {
       return c.id === categoryId;
     })[0];
     return cat ? cat.sizes : ["One size"];
+  }
+
+  function isPreviewOnly(product) {
+    return Boolean(product && product.podPending);
+  }
+
+  function validSize(product, size) {
+    if (!product) return false;
+    var mapped = product.supplier && product.supplier.sizes
+      ? Object.keys(product.supplier.sizes)
+      : [];
+    if (!mapped.length) return size === "One size" || !size;
+    return mapped.indexOf(size) !== -1;
+  }
+
+  function isOrderableItem(item) {
+    var product = findProduct(item && item.id);
+    if (!product || isPreviewOnly(product)) return false;
+    return validSize(product, item.size);
+  }
+
+  function checkoutBlocked(items) {
+    return (items || []).some(function (item) {
+      return !isOrderableItem(item);
+    });
+  }
+
+  function supplierNote(product, context) {
+    var note = product && product.supplier && product.supplier.note;
+    if (!note) return "";
+    var cls = "supplier-note" + (isPreviewOnly(product) ? " is-preview" : "");
+    var prefix = isPreviewOnly(product) ? "Preview only — " : "Supplier note — ";
+    return (
+      '<p class="' + cls + '" data-note-context="' + esc(context || "product") + '">' +
+      "<strong>" + prefix + "</strong>" + esc(note) + "</p>"
+    );
   }
 
   var arrowUpRight =
@@ -66,7 +110,7 @@
   }
 
   /* ---------------- Cart ---------------- */
-  function getCart() {
+  function readRawCart() {
     try {
       var raw = JSON.parse(localStorage.getItem(CART_KEY));
       return Array.isArray(raw) ? raw : [];
@@ -75,8 +119,35 @@
     }
   }
 
+  function sanitizedCart(raw) {
+    return raw
+      .filter(isOrderableItem)
+      .map(function (item) {
+        return {
+          id: item.id,
+          size: item.size || "One size",
+          qty: Math.max(1, Math.floor(Number(item.qty) || 1)),
+          notes: typeof item.notes === "string" ? item.notes : ""
+        };
+      });
+  }
+
+  function sanitizeStoredCart() {
+    var raw = readRawCart();
+    var clean = sanitizedCart(raw);
+    removedCartCount = raw.length - clean.length;
+    if (removedCartCount) {
+      localStorage.setItem(CART_KEY, JSON.stringify(clean));
+    }
+    return clean;
+  }
+
+  function getCart() {
+    return sanitizeStoredCart();
+  }
+
   function saveCart(cart) {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    localStorage.setItem(CART_KEY, JSON.stringify(sanitizedCart(cart)));
     renderCartCount();
   }
 
@@ -91,7 +162,15 @@
 
   function addToCart(id, size, notes) {
     var product = findProduct(id);
-    if (!product) return;
+    if (!product) return false;
+    if (isPreviewOnly(product)) {
+      toast("Design previews are WhatsApp-only. Ask us to confirm this one-off piece.");
+      return false;
+    }
+    if (!validSize(product, size)) {
+      toast("That size is not mapped to this CJ variant. Refresh and choose another size.");
+      return false;
+    }
     var cart = getCart();
     var existing = cart.filter(function (item) {
       return (
@@ -318,11 +397,17 @@
   }
 
   function productCard(product) {
-    var options = sizesFor(product.category)
+    var options = sizesFor(product)
       .map(function (s) {
         return '<option value="' + esc(s) + '">' + esc(s) + "</option>";
       })
       .join("");
+    var preview = isPreviewOnly(product);
+    var addControl = preview
+      ? '<span class="add-btn add-disabled" aria-disabled="true">Preview only</span>'
+      : '<button class="add-btn" type="button" data-add="' + esc(product.id) +
+        '">Add to bag</button>';
+    var waText = preview ? "Ask on WhatsApp" : "Order on WhatsApp";
 
     return (
       '<article class="product-card">' +
@@ -345,14 +430,14 @@
       '<p class="product-price">' + money(product.price) + "</p>" +
       "</div>" +
       '<p class="product-desc">' + esc(product.description) + "</p>" +
+      supplierNote(product, "card") +
       '<div class="card-actions">' +
       '<select class="size-select" data-size-for="' + esc(product.id) +
       '" aria-label="Select size for ' + esc(product.name) + '">' + options + "</select>" +
-      '<button class="add-btn" type="button" data-add="' + esc(product.id) +
-      '">Add to bag</button>' +
+      addControl +
       "</div>" +
       '<a class="order-btn" href="' + esc(waUrl(orderMessage(product))) +
-      '" target="_blank" rel="noreferrer"><span>Order on WhatsApp</span>' +
+      '" target="_blank" rel="noreferrer"><span>' + waText + "</span>" +
       arrowUpRight +
       "</a>" +
       "</div>" +
@@ -490,6 +575,7 @@
       })[0] || {}).sizes || [];
 
     formHost.innerHTML =
+      (opts.notice ? '<p class="design-notice">' + esc(opts.notice) + "</p>" : "") +
       '<form class="design-form" id="design-form">' +
       '<fieldset class="field"><legend>What are you designing?</legend>' +
       '<div class="segmented" data-segment="category">' +
@@ -525,7 +611,7 @@
       "</div></fieldset>" +
       '<label class="field"><span>Height (optional)</span><input type="text" id="design-height" maxlength="40" placeholder="e.g. 5\'11 / 180cm"></label>' +
       '<label class="field"><span>Anything else (optional)</span><input type="text" id="design-extra" maxlength="400" placeholder="e.g. wearing it with chunky sneakers"></label>' +
-      '<button type="submit" class="btn btn-primary btn-lg">Get my pre-order</button>' +
+      '<button type="submit" class="btn btn-primary btn-lg">Send design on WhatsApp</button>' +
       '<a class="btn btn-outline btn-lg" href="' +
       esc(waUrl("Hi " + brand.name + "! I'm sending pictures of my design. Can you make this for me? Size:")) +
       '" target="_blank" rel="noreferrer">Send pictures of my design</a>' +
@@ -576,14 +662,15 @@
       var s = summary();
       var productId = productMap[s.category] || "custom-tee";
       preview.innerHTML =
-        '<p class="preview-label">Your personalised pre-order</p>' +
+        '<p class="preview-label">Design preview — WhatsApp only</p>' +
         '<p class="preview-main">' + esc(s.design || "Describe your design on the left") + "</p>" +
         '<p class="preview-meta">' + esc([s.category, selected.fit, s.waist].filter(Boolean).join(" · ")) + "</p>" +
+        '<p class="design-notice">' +
+        "No paid CJ order is created for a design preview. Confirm artwork, size and price in chat." +
+        "</p>" +
         '<div class="preview-actions">' +
-        '<button class="btn btn-primary" type="button" data-add-custom="' + esc(productId) +
-        '" data-custom-size="' + esc(s.waist) + '">Add to bag</button>' +
         '<a class="preview-link" target="_blank" rel="noreferrer" href="' + esc(waUrl(s.message)) +
-        '">Send on WhatsApp ' + arrowRight + "</a>" +
+        '">Send design on WhatsApp ' + arrowRight + "</a>" +
         "</div>";
     }
 
@@ -600,45 +687,55 @@
     var host = document.querySelector("[data-cart-items]");
     if (!host) return;
     var cart = getCart();
+    var sanitizedNotice = removedCartCount
+      ? '<p class="supplier-note is-preview"><strong>Items removed — </strong>' +
+        removedCartCount + " preview-only or invalid-size item(s) were removed from your bag. " +
+        "Ask on WhatsApp to confirm a design preview.</p>"
+      : "";
 
     if (!cart.length) {
       host.innerHTML =
+        sanitizedNotice +
         '<div class="empty-state"><p class="display empty-title">Your bag is empty.</p>' +
         '<a class="btn btn-primary" href="collection.html">Browse the collection</a></div>';
       return;
     }
 
-    host.innerHTML = cart
-      .map(function (item, i) {
-        var p = findProduct(item.id);
-        if (!p) return "";
-        return (
-          '<div class="cart-item">' +
-          '<img src="assets/' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) + '">' +
-          '<div class="cart-item-info">' +
-          '<p class="product-index">' + esc(p.variant) + "</p>" +
-          '<h3 class="display cart-item-title">' + esc(p.name) + "</h3>" +
-          '<p class="cart-item-meta">Size: ' + esc(item.size || "One size") + "</p>" +
-          (item.notes ? '<p class="cart-item-notes">' + esc(item.notes.split("\n")[0]) + "</p>" : "") +
-          '<div class="qty-control">' +
-          '<button type="button" data-qty="dec" data-index="' + i + '" aria-label="Decrease quantity">−</button>' +
-          "<span>" + (Number(item.qty) || 1) + "</span>" +
-          '<button type="button" data-qty="inc" data-index="' + i + '" aria-label="Increase quantity">+</button>' +
-          "</div>" +
-          "</div>" +
-          '<div class="cart-item-end">' +
-          '<p class="product-price">' + money(p.price * (Number(item.qty) || 1)) + "</p>" +
-          '<button class="cart-remove" type="button" data-remove="' + i + '">Remove</button>' +
-          "</div>" +
-          "</div>"
-        );
-      })
-      .join("");
+    host.innerHTML =
+      sanitizedNotice +
+      cart
+        .map(function (item, i) {
+          var p = findProduct(item.id);
+          if (!p) return "";
+          return (
+            '<div class="cart-item">' +
+            '<img src="assets/' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) + '">' +
+            '<div class="cart-item-info">' +
+            '<p class="product-index">' + esc(p.variant) + "</p>" +
+            '<h3 class="display cart-item-title">' + esc(p.name) + "</h3>" +
+            '<p class="cart-item-meta">Size: ' + esc(item.size || "One size") + "</p>" +
+            (item.notes ? '<p class="cart-item-notes">' + esc(item.notes.split("\n")[0]) + "</p>" : "") +
+            supplierNote(p, "cart") +
+            '<div class="qty-control">' +
+            '<button type="button" data-qty="dec" data-index="' + i + '" aria-label="Decrease quantity">−</button>' +
+            "<span>" + (Number(item.qty) || 1) + "</span>" +
+            '<button type="button" data-qty="inc" data-index="' + i + '" aria-label="Increase quantity">+</button>' +
+            "</div>" +
+            "</div>" +
+            '<div class="cart-item-end">' +
+            '<p class="product-price">' + money(p.price * (Number(item.qty) || 1)) + "</p>" +
+            '<button class="cart-remove" type="button" data-remove="' + i + '">Remove</button>' +
+            "</div>" +
+            "</div>"
+          );
+        })
+        .join("");
 
     var totals = cartTotals();
     var summaryHost = document.querySelector("[data-cart-summary]");
     if (summaryHost) {
       var rules = cfg.shipping || {};
+      var blocked = checkoutBlocked(cart);
       summaryHost.innerHTML =
         '<h2 class="display cart-summary-title">Order summary</h2>' +
         '<div class="summary-row"><span>Subtotal</span><span>' + money(totals.subtotal) + "</span></div>" +
@@ -646,7 +743,9 @@
         (totals.shipping ? money(totals.shipping) : "Free") + "</span></div>" +
         '<div class="summary-row summary-total"><span>Total</span><span>' + money(totals.total) + "</span></div>" +
         '<p class="summary-note">' + esc(rules.note || "") + "</p>" +
-        '<a class="btn btn-primary checkout-btn" href="checkout.html">Continue to checkout</a>' +
+        (blocked
+          ? '<div class="checkout-alert">Remove preview-only or unavailable items before checkout.</div>'
+          : '<a class="btn btn-primary checkout-btn" href="checkout.html">Continue to checkout</a>') +
         '<a class="continue-link" href="collection.html">← Continue shopping</a>';
     }
   }
@@ -722,6 +821,11 @@
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (checkoutBlocked(cart)) {
+        toast("A preview-only or unavailable item is in your bag. Refresh the page.");
+        renderCheckout();
+        return;
+      }
       var submitBtn = form.querySelector('[type="submit"]');
       submitBtn.disabled = true;
       submitBtn.textContent = "Processing…";
@@ -729,21 +833,10 @@
       var selectedMethod = form.querySelector('input[name="paymentMethod"]:checked');
       var payload = {
         items: cart.map(function (item) {
-          var p = findProduct(item.id);
           return {
             id: item.id,
-            name: p ? p.name : item.id,
-            variant: p ? p.variant : "",
-            sku: (p && p.supplier && p.supplier.sizes && p.supplier.sizes[item.size])
-              ? p.supplier.sizes[item.size].sku
-              : (p && p.supplier ? p.supplier.sku : ""),
-            vid: (p && p.supplier && p.supplier.sizes && p.supplier.sizes[item.size])
-              ? p.supplier.sizes[item.size].vid
-              : (p && p.supplier ? p.supplier.vid : ""),
-            supplierCostCny: p && p.supplier ? p.supplier.costCny : 0,
             size: item.size,
             qty: Number(item.qty) || 1,
-            unitPrice: p ? p.price : 0,
             notes: item.notes || ""
           };
         }),
@@ -756,11 +849,7 @@
           state: document.getElementById("cust-state").value.trim(),
           postcode: document.getElementById("cust-postcode").value.trim()
         },
-        paymentMethod: selectedMethod ? selectedMethod.value : "whatsapp",
-        amount: totals.total,
-        currency: (cfg.payments && cfg.payments.currency) || "NGN",
-        shipping: totals.shipping,
-        supplier: cfg.supplier
+        paymentMethod: selectedMethod ? selectedMethod.value : "whatsapp"
       };
 
       submitOrder(payload, submitBtn);
@@ -954,15 +1043,6 @@
       return;
     }
 
-    var addCustom = e.target.closest("[data-add-custom]");
-    if (addCustom) {
-      addToCart(
-        addCustom.getAttribute("data-add-custom"),
-        addCustom.getAttribute("data-custom-size") || "One size",
-        document.querySelector("[data-design-preview]").innerText
-      );
-      return;
-    }
 
     var remove = e.target.closest("[data-remove]");
     if (remove) {

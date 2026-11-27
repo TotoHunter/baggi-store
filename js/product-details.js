@@ -63,20 +63,19 @@
       { name: "Washed Black", hex: "#232327" }
     ],
     beanie: [
-      { name: "Jet Black", hex: "#17171a" },
-      { name: "Washed Grey", hex: "#8b8d90" }
+      { name: "Jet Black", hex: "#17171a" }
     ],
     bag: [
-      { name: "Jet Black", hex: "#17171a" },
-      { name: "Natural", hex: "#d8c6a4" }
+      { name: "Jet Black", hex: "#17171a" }
     ],
     socks: [
-      { name: "Black · 2-pack", hex: "#17171a" },
-      { name: "Off White · 2-pack", hex: "#e8e5dc" }
+      { name: "Jet Black", hex: "#17171a" }
     ],
     cap: [
-      { name: "Jet Black", hex: "#17171a" },
-      { name: "Off White", hex: "#e8e5dc" }
+      { name: "Jet Black", hex: "#17171a" }
+    ],
+    custom: [
+      { name: "Your design", hex: "#b9b2a0" }
     ]
   };
 
@@ -169,12 +168,12 @@
     "gods-plan-tee": {
       colours: palettes.tee,
       story:
-        "A pre-order piece with a hand-painted feel. GOD'S PLAN sits across the front with black thunder lines and white cracks, printed on our heavyweight boxy white tee. Each run is limited and made after you order.",
+        "A design preview with a hand-painted feel. GOD'S PLAN sits across the front with black thunder lines and white cracks. Custom printing is not connected to CJ yet, so this piece is previewed here and confirmed on WhatsApp only — no paid CJ order is placed for it.",
       bullets: [
-        "Heavyweight boxy white tee",
-        "Hand-painted GOD'S PLAN artwork with thunder lines",
-        "Pre-order: made to order after checkout",
-        "Plain back, no extra branding"
+        "Design preview of GOD'S PLAN artwork on a boxy white tee",
+        "Black thunder lines and white crack details shown in the preview",
+        "WhatsApp only — confirm artwork and one-off production there",
+        "Paid CJ checkout is disabled for this preview"
       ]
     },
     "cargo-olive": {
@@ -235,67 +234,67 @@
     "canvas-tote": {
       colours: palettes.tote,
       story:
-        "A heavy natural canvas tote with long straps, built for the market, the studio and everything between. Plain by design, and customisable if you want your own artwork on it.",
+        "A heavy natural canvas tote with long straps, built for the market, the studio and everything between. It ships plain and blank — no printing is included or sent to CJ.",
       bullets: [
         "Heavy natural canvas",
         "Long shoulder straps",
-        "One size, plain finish",
-        "Add your own design with the custom option"
+        "One size, plain blank finish",
+        "Sold blank; artwork requests are handled on WhatsApp"
       ]
     },
     "custom-jeans": {
-      colours: palettes.denim,
+      colours: palettes.custom,
       story:
-        "Your artwork on our widest denim. Send an idea, a logo or a full graphic and we place it on a one-off pair made to your size. Choose your base wash and tell us where you want the print.",
+        "A preview of your artwork on our widest denim. Custom printing is not connected to CJ yet, so this is a design preview only. Send the idea, your size and placement notes on WhatsApp to confirm a one-off order before any payment.",
       bullets: [
-        "One-off pair made to your design",
-        "Choose mid indigo, washed black or light stone",
-        "Front, back or both placements",
-        "Made to order in 3–7 days"
+        "Design preview — the printed pair is not shipped by CJ",
+        "Send artwork, wash and size on WhatsApp",
+        "Front, back or both placements discussed in chat",
+        "Paid checkout is disabled until POD is verified"
       ]
     },
     "custom-tee": {
-      colours: palettes.tee,
+      colours: palettes.custom,
       story:
-        "Your print on the heavyweight box tee we already know fits right. Send your artwork and placement notes after checkout; we print it on a fresh blank and make only what you order.",
+        "A preview of your print on the heavyweight box tee we already know fits right. This is not a paid CJ print order: send your artwork and placement notes on WhatsApp, and we will confirm the one-off order before payment.",
       bullets: [
-        "Your design on a heavyweight boxy tee",
-        "Choose off white, faded black or olive",
-        "Front, back or both placements",
-        "Made to order in 3–7 days"
+        "Design preview on a heavyweight boxy tee",
+        "WhatsApp-only confirmation — no printed item ships from CJ",
+        "Front, back or both placements discussed in chat",
+        "Paid checkout is disabled until POD is verified"
       ]
     },
     "custom-hoodie": {
-      colours: palettes.hoodie,
+      colours: palettes.custom,
       story:
-        "Our oversized heavy hood, made yours. Printed or embroidered artwork on a blank built with dropped shoulders and a deep pocket. Pick the base colour and send the design after checkout.",
+        "A preview of your artwork on our oversized heavy hood. Printing and embroidery are not connected to CJ, so this preview is confirmed on WhatsApp only. No paid CJ order is placed for it.",
       bullets: [
-        "Your design printed or embroidered",
-        "Choose jet black, washed grey or off white",
+        "Design preview on a heavy hood blank",
+        "Print or embroidery confirmed on WhatsApp",
         "Oversized body with dropped shoulders",
-        "Made to order in 3–7 days"
+        "Paid checkout is disabled until POD is verified"
       ]
     },
     "custom-mug": {
-      colours: palettes.mug,
+      colours: palettes.custom,
       story:
-        "An 11oz ceramic mug printed with your artwork. Simple, solid and made for daily use — a small way to put your design on something you reach for every morning.",
+        "A preview of your artwork on an 11oz ceramic mug. Custom printing is not connected to CJ, so this is a WhatsApp-only design preview — no printed mug is shipped by CJ.",
       bullets: [
-        "11oz ceramic mug",
-        "Printed with your artwork",
-        "Choose white or jet black",
-        "Made to order"
+        "Design preview of an 11oz ceramic mug",
+        "Send your artwork on WhatsApp to confirm",
+        "Blank mug fulfilment only; printing is not included",
+        "Paid checkout is disabled until POD is verified"
       ]
     },
     "custom-poster": {
-      colours: palettes.poster,
+      colours: palettes.custom,
       story:
-        "A matte poster printed from your design, available in A2 or A3. Send the artwork after checkout and tell us the size you want. No frames, no fuss — just the print.",
+        "A preview of your design as a matte poster in A2 or A3. Printing is not connected to CJ, so send the artwork and size on WhatsApp to confirm a one-off order before any payment.",
       bullets: [
-        "A2 or A3 matte print",
-        "Your artwork, printed to order",
-        "Choose matte white or matte black stock",
-        "Ships flat and tracked"
+        "Design preview for an A2 or A3 matte poster",
+        "Artwork and size confirmed on WhatsApp",
+        "No CJ print order is created from this preview",
+        "Paid checkout is disabled until POD is verified"
       ]
     },
     "sweatpant-black": {
@@ -367,23 +366,23 @@
     "socks-black": {
       colours: palettes.socks,
       story:
-        "Heavy ribbed crew socks sold as a plain two-pack. Thick enough to hold their shape and simple enough to disappear under any BAGGI fit.",
+        "Heavy ribbed crew socks in plain black. Thick enough to hold their shape and simple enough to disappear under any BAGGI fit.",
       bullets: [
         "Heavyweight ribbed cotton blend",
-        "Two pairs in each pack",
         "Plain black finish, no branding",
+        "One size, easy to pair with any BAGGI fit",
         "Made to order and shipped tracked"
       ]
     },
     "custom-cap": {
       colours: palettes.cap,
       story:
-        "Your artwork on a heavy cotton cap. Send the design and placement notes after checkout and we print a one-off piece made only for you.",
+        "A plain black heavy cotton cap with a structured crown and adjustable fit. One size, ready to wear or customise after delivery.",
       bullets: [
-        "One-off cap printed from your artwork",
+        "Plain black finish, no branding",
         "Heavy cotton with a structured crown",
         "Curved brim and adjustable fit",
-        "Pre-order: made after checkout"
+        "Ships as a blank cap from CJ"
       ]
     }
   };

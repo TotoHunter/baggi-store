@@ -130,13 +130,23 @@ async function createSupplierOrder(order) {
     );
   }
 
+  const preview = (order.items || []).find((item) => item && item.podPending);
+  if (preview) {
+    return demo(
+      "CJ-SETUP-" + order.id.slice(-6),
+      "Product " + preview.id + " is a design preview (podPending). Confirm it on WhatsApp; no paid CJ order is created."
+    );
+  }
+
   const badSku = (order.items || []).find(
-    (item) => !(item.vid && String(item.vid).trim()) && !(item.sku && item.sku.trim())
+    (item) =>
+      !(item.vid && String(item.vid).trim()) ||
+      !(item.sku && item.sku.trim())
   );
   if (badSku) {
     return demo(
       "CJ-SETUP-" + order.id.slice(-6),
-      "Product " + badSku.id + " has no real CJ variant. Replace the placeholder SKUs in js/config.js with real CJ SKUs or VIDs."
+      "Product " + badSku.id + " has no complete CJ variant. Both SKU and VID must be set in js/config.js."
     );
   }
   const placeholders = (order.items || []).filter(
