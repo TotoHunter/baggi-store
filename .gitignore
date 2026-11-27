@@ -1,9 +1,8 @@
 server/node_modules/
 server/data/
 server/.env
-tools/.vision_cache/
-tools/.vqa_cache/
-tools/.source_extract/
-tools/__pycache__/
+server/tools/
+tools/
+assets-backup-*/
 *.log
 .DS_Store

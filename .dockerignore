@@ -1,5 +1,8 @@
 server/node_modules
-server/data/orders.json
+server/data
 server/.env
+server/tools
+tools
+assets-backup-*/
 **/*.log
 .git
